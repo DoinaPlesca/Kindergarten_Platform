@@ -41,7 +41,7 @@ public class ClientWantsToAuthenticateWithJwt(
         var claims = tokenService.ValidateJwtAndReturnClaims(dto.jwt!);
         var user = authenticationRepository.GetUserByEmail(new FindByEmail(claims["email"]));
 
-        /*// If you want to allow parents and teachers to authenticate with JWT, remove the following checks:
+        /*
         if (user.isparent)
         {
             throw new AuthenticationException("User is parent");
