@@ -1,9 +1,8 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
-using System.Security.Authentication;
-using api.ClientEventFilters;
+using api.EventFilters;
+using api.Events.LogIn.Server;
 using api.Helper;
-using api.ServerEvents;
 using api.WebSocket;
 using Fleck;
 using infrastructure.ParametherModel;
@@ -11,7 +10,7 @@ using infrastructure.Repository;
 using lib;
 using service.Security;
 
-namespace api.ClientEventHandlers;
+namespace api.Events.LogIn.Clients;
 
 public class ClientWantsToAuthenticateWithJwtDto : BaseDto
 {
@@ -25,31 +24,11 @@ public class ClientWantsToAuthenticateWithJwt(
          TokenService tokenService)
     : BaseEventHandler<ClientWantsToAuthenticateWithJwtDto>
 {
-    // public override async Task Handle(ClientWantsToAuthenticateWithJwtDto dto, IWebSocketConnection socket)
-    // {
-    //     var claims = tokenService.ValidateJwtAndReturnClaims(dto.jwt!);
-    //     var user = authenticationRepository.GetUserByEmail(new FindByEmail(claims["email"]));
-    //     if (user.isparent)
-    //         throw new AuthenticationException("User is parent");
-    //     WebSocketStateService.GetClient(socket.ConnectionInfo.Id).User = user;
-    //     WebSocketStateService.GetClient(socket.ConnectionInfo.Id).IsAuthenticated = true;
-    //     socket.SendDto(new ServerAuthenticatesUserFromJwt());
-    // }
     
     public override async Task Handle(ClientWantsToAuthenticateWithJwtDto dto, IWebSocketConnection socket)
     {
         var claims = tokenService.ValidateJwtAndReturnClaims(dto.jwt!);
         var user = authenticationRepository.GetUserByEmail(new FindByEmail(claims["email"]));
-
-        /*
-        if (user.isparent)
-        {
-            throw new AuthenticationException("User is parent");
-        }
-        else if (user.isteacher)
-        {
-            throw new AuthenticationException("User is teacher");
-        }*/
 
         WebSocketStateService.GetClient(socket.ConnectionInfo.Id).User = user;
         WebSocketStateService.GetClient(socket.ConnectionInfo.Id).IsAuthenticated = true;

@@ -1,8 +1,6 @@
 ﻿using lib;
 
-namespace api.ServerEvents;
+namespace api.Events.LogIn.Server;
 
 public class ServerAuthenticatesUserFromJwt :BaseDto
-{
-    
-}
+{ }

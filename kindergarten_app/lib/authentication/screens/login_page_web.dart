@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kindergarten_app/authentication/bloc/login_state.dart';
@@ -6,10 +6,7 @@ import 'package:kindergarten_app/authentication/widgets/login_form/login_form.da
 import 'package:kindergarten_app/home/screens/home_page.dart';
 import '../../app_colors.dart';
 import '../bloc/login_bloc.dart';
-import '../widgets/image_section.dart';
-import '../widgets/login_form/input_fields.dart';
-import '../widgets/login_form/login_button.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+
 
 class LoginPageWeb extends StatelessWidget {
   const LoginPageWeb({Key? key}): super(key: key);
@@ -51,10 +48,6 @@ class LoginPageWeb extends StatelessWidget {
                 },)
               ),
             ),
-          ),
-          const Expanded(
-            flex: 3,
-            child: ImageSection(),
           ),
         ],
       ),

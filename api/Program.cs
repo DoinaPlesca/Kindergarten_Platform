@@ -10,6 +10,7 @@ using infrastructure;
 using infrastructure.Repository;
 using lib;
 using Serilog;
+using service;
 using service.Security;
 
 namespace api;
@@ -21,7 +22,7 @@ public static class Startup
         var webApp = Start(args);
         webApp.Run();
     }
-    
+
     public static WebApplication Start(string[] args)
     {
         Log.Logger = new LoggerConfiguration()
@@ -37,41 +38,40 @@ public static class Startup
         builder.Services.AddNpgsqlDataSource(Utilities.ProperlyFormattedConnectionString,
             sourceBuilder => { sourceBuilder.EnableParameterLogging(); });
         builder.Services.AddSingleton<AuthenticationRepository>();
+        builder.Services.AddSingleton<AnnouncementsRepository>();
+        builder.Services.AddSingleton<AnnouncementService>();
+        builder.Services.AddSingleton<ChildService>();
+        builder.Services.AddSingleton<ChildRepository>();
+        builder.Services.AddSingleton<CalendarEventsService>();
+        builder.Services.AddSingleton<CalendarEventsRepository>();
         var services = builder.FindAndInjectClientEventHandlers(Assembly.GetExecutingAssembly());
-        
+
         Log.Information("Configuring server...");
-        
+
         builder.WebHost.UseUrls("http://*:9999");
         var app = builder.Build();
-        
+
         var port = Environment.GetEnvironmentVariable("PORT") ?? "8181";
-        var server = new WebSocketServer("ws://0.0.0.0:"+port);
+        var server = new WebSocketServer("ws://0.0.0.0:" + port);
         server.RestartAfterListenError = true;
-        
-          server.Start(socket =>
+
+        server.Start(socket =>
         {
-            // Log when a WebSocket connection is opened
+            socket.OnOpen = () => WebSocketStateService.AddClient(socket.ConnectionInfo.Id, socket);
             Log.Information($"WebSocket connection opened: {socket.ConnectionInfo.Id}");
             
-            // Add the WebSocket client to the state service
-            WebSocketStateService.AddClient(socket.ConnectionInfo.Id, socket);
-            
-            // Configure the actions when a message is received
             socket.OnMessage = async message =>
             {
                 try
                 {
-                    // Log the received message
+                    Log.Information($"WebSocket connection opened: {socket.ConnectionInfo.Id}");
                     Log.Information($"Received message from {socket.ConnectionInfo.Id}: {message}");
-                    
-                    // Invoke the client event handler
                     await app.InvokeClientEventHandler(services, socket, message);
                 }
                 catch (Exception e)
                 {
-                    // Log any exceptions that occur
                     Log.Error(e, "Global exception handler");
-                    
+
                     // Send an error message back to the client
                     if (app.Environment.IsProduction() && (e is ValidationException || e is AuthenticationException))
                     {
@@ -89,21 +89,15 @@ public static class Startup
                 }
             };
             
-            // Configure the action when a WebSocket connection is closed
             socket.OnClose = () =>
             {
-                // Log when a WebSocket connection is closed
                 Log.Information($"WebSocket connection closed: {socket.ConnectionInfo.Id}");
-                
-                // Remove the WebSocket client from the state service
                 WebSocketStateService.RemoveClient(socket.ConnectionInfo.Id);
             };
         });
-        
-        // Log the completion of server configuration
+
         Log.Information("Server configuration completed.");
-        
-        // Return the built web application
+
         return app;
     }
 }

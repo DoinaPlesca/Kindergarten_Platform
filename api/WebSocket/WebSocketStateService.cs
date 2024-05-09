@@ -1,22 +1,24 @@
-﻿
+﻿using api.Events.Announcement.Server;
+using api.Helper;
 using Fleck;
 using infrastructure.QueryModels;
-
+using lib;
 
 namespace api.WebSocket;
 
-public  class WsWithMetadata(IWebSocketConnection connection)
+
+public class WsWithMetadata(IWebSocketConnection connection)
 {
     public IWebSocketConnection Connection { get; set; } = connection;
     public bool IsAuthenticated { get; set; } = false;
     public User? User { get; set; }
+    public List<BaseDto> MessageQueue { get; set; } = new List<BaseDto>();
+   
 }
 
 public static class WebSocketStateService
 {
     private static readonly Dictionary<Guid, WsWithMetadata> _clients = new();
-    private static readonly Dictionary<Guid, HashSet<int>> _clientToRooms = new();
-    private static readonly Dictionary<int, HashSet<Guid>> _roomsToClients = new();
 
     public static WsWithMetadata GetClient(Guid clientId)
     {
@@ -30,19 +32,26 @@ public static class WebSocketStateService
 
     public static void RemoveClient(Guid clientId)
     {
-        if (_clientToRooms.TryGetValue(clientId, out var rooms))
-        {
-            foreach (var room in rooms)
-            {
-                _roomsToClients[room].Remove(clientId);
-                if (_roomsToClients[room].Count == 0) _roomsToClients.Remove(room);
-            }
-
-            _clientToRooms.Remove(clientId);
-        }
-
         _clients.Remove(clientId);
     }
+    
+    public static void BroadcastMessage<T>(T dto) where T : BaseDto
+    {
+        foreach (var clientId in _clients.Keys)
+        {
+            if (_clients.TryGetValue(clientId, out var connection))
+            {
+                connection.Connection.SendDto(dto);
+            }
+        }
+    }
+    
 
-   
+
 }
+
+  
+
+
+    
+

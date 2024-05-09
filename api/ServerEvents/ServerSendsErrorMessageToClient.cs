@@ -8,5 +8,6 @@ namespace api.ServerEvents
     {
         public string? errorMessage { get; set; }
         public string? receivedMessage { get; set; }
+       
     }
 }

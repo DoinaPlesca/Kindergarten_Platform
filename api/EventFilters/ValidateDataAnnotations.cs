@@ -2,7 +2,7 @@
 using Fleck;
 using lib;
 
-namespace api.ClientEventFilters;
+namespace api.EventFilters;
 
 public class ValidateDataAnnotations : BaseEventFilter
 {

@@ -1,13 +1,10 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import "../../events_base/events_base.dart";
+
 part 'events.freezed.dart';
 part 'events.g.dart';
 
 
-sealed class BaseEvent {}
-
-abstract class ClientEvent extends BaseEvent {
-  Map<String, dynamic> toJson();
-}
 
 @freezed
 class ClientWantsToAuthenticateWithJwt extends ClientEvent
@@ -26,7 +23,8 @@ class ClientWantsToAuthenticateWithJwt extends ClientEvent
 
 
 @freezed
-class ClientWantsToSignIn extends ClientEvent with _$ClientWantsToSignIn {
+class ClientWantsToSignIn extends ClientEvent
+    with _$ClientWantsToSignIn {
   static const String name = "ClientWantsToSignIn";
   const factory ClientWantsToSignIn({
     required String eventType,
@@ -38,7 +36,11 @@ class ClientWantsToSignIn extends ClientEvent with _$ClientWantsToSignIn {
       _$ClientWantsToSignInFromJson(json);
 }
 
-class ServerEvent extends BaseEvent {
+
+
+
+
+class AuthenticationServerEvent extends BaseEvent {
   static ServerEvent fromJson(Map<String, Object?> json) {
     final type = json['eventType'];
     return switch (type) {
