@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kindergarten_app/calendar/screens/calendar_screen.dart';
+import '../../announcement/widgets/annonc_widget.dart';
 import '../../app_colors.dart';
 import '../../plan_page.dart';
 import '../widgets/custom_bottom_navigation_bar.dart';
@@ -19,8 +20,8 @@ class _HomePageState extends State<HomePage> {
   static final List<Widget> _widgetOptions = <Widget>[
     PlanListPage(),
     CalendarScreen(),
-   /* NotificationPage(),
-    CheckInPage(),*/
+    NotificationPage(),
+    /*CheckInPage(),*/
     /*GalleryPage(),*/
   ];
 

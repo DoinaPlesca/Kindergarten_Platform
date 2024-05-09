@@ -1,15 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kindergarten_app/broadcast_ws_channel.dart';
 import 'package:logging/logging.dart';
 import 'package:logging_appenders/logging_appenders.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import 'app_colors.dart';
+import 'announcement/bloc/announc_bloc.dart';
 import 'authentication/bloc/login_bloc.dart';
 import 'authentication/screens/login_page_mobil.dart';
 import 'authentication/screens/login_page_web.dart';
 import 'logger_bloc_observer.dart';
-
-
+import 'app_colors.dart';
 
 void main() {
   // Initialize logger
@@ -17,14 +17,31 @@ void main() {
   Bloc.observer = LoggerBlocObserver();
 
   // Connect to WebSocket
-  final wsUri = Uri.parse('ws://localhost:8181');
-  final channel = WebSocketChannel.connect(wsUri);
+  Uri wsUri;
+  if (kIsWeb) {
+     wsUri = Uri.parse('ws://localhost:8181');
 
-  // Start app with dependency provider LoginBloc
-  runApp(BlocProvider(
-    create: (context) => LoginBloc(channel: channel),
-    child: const MyApp(),
-  ));
+  } else {
+    wsUri = Uri.parse('ws://10.0.2.2:8181');
+
+  }
+  final channel = BroadcastWsChannel(wsUri);
+
+  // Start app with MultiBlocProvider
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<LoginBloc>(
+          create: (context) => LoginBloc(channel: channel),
+        ),
+        BlocProvider<AnnouncementBloc>(
+          create: (context) => AnnouncementBloc(channel: channel),
+        ),
+
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -41,15 +58,14 @@ class MyApp extends StatelessWidget {
       ),
       home: LayoutBuilder(
         builder: (context, constraints) {
-          // Determine if it's mobile or web layout
+
+          bool isMobile = false;
           //bool isMobile = constraints.maxWidth < 600;
-bool isMobile = false;
           return isMobile ? const LoginPageMobile() : const LoginPageWeb();
         },
       ),
     );
   }
 }
-
 
 /*flutter run -d chrome*/

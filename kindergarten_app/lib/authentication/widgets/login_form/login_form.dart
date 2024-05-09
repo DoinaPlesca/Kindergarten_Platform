@@ -34,7 +34,7 @@ class _LoginFormState extends State<LoginForm> {
       ],
     );
   }
-  Widget buildInputFields(BuildContext context) { // Receive context here
+  Widget buildInputFields(BuildContext context) {
     return Form(
       key: formKey,
       child: Column(

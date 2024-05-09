@@ -1,34 +1,37 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-import '../models/events.dart';
-import 'login_state.dart';
+import 'package:kindergarten_app/authentication/bloc/login_state.dart';
+import 'package:kindergarten_app/authentication/models/events.dart';
+
+import '../../broadcast_ws_channel.dart';
+import '../../events_base/events_base.dart';
+
 
 
 
 class LoginBloc extends Bloc<BaseEvent, LoginState> {
 
-  final WebSocketChannel _channel;
+  final BroadcastWsChannel _channel;
   late StreamSubscription _channelSubscription;
   String? _jwt;
 
-  
+
   LoginBloc({required channel})
       : _channel = channel,
         super(LoginState.empty()) {
-    
     // Handler for client events
     on<ClientEvent>(_onClientEvent);
 
     // Handlers for server events
     on<ServerAuthenticatesUser>(_onServerAuthenticatesUser);
-    on<ServerSendsErrorMessageToClient>(_onServerSendsErrorMessageToClient);
+   // on<ServerEvent>((event, _) =>print(event));
+
 
     // Feed deserialized events from server into this bloc
     _channelSubscription = _channel.stream
         .map((event) => jsonDecode(event))
-        .map((event) => ServerEvent.fromJson(event))
+        .map((event) => AuthenticationServerEvent.fromJson(event))
         .listen(add, onError: addError);
   }
 
@@ -41,7 +44,6 @@ class LoginBloc extends Bloc<BaseEvent, LoginState> {
   }
 
 
-
   /// Sends ClientWantsToSignIn event to server
   void signIn({required String password, required String email}) {
     add(ClientWantsToSignIn(
@@ -51,16 +53,17 @@ class LoginBloc extends Bloc<BaseEvent, LoginState> {
 
     ));
   }
-  
 
-  FutureOr<void> _onClientEvent(ClientEvent event, Emitter<LoginState> emit) {
+
+  FutureOr<void> _onClientEvent(ClientEvent event,
+      Emitter<LoginState> emit) {
     _channel.sink.add(jsonEncode(event.toJson()));
   }
 
 
 //extend how is log in
-  FutureOr<void> _onServerAuthenticatesUser(
-      ServerAuthenticatesUser event, Emitter<LoginState> emit) {
+  FutureOr<void> _onServerAuthenticatesUser(ServerAuthenticatesUser event,
+      Emitter<LoginState> emit) {
     _jwt = event.jwt;
     emit(state.copyWith(
       authenticated: true,
@@ -69,8 +72,6 @@ class LoginBloc extends Bloc<BaseEvent, LoginState> {
   }
 
 
-  FutureOr<void> _onServerSendsErrorMessageToClient(
-      ServerSendsErrorMessageToClient event, Emitter<LoginState> emit) {
-    emit(state.copyWith(headsUp: '⚠️ ${event.errorMessage}'));
-  }
+
+
 }

@@ -8,4 +8,5 @@ public class User
     public string? salt { get; set; }
     public bool isparent { get; set; }
     public bool isteacher { get; set; }
+    public string name { get; set; }
 }

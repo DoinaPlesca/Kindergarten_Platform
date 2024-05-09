@@ -3,7 +3,7 @@ using api.WebSocket;
 using Fleck;
 using lib;
 
-namespace api.ClientEventFilters;
+namespace api.EventFilters;
 
 public class RequireAuthenticationAttribute : BaseEventFilter
 {

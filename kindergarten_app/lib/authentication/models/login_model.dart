@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-
-
 part 'login_model.freezed.dart';
 part 'login_model.g.dart';
 
@@ -16,3 +14,4 @@ class User with _$User {
   factory User.fromJson(Map<String, Object?> json) =>
       _$UserFromJson(json);
 }
+
