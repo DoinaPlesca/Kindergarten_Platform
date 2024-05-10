@@ -6,8 +6,7 @@ import 'package:logging/logging.dart';
 import 'package:logging_appenders/logging_appenders.dart';
 import 'announcement/bloc/announc_bloc.dart';
 import 'authentication/bloc/login_bloc.dart';
-import 'authentication/screens/login_page_mobil.dart';
-import 'authentication/screens/login_page_web.dart';
+import 'authentication/screens/login_screen.dart';
 import 'logger_bloc_observer.dart';
 import 'app_colors.dart';
 
@@ -58,10 +57,7 @@ class MyApp extends StatelessWidget {
       ),
       home: LayoutBuilder(
         builder: (context, constraints) {
-
-          bool isMobile = false;
-          //bool isMobile = constraints.maxWidth < 600;
-          return isMobile ? const LoginPageMobile() : const LoginPageWeb();
+          return const LoginPage();
         },
       ),
     );

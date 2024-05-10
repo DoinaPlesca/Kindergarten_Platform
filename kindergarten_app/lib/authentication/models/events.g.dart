@@ -6,6 +6,20 @@ part of 'events.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$ClientWantsToLogoutImpl _$$ClientWantsToLogoutImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ClientWantsToLogoutImpl(
+      eventType: json['eventType'] as String,
+      jwt: json['jwt'] as String,
+    );
+
+Map<String, dynamic> _$$ClientWantsToLogoutImplToJson(
+        _$ClientWantsToLogoutImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'jwt': instance.jwt,
+    };
+
 _$ClientWantsToAuthenticateWithJwtImpl
     _$$ClientWantsToAuthenticateWithJwtImplFromJson(
             Map<String, dynamic> json) =>
@@ -45,6 +59,8 @@ _$ServerAuthenticatesUserImpl _$$ServerAuthenticatesUserImplFromJson(
       email: json['email'] as String,
       isParent: json['isParent'] as bool,
       isTeacher: json['isTeacher'] as bool,
+      name: json['name'] as String,
+      Children: json['Children'] as List<dynamic>? ?? const [],
     );
 
 Map<String, dynamic> _$$ServerAuthenticatesUserImplToJson(
@@ -55,6 +71,20 @@ Map<String, dynamic> _$$ServerAuthenticatesUserImplToJson(
       'email': instance.email,
       'isParent': instance.isParent,
       'isTeacher': instance.isTeacher,
+      'name': instance.name,
+      'Children': instance.Children,
+    };
+
+_$ServerLogoutUserImpl _$$ServerLogoutUserImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ServerLogoutUserImpl(
+      eventType: json['eventType'] as String,
+    );
+
+Map<String, dynamic> _$$ServerLogoutUserImplToJson(
+        _$ServerLogoutUserImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
     };
 
 _$ServerSendsErrorMessageToClientImpl

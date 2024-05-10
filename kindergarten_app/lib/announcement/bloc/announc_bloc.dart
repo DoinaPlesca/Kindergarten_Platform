@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kindergarten_app/broadcast_ws_channel.dart';
-import '../../events_base/events_base.dart';
+import '../../events_base.dart';
 import '../models/events.dart';
 import 'announc_state.dart';
 

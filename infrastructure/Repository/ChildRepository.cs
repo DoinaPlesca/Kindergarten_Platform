@@ -22,7 +22,7 @@ public class ChildRepository
 
     public async Task<List<GetChildParams>> GetChildrenByParentId(int parentId)
     {
-        var sql = @"SELECT  firstname, lastname,image
+        var sql = @"SELECT childid, firstname, lastname, image
                 FROM kindergarten.children 
                 WHERE parentid = @parentid;";
 
@@ -31,13 +31,12 @@ public class ChildRepository
             try
             {
                 var children = await connection.QueryAsync<GetChildParams>(sql, new { parentid = parentId });
-                
                 return children.ToList();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving children for parent ID {ParentId}", parentId);
-                throw; 
+                throw;
             }
         }
     }

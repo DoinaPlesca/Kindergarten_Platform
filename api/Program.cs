@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Security.Authentication;
 using System.Text.Json;
+using api.Events.LogIn.Clients;
 using api.Helper;
 using api.ServerEvents;
 using api.WebSocket;
@@ -34,6 +35,7 @@ public static class Startup
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddSingleton<CredentialService>();
         builder.Services.AddSingleton<TokenService>();
+        builder.Services.AddSingleton<TokenBlacklistService>();
 
         builder.Services.AddNpgsqlDataSource(Utilities.ProperlyFormattedConnectionString,
             sourceBuilder => { sourceBuilder.EnableParameterLogging(); });
@@ -44,12 +46,18 @@ public static class Startup
         builder.Services.AddSingleton<ChildRepository>();
         builder.Services.AddSingleton<CalendarEventsService>();
         builder.Services.AddSingleton<CalendarEventsRepository>();
+
+        // Register event handlers
         var services = builder.FindAndInjectClientEventHandlers(Assembly.GetExecutingAssembly());
+        
 
         Log.Information("Configuring server...");
 
         builder.WebHost.UseUrls("http://*:9999");
         var app = builder.Build();
+
+        // Add JwtMiddleware to the pipeline
+        app.UseMiddleware<JwtMiddleware>();
 
         var port = Environment.GetEnvironmentVariable("PORT") ?? "8181";
         var server = new WebSocketServer("ws://0.0.0.0:" + port);
@@ -64,7 +72,6 @@ public static class Startup
             {
                 try
                 {
-                    Log.Information($"WebSocket connection opened: {socket.ConnectionInfo.Id}");
                     Log.Information($"Received message from {socket.ConnectionInfo.Id}: {message}");
                     await app.InvokeClientEventHandler(services, socket, message);
                 }
@@ -73,7 +80,7 @@ public static class Startup
                     Log.Error(e, "Global exception handler");
 
                     // Send an error message back to the client
-                    if (app.Environment.IsProduction() && (e is ValidationException || e is AuthenticationException))
+                    if (app.Environment.IsProduction() && (e is ValidationException or AuthenticationException))
                     {
                         socket.SendDto(new ServerSendsErrorMessageToClient()
                         {
@@ -84,7 +91,10 @@ public static class Startup
                     else
                     {
                         socket.SendDto(new ServerSendsErrorMessageToClient
-                            { errorMessage = e.Message, receivedMessage = message });
+                        {
+                            errorMessage = e.Message,
+                            receivedMessage = message
+                        });
                     }
                 }
             };

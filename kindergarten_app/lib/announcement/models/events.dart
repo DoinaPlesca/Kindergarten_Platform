@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../events_base/events_base.dart';
+import '../../events_base.dart';
 import 'announc_model.dart';
 
 part 'events.freezed.dart';
