@@ -22,6 +22,8 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   int get id => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  List<dynamic> get Children => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +35,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({int id, String email});
+  $Res call({int id, String email, String? name, List<dynamic> Children});
 }
 
 /// @nodoc
@@ -51,6 +53,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? id = null,
     Object? email = null,
+    Object? name = freezed,
+    Object? Children = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -61,6 +65,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      Children: null == Children
+          ? _value.Children
+          : Children // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ) as $Val);
   }
 }
@@ -72,7 +84,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String email});
+  $Res call({int id, String email, String? name, List<dynamic> Children});
 }
 
 /// @nodoc
@@ -87,6 +99,8 @@ class __$$UserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? email = null,
+    Object? name = freezed,
+    Object? Children = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -97,6 +111,14 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      Children: null == Children
+          ? _value._Children
+          : Children // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ));
   }
 }
@@ -104,7 +126,12 @@ class __$$UserImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserImpl implements _User {
-  const _$UserImpl({required this.id, required this.email});
+  const _$UserImpl(
+      {required this.id,
+      required this.email,
+      required this.name,
+      final List<dynamic> Children = const []})
+      : _Children = Children;
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -113,10 +140,20 @@ class _$UserImpl implements _User {
   final int id;
   @override
   final String email;
+  @override
+  final String? name;
+  final List<dynamic> _Children;
+  @override
+  @JsonKey()
+  List<dynamic> get Children {
+    if (_Children is EqualUnmodifiableListView) return _Children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_Children);
+  }
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email)';
+    return 'User(id: $id, email: $email, name: $name, Children: $Children)';
   }
 
   @override
@@ -125,12 +162,15 @@ class _$UserImpl implements _User {
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._Children, _Children));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email);
+  int get hashCode => Object.hash(runtimeType, id, email, name,
+      const DeepCollectionEquality().hash(_Children));
 
   @JsonKey(ignore: true)
   @override
@@ -147,8 +187,11 @@ class _$UserImpl implements _User {
 }
 
 abstract class _User implements User {
-  const factory _User({required final int id, required final String email}) =
-      _$UserImpl;
+  const factory _User(
+      {required final int id,
+      required final String email,
+      required final String? name,
+      final List<dynamic> Children}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -156,6 +199,10 @@ abstract class _User implements User {
   int get id;
   @override
   String get email;
+  @override
+  String? get name;
+  @override
+  List<dynamic> get Children;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

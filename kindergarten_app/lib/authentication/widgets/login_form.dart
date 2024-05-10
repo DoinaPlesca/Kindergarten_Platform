@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../../../app_colors.dart';
 
 class LoginForm extends StatefulWidget {
-   LoginForm({required this.onLogin, super.key});
+  const LoginForm({required this.onLogin, super.key});
 
   final Function(String, String) onLogin;
 
@@ -17,12 +16,10 @@ class _LoginFormState extends State<LoginForm> {
   final formKey = GlobalKey<FormState>();
 
   void onPressed() {
-    if (! formKey.currentState!.validate()) return;
-
-
+    if (!formKey.currentState!.validate()) return;
     widget.onLogin(usernameController.text, passwordController.text);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,10 +27,11 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         buildInputFields(context),
         const SizedBox(height: 20),
-        buildLoginButton(context), // Pass context
+        buildLoginButton(context),
       ],
     );
   }
+
   Widget buildInputFields(BuildContext context) {
     return Form(
       key: formKey,
@@ -58,30 +56,34 @@ class _LoginFormState extends State<LoginForm> {
       style: TextStyle(
           fontSize: 26,
           fontWeight: FontWeight.bold,
-          color: AppColors.blackCoffee
-      ),
+          color: AppColors.blackCoffee),
     );
   }
 
   Widget buildUsernameField(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        maxWidth: 500,
+      ),
       child: TextFormField(
         controller: usernameController,
         decoration: const InputDecoration(
           labelText: 'Username',
           filled: true,
-          fillColor:AppColors.babyPowder,
+          fillColor: AppColors.babyPowder,
           border: OutlineInputBorder(),
         ),
-        validator: (value) => (value ?? "").isEmpty ? "Must have a value" : null,
+        validator: (value) =>
+        (value ?? "").isEmpty ? "Username cannot be empty" : null,
       ),
     );
   }
 
   Widget buildPasswordField(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        maxWidth: 500,
+      ),
       child: TextFormField(
         controller: passwordController,
         obscureText: true,
@@ -91,16 +93,18 @@ class _LoginFormState extends State<LoginForm> {
           fillColor: AppColors.babyPowder,
           border: OutlineInputBorder(),
         ),
-        validator: (value) => (value ?? "").isEmpty ? "Must have a value" : null,
-
+        validator: (value) => (value ?? "").isEmpty
+            ? "The password is required for authentication"
+            : null,
       ),
     );
   }
 
-
-  Widget buildLoginButton(BuildContext context) { // Receive context here
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.4,
+  Widget buildLoginButton(BuildContext context) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        maxWidth: 300,
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -120,5 +124,4 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
-
 }

@@ -25,24 +25,30 @@ public class ClientWantsToAuthenticate(
         ChildService childService)
     : BaseEventHandler<ClientWantsToSignInDto>
 {
-    
-    public override  async Task Handle(ClientWantsToSignInDto request, IWebSocketConnection socket)
+    public override async Task Handle(ClientWantsToSignInDto request, IWebSocketConnection socket)
     {
         var user = authenticationRepository.GetUserByEmail(new FindByEmail(request.email!));
-        if(user == null)
+        if (user == null)
         {
             throw new AuthenticationException("User not found");
         }
         var expectedHash = credentialService.Hash(request.password!, user.salt!);
-        
+
         /*if (!expectedHash.SequenceEqual(user.hash!))
         {
             throw new AuthenticationException("Wrong credentials");
         }*/
-        
+
         WebSocketStateService.GetClient(socket.ConnectionInfo.Id).IsAuthenticated = true;
         WebSocketStateService.GetClient(socket.ConnectionInfo.Id).User = user;
-    
+
+        // Retrieve children if the user is a parent
+        List<GetChildParams> children = new List<GetChildParams>();
+        if (user.isparent)
+        {
+            children = await childService.GetChildrenByParentId(user.id);
+        }
+
         var authResponseDto = new ServerAuthenticatesUser()
         {
             jwt = tokenService.IssueJwt(user),
@@ -50,13 +56,9 @@ public class ClientWantsToAuthenticate(
             isParent = user.isparent,
             isTeacher = user.isteacher,
             name = user.name,
-            Children = user.isparent?  await childService.GetChildrenByParentId(user.id) : new List<GetChildParams>()
+            Children = children
         };
-    
+
         socket.SendDto(authResponseDto);
-       
     }
-
-
 }
-

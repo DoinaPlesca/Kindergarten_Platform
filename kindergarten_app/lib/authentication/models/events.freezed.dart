@@ -14,6 +14,162 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+ClientWantsToLogout _$ClientWantsToLogoutFromJson(Map<String, dynamic> json) {
+  return _ClientWantsToLogout.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ClientWantsToLogout {
+  String get eventType => throw _privateConstructorUsedError;
+  String get jwt => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ClientWantsToLogoutCopyWith<ClientWantsToLogout> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ClientWantsToLogoutCopyWith<$Res> {
+  factory $ClientWantsToLogoutCopyWith(
+          ClientWantsToLogout value, $Res Function(ClientWantsToLogout) then) =
+      _$ClientWantsToLogoutCopyWithImpl<$Res, ClientWantsToLogout>;
+  @useResult
+  $Res call({String eventType, String jwt});
+}
+
+/// @nodoc
+class _$ClientWantsToLogoutCopyWithImpl<$Res, $Val extends ClientWantsToLogout>
+    implements $ClientWantsToLogoutCopyWith<$Res> {
+  _$ClientWantsToLogoutCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? jwt = null,
+  }) {
+    return _then(_value.copyWith(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      jwt: null == jwt
+          ? _value.jwt
+          : jwt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ClientWantsToLogoutImplCopyWith<$Res>
+    implements $ClientWantsToLogoutCopyWith<$Res> {
+  factory _$$ClientWantsToLogoutImplCopyWith(_$ClientWantsToLogoutImpl value,
+          $Res Function(_$ClientWantsToLogoutImpl) then) =
+      __$$ClientWantsToLogoutImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType, String jwt});
+}
+
+/// @nodoc
+class __$$ClientWantsToLogoutImplCopyWithImpl<$Res>
+    extends _$ClientWantsToLogoutCopyWithImpl<$Res, _$ClientWantsToLogoutImpl>
+    implements _$$ClientWantsToLogoutImplCopyWith<$Res> {
+  __$$ClientWantsToLogoutImplCopyWithImpl(_$ClientWantsToLogoutImpl _value,
+      $Res Function(_$ClientWantsToLogoutImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+    Object? jwt = null,
+  }) {
+    return _then(_$ClientWantsToLogoutImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+      jwt: null == jwt
+          ? _value.jwt
+          : jwt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ClientWantsToLogoutImpl implements _ClientWantsToLogout {
+  const _$ClientWantsToLogoutImpl({required this.eventType, required this.jwt});
+
+  factory _$ClientWantsToLogoutImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ClientWantsToLogoutImplFromJson(json);
+
+  @override
+  final String eventType;
+  @override
+  final String jwt;
+
+  @override
+  String toString() {
+    return 'ClientWantsToLogout(eventType: $eventType, jwt: $jwt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ClientWantsToLogoutImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType) &&
+            (identical(other.jwt, jwt) || other.jwt == jwt));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType, jwt);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ClientWantsToLogoutImplCopyWith<_$ClientWantsToLogoutImpl> get copyWith =>
+      __$$ClientWantsToLogoutImplCopyWithImpl<_$ClientWantsToLogoutImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ClientWantsToLogoutImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ClientWantsToLogout implements ClientWantsToLogout {
+  const factory _ClientWantsToLogout(
+      {required final String eventType,
+      required final String jwt}) = _$ClientWantsToLogoutImpl;
+
+  factory _ClientWantsToLogout.fromJson(Map<String, dynamic> json) =
+      _$ClientWantsToLogoutImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  String get jwt;
+  @override
+  @JsonKey(ignore: true)
+  _$$ClientWantsToLogoutImplCopyWith<_$ClientWantsToLogoutImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 ClientWantsToAuthenticateWithJwt _$ClientWantsToAuthenticateWithJwtFromJson(
     Map<String, dynamic> json) {
   return _ClientWantsToAuthenticateWithJwt.fromJson(json);
@@ -371,6 +527,8 @@ mixin _$ServerAuthenticatesUser {
   String get email => throw _privateConstructorUsedError;
   bool get isParent => throw _privateConstructorUsedError;
   bool get isTeacher => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  List<dynamic> get Children => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -389,7 +547,9 @@ abstract class $ServerAuthenticatesUserCopyWith<$Res> {
       String jwt,
       String email,
       bool isParent,
-      bool isTeacher});
+      bool isTeacher,
+      String name,
+      List<dynamic> Children});
 }
 
 /// @nodoc
@@ -411,6 +571,8 @@ class _$ServerAuthenticatesUserCopyWithImpl<$Res,
     Object? email = null,
     Object? isParent = null,
     Object? isTeacher = null,
+    Object? name = null,
+    Object? Children = null,
   }) {
     return _then(_value.copyWith(
       eventType: null == eventType
@@ -433,6 +595,14 @@ class _$ServerAuthenticatesUserCopyWithImpl<$Res,
           ? _value.isTeacher
           : isTeacher // ignore: cast_nullable_to_non_nullable
               as bool,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      Children: null == Children
+          ? _value.Children
+          : Children // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ) as $Val);
   }
 }
@@ -451,7 +621,9 @@ abstract class _$$ServerAuthenticatesUserImplCopyWith<$Res>
       String jwt,
       String email,
       bool isParent,
-      bool isTeacher});
+      bool isTeacher,
+      String name,
+      List<dynamic> Children});
 }
 
 /// @nodoc
@@ -472,6 +644,8 @@ class __$$ServerAuthenticatesUserImplCopyWithImpl<$Res>
     Object? email = null,
     Object? isParent = null,
     Object? isTeacher = null,
+    Object? name = null,
+    Object? Children = null,
   }) {
     return _then(_$ServerAuthenticatesUserImpl(
       eventType: null == eventType
@@ -494,6 +668,14 @@ class __$$ServerAuthenticatesUserImplCopyWithImpl<$Res>
           ? _value.isTeacher
           : isTeacher // ignore: cast_nullable_to_non_nullable
               as bool,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      Children: null == Children
+          ? _value._Children
+          : Children // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ));
   }
 }
@@ -506,7 +688,10 @@ class _$ServerAuthenticatesUserImpl implements _ServerAuthenticatesUser {
       required this.jwt,
       required this.email,
       required this.isParent,
-      required this.isTeacher});
+      required this.isTeacher,
+      required this.name,
+      final List<dynamic> Children = const []})
+      : _Children = Children;
 
   factory _$ServerAuthenticatesUserImpl.fromJson(Map<String, dynamic> json) =>
       _$$ServerAuthenticatesUserImplFromJson(json);
@@ -521,10 +706,20 @@ class _$ServerAuthenticatesUserImpl implements _ServerAuthenticatesUser {
   final bool isParent;
   @override
   final bool isTeacher;
+  @override
+  final String name;
+  final List<dynamic> _Children;
+  @override
+  @JsonKey()
+  List<dynamic> get Children {
+    if (_Children is EqualUnmodifiableListView) return _Children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_Children);
+  }
 
   @override
   String toString() {
-    return 'ServerAuthenticatesUser(eventType: $eventType, jwt: $jwt, email: $email, isParent: $isParent, isTeacher: $isTeacher)';
+    return 'ServerAuthenticatesUser(eventType: $eventType, jwt: $jwt, email: $email, isParent: $isParent, isTeacher: $isTeacher, name: $name, Children: $Children)';
   }
 
   @override
@@ -539,13 +734,15 @@ class _$ServerAuthenticatesUserImpl implements _ServerAuthenticatesUser {
             (identical(other.isParent, isParent) ||
                 other.isParent == isParent) &&
             (identical(other.isTeacher, isTeacher) ||
-                other.isTeacher == isTeacher));
+                other.isTeacher == isTeacher) &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._Children, _Children));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, eventType, jwt, email, isParent, isTeacher);
+  int get hashCode => Object.hash(runtimeType, eventType, jwt, email, isParent,
+      isTeacher, name, const DeepCollectionEquality().hash(_Children));
 
   @JsonKey(ignore: true)
   @override
@@ -568,7 +765,9 @@ abstract class _ServerAuthenticatesUser implements ServerAuthenticatesUser {
       required final String jwt,
       required final String email,
       required final bool isParent,
-      required final bool isTeacher}) = _$ServerAuthenticatesUserImpl;
+      required final bool isTeacher,
+      required final String name,
+      final List<dynamic> Children}) = _$ServerAuthenticatesUserImpl;
 
   factory _ServerAuthenticatesUser.fromJson(Map<String, dynamic> json) =
       _$ServerAuthenticatesUserImpl.fromJson;
@@ -584,9 +783,152 @@ abstract class _ServerAuthenticatesUser implements ServerAuthenticatesUser {
   @override
   bool get isTeacher;
   @override
+  String get name;
+  @override
+  List<dynamic> get Children;
+  @override
   @JsonKey(ignore: true)
   _$$ServerAuthenticatesUserImplCopyWith<_$ServerAuthenticatesUserImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+ServerLogoutUser _$ServerLogoutUserFromJson(Map<String, dynamic> json) {
+  return _ServerLogoutUser.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ServerLogoutUser {
+  String get eventType => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ServerLogoutUserCopyWith<ServerLogoutUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ServerLogoutUserCopyWith<$Res> {
+  factory $ServerLogoutUserCopyWith(
+          ServerLogoutUser value, $Res Function(ServerLogoutUser) then) =
+      _$ServerLogoutUserCopyWithImpl<$Res, ServerLogoutUser>;
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class _$ServerLogoutUserCopyWithImpl<$Res, $Val extends ServerLogoutUser>
+    implements $ServerLogoutUserCopyWith<$Res> {
+  _$ServerLogoutUserCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_value.copyWith(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ServerLogoutUserImplCopyWith<$Res>
+    implements $ServerLogoutUserCopyWith<$Res> {
+  factory _$$ServerLogoutUserImplCopyWith(_$ServerLogoutUserImpl value,
+          $Res Function(_$ServerLogoutUserImpl) then) =
+      __$$ServerLogoutUserImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String eventType});
+}
+
+/// @nodoc
+class __$$ServerLogoutUserImplCopyWithImpl<$Res>
+    extends _$ServerLogoutUserCopyWithImpl<$Res, _$ServerLogoutUserImpl>
+    implements _$$ServerLogoutUserImplCopyWith<$Res> {
+  __$$ServerLogoutUserImplCopyWithImpl(_$ServerLogoutUserImpl _value,
+      $Res Function(_$ServerLogoutUserImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? eventType = null,
+  }) {
+    return _then(_$ServerLogoutUserImpl(
+      eventType: null == eventType
+          ? _value.eventType
+          : eventType // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ServerLogoutUserImpl implements _ServerLogoutUser {
+  const _$ServerLogoutUserImpl({required this.eventType});
+
+  factory _$ServerLogoutUserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ServerLogoutUserImplFromJson(json);
+
+  @override
+  final String eventType;
+
+  @override
+  String toString() {
+    return 'ServerLogoutUser(eventType: $eventType)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ServerLogoutUserImpl &&
+            (identical(other.eventType, eventType) ||
+                other.eventType == eventType));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, eventType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ServerLogoutUserImplCopyWith<_$ServerLogoutUserImpl> get copyWith =>
+      __$$ServerLogoutUserImplCopyWithImpl<_$ServerLogoutUserImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ServerLogoutUserImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ServerLogoutUser implements ServerLogoutUser {
+  const factory _ServerLogoutUser({required final String eventType}) =
+      _$ServerLogoutUserImpl;
+
+  factory _ServerLogoutUser.fromJson(Map<String, dynamic> json) =
+      _$ServerLogoutUserImpl.fromJson;
+
+  @override
+  String get eventType;
+  @override
+  @JsonKey(ignore: true)
+  _$$ServerLogoutUserImplCopyWith<_$ServerLogoutUserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 ServerSendsErrorMessageToClient _$ServerSendsErrorMessageToClientFromJson(

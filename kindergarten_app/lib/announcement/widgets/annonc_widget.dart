@@ -7,7 +7,7 @@ import 'package:kindergarten_app/app_colors.dart';
 import '../bloc/announc_state.dart';
 
 
-/*
+
 class NotificationPage extends StatefulWidget {
   @override
   _NotificationPageState createState() => _NotificationPageState();
@@ -149,7 +149,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 },
               ),
             ),
-          ],
+          ]
         ),
       ),
     );
@@ -157,4 +157,4 @@ class _NotificationPageState extends State<NotificationPage> {
 }
 
 
-*/
+

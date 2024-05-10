@@ -18,6 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LoginState {
   bool get authenticated => throw _privateConstructorUsedError;
   String? get headsUp => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get jwt => throw _privateConstructorUsedError;
+  List<dynamic> get Children => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginStateCopyWith<LoginState> get copyWith =>
@@ -30,7 +33,12 @@ abstract class $LoginStateCopyWith<$Res> {
           LoginState value, $Res Function(LoginState) then) =
       _$LoginStateCopyWithImpl<$Res, LoginState>;
   @useResult
-  $Res call({bool authenticated, String? headsUp});
+  $Res call(
+      {bool authenticated,
+      String? headsUp,
+      String? name,
+      String? jwt,
+      List<dynamic> Children});
 }
 
 /// @nodoc
@@ -48,6 +56,9 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   $Res call({
     Object? authenticated = null,
     Object? headsUp = freezed,
+    Object? name = freezed,
+    Object? jwt = freezed,
+    Object? Children = null,
   }) {
     return _then(_value.copyWith(
       authenticated: null == authenticated
@@ -58,6 +69,18 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.headsUp
           : headsUp // ignore: cast_nullable_to_non_nullable
               as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      jwt: freezed == jwt
+          ? _value.jwt
+          : jwt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      Children: null == Children
+          ? _value.Children
+          : Children // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ) as $Val);
   }
 }
@@ -70,7 +93,12 @@ abstract class _$$LoginStateImplCopyWith<$Res>
       __$$LoginStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool authenticated, String? headsUp});
+  $Res call(
+      {bool authenticated,
+      String? headsUp,
+      String? name,
+      String? jwt,
+      List<dynamic> Children});
 }
 
 /// @nodoc
@@ -86,6 +114,9 @@ class __$$LoginStateImplCopyWithImpl<$Res>
   $Res call({
     Object? authenticated = null,
     Object? headsUp = freezed,
+    Object? name = freezed,
+    Object? jwt = freezed,
+    Object? Children = null,
   }) {
     return _then(_$LoginStateImpl(
       authenticated: null == authenticated
@@ -96,6 +127,18 @@ class __$$LoginStateImplCopyWithImpl<$Res>
           ? _value.headsUp
           : headsUp // ignore: cast_nullable_to_non_nullable
               as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      jwt: freezed == jwt
+          ? _value.jwt
+          : jwt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      Children: null == Children
+          ? _value._Children
+          : Children // ignore: cast_nullable_to_non_nullable
+              as List<dynamic>,
     ));
   }
 }
@@ -103,16 +146,34 @@ class __$$LoginStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoginStateImpl implements _LoginState {
-  const _$LoginStateImpl({required this.authenticated, required this.headsUp});
+  const _$LoginStateImpl(
+      {required this.authenticated,
+      this.headsUp,
+      this.name,
+      this.jwt,
+      final List<dynamic> Children = const []})
+      : _Children = Children;
 
   @override
   final bool authenticated;
   @override
   final String? headsUp;
+  @override
+  final String? name;
+  @override
+  final String? jwt;
+  final List<dynamic> _Children;
+  @override
+  @JsonKey()
+  List<dynamic> get Children {
+    if (_Children is EqualUnmodifiableListView) return _Children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_Children);
+  }
 
   @override
   String toString() {
-    return 'LoginState(authenticated: $authenticated, headsUp: $headsUp)';
+    return 'LoginState(authenticated: $authenticated, headsUp: $headsUp, name: $name, jwt: $jwt, Children: $Children)';
   }
 
   @override
@@ -122,11 +183,15 @@ class _$LoginStateImpl implements _LoginState {
             other is _$LoginStateImpl &&
             (identical(other.authenticated, authenticated) ||
                 other.authenticated == authenticated) &&
-            (identical(other.headsUp, headsUp) || other.headsUp == headsUp));
+            (identical(other.headsUp, headsUp) || other.headsUp == headsUp) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.jwt, jwt) || other.jwt == jwt) &&
+            const DeepCollectionEquality().equals(other._Children, _Children));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, authenticated, headsUp);
+  int get hashCode => Object.hash(runtimeType, authenticated, headsUp, name,
+      jwt, const DeepCollectionEquality().hash(_Children));
 
   @JsonKey(ignore: true)
   @override
@@ -138,12 +203,21 @@ class _$LoginStateImpl implements _LoginState {
 abstract class _LoginState implements LoginState {
   const factory _LoginState(
       {required final bool authenticated,
-      required final String? headsUp}) = _$LoginStateImpl;
+      final String? headsUp,
+      final String? name,
+      final String? jwt,
+      final List<dynamic> Children}) = _$LoginStateImpl;
 
   @override
   bool get authenticated;
   @override
   String? get headsUp;
+  @override
+  String? get name;
+  @override
+  String? get jwt;
+  @override
+  List<dynamic> get Children;
   @override
   @JsonKey(ignore: true)
   _$$LoginStateImplCopyWith<_$LoginStateImpl> get copyWith =>
