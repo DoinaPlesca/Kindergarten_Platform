@@ -1,48 +1,101 @@
 import 'package:flutter/material.dart';
-import '../../app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kindergarten_app/announcement/bloc/announc_bloc.dart';
+import 'package:kindergarten_app/announcement/bloc/announc_state.dart';
+import 'package:kindergarten_app/app_colors.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
+
+class CustomBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
   final Function(int) onTap;
 
   const CustomBottomNavigationBar({
-    Key? key,
+    super.key,
     required this.currentIndex,
     required this.onTap,
-  }) : super(key: key);
+  });
+
+  @override
+  _CustomBottomNavigationBarState createState() => _CustomBottomNavigationBarState();
+}
+
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.7, end: 1.3).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      elevation: 1.0,
-      backgroundColor: AppColors.celeste,
-      items: _buildBottomNavBarItems(),
-      currentIndex: currentIndex,
-      selectedItemColor: AppColors.ultraRed,
-      unselectedItemColor: AppColors.blackCoffee,
-      onTap: onTap,
+    return BlocBuilder<AnnouncementBloc, AnnouncementState>(
+      builder: (context, state) {
+        bool showNotification = false;
+        if (state is Loaded && state.showNotificationDot) {
+          showNotification = true;
+        }
+
+        return BottomNavigationBar(
+          elevation: 1.0,
+          backgroundColor: AppColors.celeste,
+          items: _buildBottomNavBarItems(showNotification),
+          currentIndex: widget.currentIndex,
+          selectedItemColor: AppColors.ultraRed,
+          unselectedItemColor: AppColors.blackCoffee,
+          onTap: widget.onTap,
+        );
+      },
     );
   }
 
-  List<BottomNavigationBarItem> _buildBottomNavBarItems() {
-    return const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
+  List<BottomNavigationBarItem> _buildBottomNavBarItems(bool showNotification) {
+    return <BottomNavigationBarItem>[
+      const BottomNavigationBarItem(
         icon: Icon(Icons.person),
         label: 'Profile',
       ),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: Icon(Icons.calendar_today),
         label: 'Calendar',
       ),
       BottomNavigationBarItem(
-        icon: Icon(Icons.notifications),
+        icon: Stack(
+          children: [
+            const Icon(Icons.notifications),
+            if (showNotification)
+              Positioned(
+                right: 0,
+                child: ScaleTransition(
+                  scale: _animation,
+                  child: const Icon(
+                    Icons.circle,
+                    color: Colors.red,
+                    size: 12,
+                  ),
+                ),
+              ),
+          ],
+        ),
         label: 'Notification',
       ),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: Icon(Icons.check),
         label: 'Check-in',
       ),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
         icon: Icon(Icons.photo),
         label: 'Gallery',
       ),

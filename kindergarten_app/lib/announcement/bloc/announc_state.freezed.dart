@@ -20,7 +20,10 @@ mixin _$AnnouncementState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<AnnouncementWithSenderEmail> announcements)
+    required TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)
         loaded,
     required TResult Function(String message) error,
   }) =>
@@ -29,7 +32,11 @@ mixin _$AnnouncementState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult? Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,7 +44,11 @@ mixin _$AnnouncementState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -127,7 +138,10 @@ class _$InitialImpl implements Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<AnnouncementWithSenderEmail> announcements)
+    required TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -139,7 +153,11 @@ class _$InitialImpl implements Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult? Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -150,7 +168,11 @@ class _$InitialImpl implements Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -242,7 +264,10 @@ class _$LoadingImpl implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<AnnouncementWithSenderEmail> announcements)
+    required TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -254,7 +279,11 @@ class _$LoadingImpl implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult? Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -265,7 +294,11 @@ class _$LoadingImpl implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -323,7 +356,10 @@ abstract class _$$LoadedImplCopyWith<$Res> {
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<AnnouncementWithSenderEmail> announcements});
+  $Res call(
+      {List<AnnouncementWithSenderEmail> Announcements,
+      List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+      bool showNotificationDot});
 }
 
 /// @nodoc
@@ -337,13 +373,23 @@ class __$$LoadedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? announcements = null,
+    Object? Announcements = null,
+    Object? UnreadAnnouncements = null,
+    Object? showNotificationDot = null,
   }) {
     return _then(_$LoadedImpl(
-      null == announcements
-          ? _value._announcements
-          : announcements // ignore: cast_nullable_to_non_nullable
+      Announcements: null == Announcements
+          ? _value._Announcements
+          : Announcements // ignore: cast_nullable_to_non_nullable
               as List<AnnouncementWithSenderEmail>,
+      UnreadAnnouncements: null == UnreadAnnouncements
+          ? _value._UnreadAnnouncements
+          : UnreadAnnouncements // ignore: cast_nullable_to_non_nullable
+              as List<AnnouncementWithSenderEmail>,
+      showNotificationDot: null == showNotificationDot
+          ? _value.showNotificationDot
+          : showNotificationDot // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -351,20 +397,36 @@ class __$$LoadedImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoadedImpl implements Loaded {
-  const _$LoadedImpl(final List<AnnouncementWithSenderEmail> announcements)
-      : _announcements = announcements;
+  const _$LoadedImpl(
+      {required final List<AnnouncementWithSenderEmail> Announcements,
+      required final List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+      required this.showNotificationDot})
+      : _Announcements = Announcements,
+        _UnreadAnnouncements = UnreadAnnouncements;
 
-  final List<AnnouncementWithSenderEmail> _announcements;
+  final List<AnnouncementWithSenderEmail> _Announcements;
   @override
-  List<AnnouncementWithSenderEmail> get announcements {
-    if (_announcements is EqualUnmodifiableListView) return _announcements;
+  List<AnnouncementWithSenderEmail> get Announcements {
+    if (_Announcements is EqualUnmodifiableListView) return _Announcements;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_announcements);
+    return EqualUnmodifiableListView(_Announcements);
+  }
+
+  final List<AnnouncementWithSenderEmail> _UnreadAnnouncements;
+  @override
+  List<AnnouncementWithSenderEmail> get UnreadAnnouncements {
+    if (_UnreadAnnouncements is EqualUnmodifiableListView)
+      return _UnreadAnnouncements;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_UnreadAnnouncements);
   }
 
   @override
+  final bool showNotificationDot;
+
+  @override
   String toString() {
-    return 'AnnouncementState.loaded(announcements: $announcements)';
+    return 'AnnouncementState.loaded(Announcements: $Announcements, UnreadAnnouncements: $UnreadAnnouncements, showNotificationDot: $showNotificationDot)';
   }
 
   @override
@@ -373,12 +435,19 @@ class _$LoadedImpl implements Loaded {
         (other.runtimeType == runtimeType &&
             other is _$LoadedImpl &&
             const DeepCollectionEquality()
-                .equals(other._announcements, _announcements));
+                .equals(other._Announcements, _Announcements) &&
+            const DeepCollectionEquality()
+                .equals(other._UnreadAnnouncements, _UnreadAnnouncements) &&
+            (identical(other.showNotificationDot, showNotificationDot) ||
+                other.showNotificationDot == showNotificationDot));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_announcements));
+      runtimeType,
+      const DeepCollectionEquality().hash(_Announcements),
+      const DeepCollectionEquality().hash(_UnreadAnnouncements),
+      showNotificationDot);
 
   @JsonKey(ignore: true)
   @override
@@ -391,11 +460,14 @@ class _$LoadedImpl implements Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<AnnouncementWithSenderEmail> announcements)
+    required TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)
         loaded,
     required TResult Function(String message) error,
   }) {
-    return loaded(announcements);
+    return loaded(Announcements, UnreadAnnouncements, showNotificationDot);
   }
 
   @override
@@ -403,10 +475,15 @@ class _$LoadedImpl implements Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult? Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
-    return loaded?.call(announcements);
+    return loaded?.call(
+        Announcements, UnreadAnnouncements, showNotificationDot);
   }
 
   @override
@@ -414,12 +491,16 @@ class _$LoadedImpl implements Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(announcements);
+      return loaded(Announcements, UnreadAnnouncements, showNotificationDot);
     }
     return orElse();
   }
@@ -463,10 +544,14 @@ class _$LoadedImpl implements Loaded {
 }
 
 abstract class Loaded implements AnnouncementState {
-  const factory Loaded(final List<AnnouncementWithSenderEmail> announcements) =
-      _$LoadedImpl;
+  const factory Loaded(
+      {required final List<AnnouncementWithSenderEmail> Announcements,
+      required final List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+      required final bool showNotificationDot}) = _$LoadedImpl;
 
-  List<AnnouncementWithSenderEmail> get announcements;
+  List<AnnouncementWithSenderEmail> get Announcements;
+  List<AnnouncementWithSenderEmail> get UnreadAnnouncements;
+  bool get showNotificationDot;
   @JsonKey(ignore: true)
   _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -538,7 +623,10 @@ class _$ErrorImpl implements Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<AnnouncementWithSenderEmail> announcements)
+    required TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)
         loaded,
     required TResult Function(String message) error,
   }) {
@@ -550,7 +638,11 @@ class _$ErrorImpl implements Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult? Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -561,7 +653,11 @@ class _$ErrorImpl implements Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<AnnouncementWithSenderEmail> announcements)? loaded,
+    TResult Function(
+            List<AnnouncementWithSenderEmail> Announcements,
+            List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+            bool showNotificationDot)?
+        loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

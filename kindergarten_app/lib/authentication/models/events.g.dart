@@ -61,6 +61,11 @@ _$ServerAuthenticatesUserImpl _$$ServerAuthenticatesUserImplFromJson(
       isTeacher: json['isTeacher'] as bool,
       name: json['name'] as String,
       Children: json['Children'] as List<dynamic>? ?? const [],
+      UnreadAnnouncements: (json['UnreadAnnouncements'] as List<dynamic>?)
+              ?.map((e) => AnnouncementWithSenderEmail.fromJson(
+                  e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$ServerAuthenticatesUserImplToJson(
@@ -73,6 +78,7 @@ Map<String, dynamic> _$$ServerAuthenticatesUserImplToJson(
       'isTeacher': instance.isTeacher,
       'name': instance.name,
       'Children': instance.Children,
+      'UnreadAnnouncements': instance.UnreadAnnouncements,
     };
 
 _$ServerLogoutUserImpl _$$ServerLogoutUserImplFromJson(

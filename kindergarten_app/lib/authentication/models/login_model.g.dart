@@ -11,6 +11,11 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       email: json['email'] as String,
       name: json['name'] as String?,
       Children: json['Children'] as List<dynamic>? ?? const [],
+      UnreadAnnouncements: (json['UnreadAnnouncements'] as List<dynamic>?)
+              ?.map((e) => AnnouncementWithSenderEmail.fromJson(
+                  e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -19,4 +24,5 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'email': instance.email,
       'name': instance.name,
       'Children': instance.Children,
+      'UnreadAnnouncements': instance.UnreadAnnouncements,
     };

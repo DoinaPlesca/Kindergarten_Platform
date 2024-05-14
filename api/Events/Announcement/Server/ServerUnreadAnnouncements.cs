@@ -1,6 +1,9 @@
-﻿namespace api.Events.Announcement.Server;
+﻿using infrastructure.QueryModels;
+using lib;
 
-public class ServerUnreadAnnouncements
+namespace api.Events.Announcement.Server;
+
+public class ServerUnreadAnnouncements : BaseDto
 {
-    
+    public List<AnnouncementWithSenderEmail> UnreadAnnouncements { get; set; }
 }

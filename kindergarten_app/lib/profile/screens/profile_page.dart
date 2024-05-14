@@ -26,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
   int _selectedIndex = 0;
 
   List<Widget> get _widgetOptions => <Widget>[
-    ChildrenPage(children: widget.children),
+    ChildrenPage(children: widget.children, username: widget.username),
     CalendarScreen(),
     NotificationPage(),
     /*CheckInPage(),*/

@@ -1,12 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kindergarten_app/announcement/bloc/announc_bloc.dart';
 import 'package:kindergarten_app/announcement/models/announc_model.dart';
 import 'package:kindergarten_app/app_colors.dart';
 import '../bloc/announc_state.dart';
-
-
 
 class NotificationPage extends StatefulWidget {
   @override
@@ -17,6 +14,7 @@ class _NotificationPageState extends State<NotificationPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController messageController = TextEditingController();
   int selectedNotificationIndex = -1;
+  bool isAnnouncementPoster = false;
 
   @override
   void initState() {
@@ -26,9 +24,16 @@ class _NotificationPageState extends State<NotificationPage> {
 
   void postNotification() {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        isAnnouncementPoster = true;
+      });
       context.read<AnnouncementBloc>().postAnnouncement(messageController.text.trim());
       messageController.clear();
     }
+  }
+
+  void markAnnouncementAsRead(int announcementId) {
+    context.read<AnnouncementBloc>().markAnnouncementAsRead(announcementId);
   }
 
   @override
@@ -83,20 +88,22 @@ class _NotificationPageState extends State<NotificationPage> {
                   if (state is Loading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state is Loaded) {
-                    final List<AnnouncementWithSenderEmail> announcementsList = state.announcements;
-                    if (announcementsList .isEmpty) {
+                    final List<AnnouncementWithSenderEmail> announcementsList = state.Announcements;
+                    if (announcementsList.isEmpty) {
                       return const Center(child: Text('No announcements found.'));
                     }
                     return ListView.builder(
-                      itemCount: announcementsList .length,
+                      itemCount: announcementsList.length,
                       itemBuilder: (context, index) {
-                        final announcement = announcementsList [index];
+                        final announcement = announcementsList[index];
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              selectedNotificationIndex =
-                              selectedNotificationIndex == index ? -1 : index;
+                              selectedNotificationIndex = selectedNotificationIndex == index ? -1 : index;
                             });
+                            if (!announcement.isread) {
+                              markAnnouncementAsRead(announcement.id);
+                            }
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -113,20 +120,36 @@ class _NotificationPageState extends State<NotificationPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'From: ${announcement.email}',
-                                      style: const TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4.0),
-                                    Text(
-                                      'Time: ${announcement.timestamp}',
-                                      style: const TextStyle(
-                                        fontSize: 12.0,
-                                        fontStyle: FontStyle.italic,
-                                      ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          announcement.isread ? Icons.mark_email_read : Icons.mark_email_unread,
+                                          color: Colors.grey,
+                                        ),
+                                        const SizedBox(width: 8.0),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'From: ${announcement.email}',
+                                                style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 4.0),
+                                              Text(
+                                                'Time: ${announcement.timestamp}',
+                                                style: const TextStyle(
+                                                  fontSize: 12.0,
+                                                  fontStyle: FontStyle.italic,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     const SizedBox(height: 8.0),
                                     Text(
@@ -149,12 +172,9 @@ class _NotificationPageState extends State<NotificationPage> {
                 },
               ),
             ),
-          ]
+          ],
         ),
       ),
     );
   }
 }
-
-
-

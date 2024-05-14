@@ -39,7 +39,8 @@ public class ClientWantsToGetAllAnnouncements : BaseEventHandler<BaseDto>
                     sender = announcement.sender,
                     content = announcement.content,
                     timestamp = announcement.timestamp,
-                    email = announcement.email
+                    email = announcement.email,
+                    isread = announcement.isread
                 };
                 announcementDtos.Add(announcementDto);
             }

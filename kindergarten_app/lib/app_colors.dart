@@ -9,4 +9,5 @@ class AppColors {
   static const Color celeste = Color(0xFFb1ede8);
   static const Color babyPowder = Color(0xFFFFFcF9);
   static const Color ultraRed = Color(0xFFFF6978);
+
 }

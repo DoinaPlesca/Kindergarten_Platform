@@ -26,6 +26,7 @@ mixin _$AnnouncementWithSenderEmail {
   String? get content => throw _privateConstructorUsedError;
   DateTime get timestamp => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  bool get isread => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +43,12 @@ abstract class $AnnouncementWithSenderEmailCopyWith<$Res> {
           AnnouncementWithSenderEmail>;
   @useResult
   $Res call(
-      {int id, int sender, String? content, DateTime timestamp, String? email});
+      {int id,
+      int sender,
+      String? content,
+      DateTime timestamp,
+      String? email,
+      bool isread});
 }
 
 /// @nodoc
@@ -64,6 +70,7 @@ class _$AnnouncementWithSenderEmailCopyWithImpl<$Res,
     Object? content = freezed,
     Object? timestamp = null,
     Object? email = freezed,
+    Object? isread = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -86,6 +93,10 @@ class _$AnnouncementWithSenderEmailCopyWithImpl<$Res,
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      isread: null == isread
+          ? _value.isread
+          : isread // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -100,7 +111,12 @@ abstract class _$$AnnouncementWithSenderEmailImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id, int sender, String? content, DateTime timestamp, String? email});
+      {int id,
+      int sender,
+      String? content,
+      DateTime timestamp,
+      String? email,
+      bool isread});
 }
 
 /// @nodoc
@@ -121,6 +137,7 @@ class __$$AnnouncementWithSenderEmailImplCopyWithImpl<$Res>
     Object? content = freezed,
     Object? timestamp = null,
     Object? email = freezed,
+    Object? isread = null,
   }) {
     return _then(_$AnnouncementWithSenderEmailImpl(
       id: null == id
@@ -143,6 +160,10 @@ class __$$AnnouncementWithSenderEmailImplCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      isread: null == isread
+          ? _value.isread
+          : isread // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -156,7 +177,8 @@ class _$AnnouncementWithSenderEmailImpl
       required this.sender,
       required this.content,
       required this.timestamp,
-      required this.email});
+      required this.email,
+      required this.isread});
 
   factory _$AnnouncementWithSenderEmailImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -172,10 +194,12 @@ class _$AnnouncementWithSenderEmailImpl
   final DateTime timestamp;
   @override
   final String? email;
+  @override
+  final bool isread;
 
   @override
   String toString() {
-    return 'AnnouncementWithSenderEmail(id: $id, sender: $sender, content: $content, timestamp: $timestamp, email: $email)';
+    return 'AnnouncementWithSenderEmail(id: $id, sender: $sender, content: $content, timestamp: $timestamp, email: $email, isread: $isread)';
   }
 
   @override
@@ -188,13 +212,14 @@ class _$AnnouncementWithSenderEmailImpl
             (identical(other.content, content) || other.content == content) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.isread, isread) || other.isread == isread));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, sender, content, timestamp, email);
+      Object.hash(runtimeType, id, sender, content, timestamp, email, isread);
 
   @JsonKey(ignore: true)
   @override
@@ -218,7 +243,8 @@ abstract class _AnnouncementWithSenderEmail
       required final int sender,
       required final String? content,
       required final DateTime timestamp,
-      required final String? email}) = _$AnnouncementWithSenderEmailImpl;
+      required final String? email,
+      required final bool isread}) = _$AnnouncementWithSenderEmailImpl;
 
   factory _AnnouncementWithSenderEmail.fromJson(Map<String, dynamic> json) =
       _$AnnouncementWithSenderEmailImpl.fromJson;
@@ -233,6 +259,8 @@ abstract class _AnnouncementWithSenderEmail
   DateTime get timestamp;
   @override
   String? get email;
+  @override
+  bool get isread;
   @override
   @JsonKey(ignore: true)
   _$$AnnouncementWithSenderEmailImplCopyWith<_$AnnouncementWithSenderEmailImpl>

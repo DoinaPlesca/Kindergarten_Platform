@@ -12,4 +12,5 @@ public class ServerAuthenticatesUser : BaseDto
     public bool isTeacher { get; set; }
     public string name { get; set; }
     public List<GetChildParams> Children { get; set; } = new List<GetChildParams>();
+    
 }
