@@ -6,4 +6,5 @@ public class AnnouncementWithSenderEmail
     public string? content { get; set; }
     public int sender { get; set; }
     public string? email { get; set; }
+    public bool isread { get; set; } 
 }

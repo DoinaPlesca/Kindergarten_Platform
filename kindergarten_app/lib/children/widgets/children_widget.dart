@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten_app/app_colors.dart';
 
 class ChildCard extends StatelessWidget {
   final dynamic child;
@@ -46,8 +47,9 @@ class ChildCard extends StatelessWidget {
       child: Text(
         '${child['firstname']} ${child['lastname']}',
         style: const TextStyle(
-          fontSize: 16.0,
+          fontSize: 20.0,
           fontWeight: FontWeight.bold,
+          color: AppColors.purple,
         ),
       ),
     );

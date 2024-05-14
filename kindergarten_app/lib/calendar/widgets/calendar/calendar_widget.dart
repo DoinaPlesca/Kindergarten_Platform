@@ -34,7 +34,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
         side: const BorderSide(
-          color: AppColors.blackCoffee,
+          color: AppColors.black,
           width: 2.0,
         ),
       ),

@@ -46,16 +46,26 @@ public static class WebSocketStateService
         }
     }
     
+  
+
     public static void BroadcastMessageToAllExcept<T>(T dto, int excludeUserId) where T : BaseDto
     {
         foreach (var client in _clients.Values)
         {
-            if (client.User.id != excludeUserId)
+            if (client?.User != null && client.User.id != excludeUserId && client.Connection != null && client.Connection.IsAvailable)
             {
-                client.Connection.SendDto(dto);
+                try
+                {
+                    client.Connection.SendDto(dto); 
+                }
+                catch (Exception ex)
+                {
+                    Serilog.Log.Error(ex, "Failed to send message to client {UserId}", client.User.id);
+                }
             }
         }
     }
+
     
 
 

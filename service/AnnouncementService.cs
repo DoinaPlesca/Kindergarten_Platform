@@ -28,4 +28,14 @@ public class AnnouncementService
     {
          _announcementsRepository.EditAnnouncement(editAnnouncementParams);
     }
+
+    public IEnumerable<AnnouncementWithSenderEmail> GetUnreadAnnouncementsForUser(int id)
+    {
+        return _announcementsRepository.GetUnreadAnnouncementsForUser(id);
+    }
+
+    public void MarkAnnouncementAsRead(int id)
+    {
+         _announcementsRepository.MarkAnnouncementAsRead(id);
+    }
 }

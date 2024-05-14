@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kindergarten_app/calendar/screens/calendar_screen.dart';
 import 'package:kindergarten_app/children/screen/children_page.dart';
 import 'package:kindergarten_app/profile/widgets/profile_app_bar_title.dart';
-import '../../announcement/widgets/annonc_widget.dart';
+import '../../announcement/screen/annouc_screen.dart';
 import '../../app_colors.dart';
 import '../widgets/custom_bottom_navigation_bar.dart';
 
@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   List<Widget> get _widgetOptions => <Widget>[
     ChildrenPage(children: widget.children, username: widget.username),
-    CalendarScreen(),
+    const CalendarScreen(),
     NotificationPage(),
     /*CheckInPage(),*/
     /*GalleryPage(),*/
@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: AppColors.celeste,
+      backgroundColor: AppColors.purple,
       elevation: 0.0,
       title: ProfileAppBarTitle(
         username: widget.username,

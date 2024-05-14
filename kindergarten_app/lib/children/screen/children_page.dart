@@ -21,6 +21,7 @@ class ChildrenPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
                 color: Colors.black,
+                fontStyle: FontStyle.italic
               ),
             ),
           ),

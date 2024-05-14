@@ -1,9 +1,6 @@
-﻿
-        
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using api.EventFilters;
 using api.Events.Announcement.Server;
-using api.Helper;
 using api.WebSocket;
 using Fleck;
 using infrastructure.ParametherModel;
@@ -38,37 +35,47 @@ namespace api.Events.Announcement.Clients
         {
             try
             {
+                // Retrieve client metadata
                 var clientMetadata = WebSocketStateService.GetClient(socket.ConnectionInfo.Id);
+                if (clientMetadata.User == null)
+                {
+                    Log.Error("Client metadata or user is null.");
+                    return Task.CompletedTask;  
+                }
 
-                Log.Information("Setting client authentication status to true.");
+               
+                Log.Information("Posting announcement for user {UserId}.", clientMetadata.User.id);
 
+                
                 var insertAnnouncementParams = new InsertAnnouncementParams(
                     dto.content,
                     DateTimeOffset.UtcNow,
-                    WebSocketStateService.GetClient(socket.ConnectionInfo.Id).User!.id
+                    clientMetadata.User.id
                 );
 
                 var insertedMessage = _announcementService.InsertAnnouncement(insertAnnouncementParams);
 
+               
                 var messageWithUserInfo = new AnnouncementWithSenderEmail
                 {
                     sender = insertedMessage.sender,
                     content = insertedMessage.content,
                     timestamp = insertedMessage.timestamp,
                     id = insertedMessage.id,
-                    email = WebSocketStateService.GetClient(socket.ConnectionInfo.Id).User!.email
+                    email = clientMetadata.User.email
                 };
-                
-                WebSocketStateService.BroadcastMessage(new ServerPostAnnouncement
+
+              
+                WebSocketStateService.BroadcastMessageToAllExcept(new ServerPostAnnouncement
                 {
                     message = messageWithUserInfo
-                });
+                }, clientMetadata.User.id);  
                 
                 WebSocketStateService.BroadcastMessageToAllExcept(new ServerNotifiesClientsWhenNewAnnouncementWasPost
                 {
                     notificationmessage = "New Announcement",
-                    userName = WebSocketStateService.GetClient(socket.ConnectionInfo.Id).User?.email
-                }, WebSocketStateService.GetClient(socket.ConnectionInfo.Id).User!.id);
+                    userName = clientMetadata.User.email
+                }, clientMetadata.User.id);
             }
             catch (Exception ex)
             {
@@ -80,4 +87,3 @@ namespace api.Events.Announcement.Clients
         }
     }
 }
-

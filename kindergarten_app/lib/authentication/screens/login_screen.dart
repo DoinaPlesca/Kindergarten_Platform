@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints.expand(),
-        color: AppColors.celeste,
+        color: AppColors.levender,
         child: buildLoginLayout(context),
       ),
     );

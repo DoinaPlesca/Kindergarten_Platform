@@ -26,7 +26,7 @@ class _LoginFormState extends State<LoginForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildInputFields(context),
-        const SizedBox(height: 20),
+        const SizedBox(height: 30),
         buildLoginButton(context),
       ],
     );
@@ -40,11 +40,11 @@ class _LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           buildAuthenticationText(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 40),
           buildUsernameField(context),
-          const SizedBox(height: 10),
+          const SizedBox(height: 40),
           buildPasswordField(context),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
         ],
       ),
     );
@@ -54,9 +54,11 @@ class _LoginFormState extends State<LoginForm> {
     return const Text(
       'Authentication',
       style: TextStyle(
-          fontSize: 26,
-          fontWeight: FontWeight.bold,
-          color: AppColors.blackCoffee),
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+        color: AppColors.black,
+        letterSpacing: 1.2,
+      ),
     );
   }
 
@@ -72,6 +74,9 @@ class _LoginFormState extends State<LoginForm> {
           filled: true,
           fillColor: AppColors.babyPowder,
           border: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.purple100, width: 2.0),
+          ),
         ),
         validator: (value) =>
         (value ?? "").isEmpty ? "Username cannot be empty" : null,
@@ -92,8 +97,12 @@ class _LoginFormState extends State<LoginForm> {
           filled: true,
           fillColor: AppColors.babyPowder,
           border: OutlineInputBorder(),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.purple100, width: 2.0),
+          ),
         ),
-        validator: (value) => (value ?? "").isEmpty
+        validator: (value) =>
+        (value ?? "").isEmpty
             ? "The password is required for authentication"
             : null,
       ),
@@ -101,24 +110,21 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   Widget buildLoginButton(BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxWidth: 300,
-      ),
+    return SizedBox(
+      width: 300,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          foregroundColor: AppColors.ultraRed,
+          backgroundColor: AppColors.celeste,
+          foregroundColor: AppColors.babyPowder,
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
         ),
-        child: const Padding(
-          padding: EdgeInsets.all(12.0),
-          child: Text(
-            'Login',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppColors.blackCoffee,
-            ),
+        child: const Text(
+          'Login',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppColors.black,
           ),
         ),
       ),

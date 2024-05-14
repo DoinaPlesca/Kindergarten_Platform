@@ -84,11 +84,11 @@ class AddEventScreen extends StatelessWidget {
       decoration: InputDecoration(
         labelText: hint ?? '',
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.eggPlant, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.purple100, width: 1.5),
           borderRadius: BorderRadius.circular(10.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.eggPlant, width: 1.5),
+          borderSide: const BorderSide(color: AppColors.purple100, width: 1.5),
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),

@@ -30,7 +30,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Calendar'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateToAddEventScreen(_selectedDate),
@@ -117,14 +116,14 @@ class EventListWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
             child: ListTile(
               shape: RoundedRectangleBorder(
-                side: const BorderSide(color: AppColors.eggPlant, width: 2.0),
+                side: const BorderSide(color: AppColors.purple100, width: 2.0),
                 borderRadius: BorderRadius.circular(10.0),
               ),
               leading: Container(
                 width: 50,
                 height: 50,
                 decoration: const BoxDecoration(
-                  color: AppColors.eggPlant,
+                  color: AppColors.purple100,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -134,7 +133,7 @@ class EventListWidget extends StatelessWidget {
               ),
               trailing: const Icon(
                 Icons.arrow_forward_ios,
-                color: AppColors.eggPlant,
+                color: AppColors.purple200,
               ),
               title: Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),

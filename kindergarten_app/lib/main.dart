@@ -55,7 +55,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Kindergarten Platform',
       theme: ThemeData(
-        primaryColor: AppColors.celeste,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: LayoutBuilder(

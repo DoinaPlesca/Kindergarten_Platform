@@ -50,11 +50,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> w
 
         return BottomNavigationBar(
           elevation: 1.0,
-          backgroundColor: AppColors.celeste,
           items: _buildBottomNavBarItems(showNotification),
           currentIndex: widget.currentIndex,
-          selectedItemColor: AppColors.ultraRed,
-          unselectedItemColor: AppColors.blackCoffee,
+          selectedItemColor: AppColors.purple,
+          unselectedItemColor: AppColors.black,
           onTap: widget.onTap,
         );
       },
@@ -66,6 +65,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> w
       const BottomNavigationBarItem(
         icon: Icon(Icons.person),
         label: 'Profile',
+
       ),
       const BottomNavigationBarItem(
         icon: Icon(Icons.calendar_today),
@@ -82,7 +82,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> w
                   scale: _animation,
                   child: const Icon(
                     Icons.circle,
-                    color: Colors.red,
+                    color: AppColors.ultraRed,
                     size: 12,
                   ),
                 ),

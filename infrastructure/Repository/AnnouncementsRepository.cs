@@ -59,12 +59,47 @@ public class AnnouncementsRepository
         a.content AS {nameof(AnnouncementWithSenderEmail.content)},
         a.sender AS {nameof(AnnouncementWithSenderEmail.sender)},
         a.id AS {nameof(AnnouncementWithSenderEmail.id)},
-        a.timestamp AS {nameof(AnnouncementWithSenderEmail.timestamp)}
+        a.timestamp AS {nameof(AnnouncementWithSenderEmail.timestamp)},
+        a.isread AS {nameof(AnnouncementWithSenderEmail.isread)}
     FROM kindergarten.announcements a
     JOIN kindergarten.user u ON a.sender = u.id";
 
         return conn.Query<AnnouncementWithSenderEmail>(sql).ToList();
     }
+    
+    
+    
+    
+    public IEnumerable<AnnouncementWithSenderEmail> GetUnreadAnnouncementsForUser(int userId)
+    {
+        using var conn = _dataSource.OpenConnection();
+        string sql = $@"
+                SELECT 
+                    u.email AS {nameof(AnnouncementWithSenderEmail.email)},
+                    a.content AS {nameof(AnnouncementWithSenderEmail.content)},
+                    a.sender AS {nameof(AnnouncementWithSenderEmail.sender)},
+                    a.id AS {nameof(AnnouncementWithSenderEmail.id)},
+                    a.timestamp AS {nameof(AnnouncementWithSenderEmail.timestamp)},
+                    a.isread AS {nameof(AnnouncementWithSenderEmail.isread)}
+                FROM kindergarten.announcements a
+                JOIN kindergarten.user u ON a.sender = u.id
+                WHERE a.isread = false AND a.sender != @userId";
+
+        return conn.Query<AnnouncementWithSenderEmail>(sql, new { userId }).ToList();
+    }
+
+    public void MarkAnnouncementAsRead(int id)
+    {
+        using var conn = _dataSource.OpenConnection();
+        string sql = $@"
+        UPDATE kindergarten.announcements
+        SET isread = true
+        WHERE id = @id";
+
+        conn.Execute(sql, new { id });
+    }
+
+
 
 
 }

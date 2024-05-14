@@ -34,20 +34,22 @@ class ProfileAppBarTitle extends StatelessWidget {
         const Text(
           'Welcome',
           style: TextStyle(
-            color: AppColors.blackCoffee,
+            fontSize: 30,
             fontWeight: FontWeight.bold,
-            fontSize: 25,
+            color: AppColors.white,
+            letterSpacing: 1.2,
           ),
         ),
         TextButton(
           onPressed: () => _logout(context),
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(AppColors.ultraRed),
+            backgroundColor: MaterialStateProperty.all<Color>(AppColors.purplelight),
           ),
           child: const Text(
             'Logout',
             style: TextStyle(
-              color: AppColors.blackCoffee,
+              color: AppColors.white,
+              fontSize: 20
             ),
           ),
         ),

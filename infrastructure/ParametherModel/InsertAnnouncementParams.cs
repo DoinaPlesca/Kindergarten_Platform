@@ -5,6 +5,7 @@ public class InsertAnnouncementParams (string? content, DateTimeOffset timestamp
     public string? content { get; set; } = content;
     public DateTimeOffset timestamp { get; set; } = timestamp;
     public int sender { get; set; } = sender;
+    public bool isread { get; set; }
     
     
     
