@@ -108,7 +108,7 @@ class _LoginFormState extends State<LoginForm> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: AppColors.ultraRed,
+          foregroundColor: AppColors.ultraRed,
         ),
         child: const Padding(
           padding: EdgeInsets.all(12.0),

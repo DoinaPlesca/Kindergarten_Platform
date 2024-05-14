@@ -10,7 +10,8 @@ class AnnouncementWithSenderEmail with _$AnnouncementWithSenderEmail {
     required int sender,
     required String? content,
     required DateTime timestamp,
-    required String? email
+    required String? email,
+    required bool isread,
   }) = _AnnouncementWithSenderEmail;
 
   factory AnnouncementWithSenderEmail.fromJson(Map<String, dynamic> json) =>

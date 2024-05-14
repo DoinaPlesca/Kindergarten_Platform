@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kindergarten_app/announcement/models/announc_model.dart';
 part 'login_state.freezed.dart';//// dart run build_runner build
 
 
@@ -10,6 +11,7 @@ class LoginState with _$LoginState {
     String? name,
     String? jwt,
     @Default([]) List<dynamic> Children,
+    @Default([]) List<AnnouncementWithSenderEmail> UnreadAnnouncements,
   }) = _LoginState;
 
   factory LoginState.empty() => const LoginState(
@@ -17,6 +19,7 @@ class LoginState with _$LoginState {
     headsUp: null,
     name: null,
     Children: [],
+    UnreadAnnouncements: [],
   );
 }
 

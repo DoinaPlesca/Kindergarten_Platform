@@ -18,10 +18,11 @@ void main() {
   // Connect to WebSocket
   Uri wsUri;
   if (kIsWeb) {
-     wsUri = Uri.parse('ws://localhost:8181');
+    wsUri = Uri.parse('ws://localhost:8181');
 
   } else {
-    wsUri = Uri.parse('ws://10.0.2.2:8181');
+    //wsUri = Uri.parse('ws://10.0.2.2:8181');
+    wsUri = Uri.parse('ws://localhost:8181');
 
   }
   final channel = BroadcastWsChannel(wsUri);
@@ -34,9 +35,11 @@ void main() {
           create: (context) => LoginBloc(channel: channel),
         ),
         BlocProvider<AnnouncementBloc>(
-          create: (context) => AnnouncementBloc(channel: channel),
+          create: (context) => AnnouncementBloc(
+            channel: channel,
+            loginBloc: context.read<LoginBloc>(),
+          ),
         ),
-
       ],
       child: const MyApp(),
     ),
@@ -63,5 +66,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-/*flutter run -d chrome*/

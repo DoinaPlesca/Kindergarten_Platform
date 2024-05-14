@@ -23,7 +23,9 @@ class LoginBloc extends Bloc<BaseEvent, LoginState> {
   void _initChannel() {
     _channelSubscription = _channel.stream
         .map((event) => jsonDecode(event))
-        .map((event) => AuthenticationServerEvent.fromJson(event))
+        .map((event) {
+          return AuthenticationServerEvent.fromJson(event);
+        })
         .listen(add, onError: addError);
   }
 
@@ -65,8 +67,9 @@ class LoginBloc extends Bloc<BaseEvent, LoginState> {
       authenticated: true,
       headsUp: 'Authentication successful!',
       name: event.name,
-      jwt: event.jwt,  // Update the jwt in the state
+      jwt: event.jwt,
       Children: event.Children,
+      UnreadAnnouncements: event.UnreadAnnouncements,
     ));
   }
 

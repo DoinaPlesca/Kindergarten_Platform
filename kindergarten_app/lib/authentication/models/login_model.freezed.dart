@@ -24,6 +24,8 @@ mixin _$User {
   String get email => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   List<dynamic> get Children => throw _privateConstructorUsedError;
+  List<AnnouncementWithSenderEmail> get UnreadAnnouncements =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,12 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({int id, String email, String? name, List<dynamic> Children});
+  $Res call(
+      {int id,
+      String email,
+      String? name,
+      List<dynamic> Children,
+      List<AnnouncementWithSenderEmail> UnreadAnnouncements});
 }
 
 /// @nodoc
@@ -55,6 +62,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? email = null,
     Object? name = freezed,
     Object? Children = null,
+    Object? UnreadAnnouncements = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -73,6 +81,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.Children
           : Children // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      UnreadAnnouncements: null == UnreadAnnouncements
+          ? _value.UnreadAnnouncements
+          : UnreadAnnouncements // ignore: cast_nullable_to_non_nullable
+              as List<AnnouncementWithSenderEmail>,
     ) as $Val);
   }
 }
@@ -84,7 +96,12 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$UserImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String email, String? name, List<dynamic> Children});
+  $Res call(
+      {int id,
+      String email,
+      String? name,
+      List<dynamic> Children,
+      List<AnnouncementWithSenderEmail> UnreadAnnouncements});
 }
 
 /// @nodoc
@@ -101,6 +118,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? email = null,
     Object? name = freezed,
     Object? Children = null,
+    Object? UnreadAnnouncements = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -119,6 +137,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value._Children
           : Children // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      UnreadAnnouncements: null == UnreadAnnouncements
+          ? _value._UnreadAnnouncements
+          : UnreadAnnouncements // ignore: cast_nullable_to_non_nullable
+              as List<AnnouncementWithSenderEmail>,
     ));
   }
 }
@@ -130,8 +152,10 @@ class _$UserImpl implements _User {
       {required this.id,
       required this.email,
       required this.name,
-      final List<dynamic> Children = const []})
-      : _Children = Children;
+      final List<dynamic> Children = const [],
+      final List<AnnouncementWithSenderEmail> UnreadAnnouncements = const []})
+      : _Children = Children,
+        _UnreadAnnouncements = UnreadAnnouncements;
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -151,9 +175,19 @@ class _$UserImpl implements _User {
     return EqualUnmodifiableListView(_Children);
   }
 
+  final List<AnnouncementWithSenderEmail> _UnreadAnnouncements;
+  @override
+  @JsonKey()
+  List<AnnouncementWithSenderEmail> get UnreadAnnouncements {
+    if (_UnreadAnnouncements is EqualUnmodifiableListView)
+      return _UnreadAnnouncements;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_UnreadAnnouncements);
+  }
+
   @override
   String toString() {
-    return 'User(id: $id, email: $email, name: $name, Children: $Children)';
+    return 'User(id: $id, email: $email, name: $name, Children: $Children, UnreadAnnouncements: $UnreadAnnouncements)';
   }
 
   @override
@@ -164,13 +198,20 @@ class _$UserImpl implements _User {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other._Children, _Children));
+            const DeepCollectionEquality().equals(other._Children, _Children) &&
+            const DeepCollectionEquality()
+                .equals(other._UnreadAnnouncements, _UnreadAnnouncements));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, name,
-      const DeepCollectionEquality().hash(_Children));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      email,
+      name,
+      const DeepCollectionEquality().hash(_Children),
+      const DeepCollectionEquality().hash(_UnreadAnnouncements));
 
   @JsonKey(ignore: true)
   @override
@@ -188,10 +229,12 @@ class _$UserImpl implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final int id,
-      required final String email,
-      required final String? name,
-      final List<dynamic> Children}) = _$UserImpl;
+          {required final int id,
+          required final String email,
+          required final String? name,
+          final List<dynamic> Children,
+          final List<AnnouncementWithSenderEmail> UnreadAnnouncements}) =
+      _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -203,6 +246,8 @@ abstract class _User implements User {
   String? get name;
   @override
   List<dynamic> get Children;
+  @override
+  List<AnnouncementWithSenderEmail> get UnreadAnnouncements;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

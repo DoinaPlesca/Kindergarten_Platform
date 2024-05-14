@@ -529,6 +529,8 @@ mixin _$ServerAuthenticatesUser {
   bool get isTeacher => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<dynamic> get Children => throw _privateConstructorUsedError;
+  List<AnnouncementWithSenderEmail> get UnreadAnnouncements =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -549,7 +551,8 @@ abstract class $ServerAuthenticatesUserCopyWith<$Res> {
       bool isParent,
       bool isTeacher,
       String name,
-      List<dynamic> Children});
+      List<dynamic> Children,
+      List<AnnouncementWithSenderEmail> UnreadAnnouncements});
 }
 
 /// @nodoc
@@ -573,6 +576,7 @@ class _$ServerAuthenticatesUserCopyWithImpl<$Res,
     Object? isTeacher = null,
     Object? name = null,
     Object? Children = null,
+    Object? UnreadAnnouncements = null,
   }) {
     return _then(_value.copyWith(
       eventType: null == eventType
@@ -603,6 +607,10 @@ class _$ServerAuthenticatesUserCopyWithImpl<$Res,
           ? _value.Children
           : Children // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      UnreadAnnouncements: null == UnreadAnnouncements
+          ? _value.UnreadAnnouncements
+          : UnreadAnnouncements // ignore: cast_nullable_to_non_nullable
+              as List<AnnouncementWithSenderEmail>,
     ) as $Val);
   }
 }
@@ -623,7 +631,8 @@ abstract class _$$ServerAuthenticatesUserImplCopyWith<$Res>
       bool isParent,
       bool isTeacher,
       String name,
-      List<dynamic> Children});
+      List<dynamic> Children,
+      List<AnnouncementWithSenderEmail> UnreadAnnouncements});
 }
 
 /// @nodoc
@@ -646,6 +655,7 @@ class __$$ServerAuthenticatesUserImplCopyWithImpl<$Res>
     Object? isTeacher = null,
     Object? name = null,
     Object? Children = null,
+    Object? UnreadAnnouncements = null,
   }) {
     return _then(_$ServerAuthenticatesUserImpl(
       eventType: null == eventType
@@ -676,6 +686,10 @@ class __$$ServerAuthenticatesUserImplCopyWithImpl<$Res>
           ? _value._Children
           : Children // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      UnreadAnnouncements: null == UnreadAnnouncements
+          ? _value._UnreadAnnouncements
+          : UnreadAnnouncements // ignore: cast_nullable_to_non_nullable
+              as List<AnnouncementWithSenderEmail>,
     ));
   }
 }
@@ -690,8 +704,10 @@ class _$ServerAuthenticatesUserImpl implements _ServerAuthenticatesUser {
       required this.isParent,
       required this.isTeacher,
       required this.name,
-      final List<dynamic> Children = const []})
-      : _Children = Children;
+      final List<dynamic> Children = const [],
+      final List<AnnouncementWithSenderEmail> UnreadAnnouncements = const []})
+      : _Children = Children,
+        _UnreadAnnouncements = UnreadAnnouncements;
 
   factory _$ServerAuthenticatesUserImpl.fromJson(Map<String, dynamic> json) =>
       _$$ServerAuthenticatesUserImplFromJson(json);
@@ -717,9 +733,19 @@ class _$ServerAuthenticatesUserImpl implements _ServerAuthenticatesUser {
     return EqualUnmodifiableListView(_Children);
   }
 
+  final List<AnnouncementWithSenderEmail> _UnreadAnnouncements;
+  @override
+  @JsonKey()
+  List<AnnouncementWithSenderEmail> get UnreadAnnouncements {
+    if (_UnreadAnnouncements is EqualUnmodifiableListView)
+      return _UnreadAnnouncements;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_UnreadAnnouncements);
+  }
+
   @override
   String toString() {
-    return 'ServerAuthenticatesUser(eventType: $eventType, jwt: $jwt, email: $email, isParent: $isParent, isTeacher: $isTeacher, name: $name, Children: $Children)';
+    return 'ServerAuthenticatesUser(eventType: $eventType, jwt: $jwt, email: $email, isParent: $isParent, isTeacher: $isTeacher, name: $name, Children: $Children, UnreadAnnouncements: $UnreadAnnouncements)';
   }
 
   @override
@@ -736,13 +762,23 @@ class _$ServerAuthenticatesUserImpl implements _ServerAuthenticatesUser {
             (identical(other.isTeacher, isTeacher) ||
                 other.isTeacher == isTeacher) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality().equals(other._Children, _Children));
+            const DeepCollectionEquality().equals(other._Children, _Children) &&
+            const DeepCollectionEquality()
+                .equals(other._UnreadAnnouncements, _UnreadAnnouncements));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, eventType, jwt, email, isParent,
-      isTeacher, name, const DeepCollectionEquality().hash(_Children));
+  int get hashCode => Object.hash(
+      runtimeType,
+      eventType,
+      jwt,
+      email,
+      isParent,
+      isTeacher,
+      name,
+      const DeepCollectionEquality().hash(_Children),
+      const DeepCollectionEquality().hash(_UnreadAnnouncements));
 
   @JsonKey(ignore: true)
   @override
@@ -761,13 +797,15 @@ class _$ServerAuthenticatesUserImpl implements _ServerAuthenticatesUser {
 
 abstract class _ServerAuthenticatesUser implements ServerAuthenticatesUser {
   const factory _ServerAuthenticatesUser(
-      {required final String eventType,
-      required final String jwt,
-      required final String email,
-      required final bool isParent,
-      required final bool isTeacher,
-      required final String name,
-      final List<dynamic> Children}) = _$ServerAuthenticatesUserImpl;
+          {required final String eventType,
+          required final String jwt,
+          required final String email,
+          required final bool isParent,
+          required final bool isTeacher,
+          required final String name,
+          final List<dynamic> Children,
+          final List<AnnouncementWithSenderEmail> UnreadAnnouncements}) =
+      _$ServerAuthenticatesUserImpl;
 
   factory _ServerAuthenticatesUser.fromJson(Map<String, dynamic> json) =
       _$ServerAuthenticatesUserImpl.fromJson;
@@ -786,6 +824,8 @@ abstract class _ServerAuthenticatesUser implements ServerAuthenticatesUser {
   String get name;
   @override
   List<dynamic> get Children;
+  @override
+  List<AnnouncementWithSenderEmail> get UnreadAnnouncements;
   @override
   @JsonKey(ignore: true)
   _$$ServerAuthenticatesUserImplCopyWith<_$ServerAuthenticatesUserImpl>

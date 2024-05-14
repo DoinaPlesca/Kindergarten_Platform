@@ -1,10 +1,10 @@
-﻿using infrastructure.QueryModels;
+﻿
 using lib;
 
 namespace api.Events.Announcement.Server;
 
-public class ServerGetUnreadAnnouncements: BaseDto
+public class ServerNotifiesClientsWhenNewAnnouncementWasPost: BaseDto
 {
-    public string? message { get; set; }
-    public string userEmail { get; set; }
+    public string? notificationmessage { get; set; }
+    public string? userName { get; set; }
 }

@@ -33,6 +33,56 @@ Map<String, dynamic> _$$ClientWantsToPostAnnouncementImplToJson(
       'content': instance.content,
     };
 
+_$ClientWantsToMarkAnnouncementAsReadImpl
+    _$$ClientWantsToMarkAnnouncementAsReadImplFromJson(
+            Map<String, dynamic> json) =>
+        _$ClientWantsToMarkAnnouncementAsReadImpl(
+          eventType: json['eventType'] as String,
+          announcementId: (json['announcementId'] as num).toInt(),
+        );
+
+Map<String, dynamic> _$$ClientWantsToMarkAnnouncementAsReadImplToJson(
+        _$ClientWantsToMarkAnnouncementAsReadImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'announcementId': instance.announcementId,
+    };
+
+_$ServerMarkAnnouncementAsReadImpl _$$ServerMarkAnnouncementAsReadImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ServerMarkAnnouncementAsReadImpl(
+      eventType: json['eventType'] as String,
+      id: (json['id'] as num).toInt(),
+      userId: (json['userId'] as num).toInt(),
+      email: json['email'] as String,
+    );
+
+Map<String, dynamic> _$$ServerMarkAnnouncementAsReadImplToJson(
+        _$ServerMarkAnnouncementAsReadImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'id': instance.id,
+      'userId': instance.userId,
+      'email': instance.email,
+    };
+
+_$ServerUnreadAnnouncementsImpl _$$ServerUnreadAnnouncementsImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ServerUnreadAnnouncementsImpl(
+      eventType: json['eventType'] as String,
+      UnreadAnnouncements: (json['UnreadAnnouncements'] as List<dynamic>)
+          .map((e) =>
+              AnnouncementWithSenderEmail.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$ServerUnreadAnnouncementsImplToJson(
+        _$ServerUnreadAnnouncementsImpl instance) =>
+    <String, dynamic>{
+      'eventType': instance.eventType,
+      'UnreadAnnouncements': instance.UnreadAnnouncements,
+    };
+
 _$ServerGetAllAnnouncementsImpl _$$ServerGetAllAnnouncementsImplFromJson(
         Map<String, dynamic> json) =>
     _$ServerGetAllAnnouncementsImpl(
@@ -65,6 +115,24 @@ Map<String, dynamic> _$$ServerPostAnnouncementImplToJson(
       'eventType': instance.eventType,
       'message': instance.message,
     };
+
+_$ServerNotifiesClientsWhenNewAnnouncementWasPostImpl
+    _$$ServerNotifiesClientsWhenNewAnnouncementWasPostImplFromJson(
+            Map<String, dynamic> json) =>
+        _$ServerNotifiesClientsWhenNewAnnouncementWasPostImpl(
+          eventType: json['eventType'] as String,
+          notificationmessage: json['notificationmessage'] as String,
+          userName: json['userName'] as String,
+        );
+
+Map<String, dynamic>
+    _$$ServerNotifiesClientsWhenNewAnnouncementWasPostImplToJson(
+            _$ServerNotifiesClientsWhenNewAnnouncementWasPostImpl instance) =>
+        <String, dynamic>{
+          'eventType': instance.eventType,
+          'notificationmessage': instance.notificationmessage,
+          'userName': instance.userName,
+        };
 
 _$ServerSendsErrorMessageToClientImpl
     _$$ServerSendsErrorMessageToClientImplFromJson(Map<String, dynamic> json) =>

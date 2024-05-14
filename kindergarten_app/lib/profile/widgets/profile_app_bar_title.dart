@@ -10,7 +10,7 @@ class ProfileAppBarTitle extends StatelessWidget {
   final String username;
   final String jwt;
 
-  const ProfileAppBarTitle({Key? key, required this.username, required this.jwt}) : super(key: key);
+  const ProfileAppBarTitle({super.key, required this.username, required this.jwt});
 
   void _logout(BuildContext context) {
     // Dispatch the logout event
@@ -31,9 +31,9 @@ class ProfileAppBarTitle extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          'Welcome $username',
-          style: const TextStyle(
+        const Text(
+          'Welcome',
+          style: TextStyle(
             color: AppColors.blackCoffee,
             fontWeight: FontWeight.bold,
             fontSize: 25,

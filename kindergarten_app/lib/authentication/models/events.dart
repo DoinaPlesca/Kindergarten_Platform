@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kindergarten_app/announcement/models/announc_model.dart';
 import '../../events_base.dart';
+
 
 part 'events.freezed.dart';
 part 'events.g.dart';
@@ -14,7 +16,8 @@ class AuthenticationServerEvent extends BaseEvent {
   }
 }
 
-//CLIENT---------
+/// CLIENT---------
+
 @freezed
 class ClientWantsToLogout extends ClientEvent with _$ClientWantsToLogout {
   static const String eventName = "ClientWantsToLogout";
@@ -55,7 +58,8 @@ class ClientWantsToSignIn extends ClientEvent
       _$ClientWantsToSignInFromJson(json);
 }
 
-//SERVER------
+
+/// SERVER------
 
 @freezed
 class ServerAuthenticatesUser extends ServerEvent
@@ -69,6 +73,7 @@ class ServerAuthenticatesUser extends ServerEvent
     required bool isTeacher,
     required String name,
     @Default([]) List<dynamic> Children,
+    @Default([]) List<AnnouncementWithSenderEmail> UnreadAnnouncements,
   }) = _ServerAuthenticatesUser;
 
   factory ServerAuthenticatesUser.fromJson(Map<String, Object?> json) =>

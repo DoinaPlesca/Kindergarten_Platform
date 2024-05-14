@@ -1,4 +1,4 @@
-﻿using api.Events.Announcement.Server;
+﻿
 using api.Helper;
 using Fleck;
 using infrastructure.QueryModels;
@@ -12,7 +12,7 @@ public class WsWithMetadata(IWebSocketConnection connection)
     public IWebSocketConnection Connection { get; set; } = connection;
     public bool IsAuthenticated { get; set; } = false;
     public User? User { get; set; }
-    public List<BaseDto> MessageQueue { get; set; } = new List<BaseDto>();
+  
    
 }
 
@@ -42,6 +42,17 @@ public static class WebSocketStateService
             if (_clients.TryGetValue(clientId, out var connection))
             {
                 connection.Connection.SendDto(dto);
+            }
+        }
+    }
+    
+    public static void BroadcastMessageToAllExcept<T>(T dto, int excludeUserId) where T : BaseDto
+    {
+        foreach (var client in _clients.Values)
+        {
+            if (client.User.id != excludeUserId)
+            {
+                client.Connection.SendDto(dto);
             }
         }
     }
