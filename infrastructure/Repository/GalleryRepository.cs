@@ -28,7 +28,7 @@ namespace infrastructure.Repository
                           photoid AS {nameof(Gallery.photoid)};", gallery);
         }
 
-        public IEnumerable<Gallery> GetLastPhotos()
+        public List<Gallery> GetLastPhotos()
         {
             using var conn = _dataSource.OpenConnection();
             string sql = @"

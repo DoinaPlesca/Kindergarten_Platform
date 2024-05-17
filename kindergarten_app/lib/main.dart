@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kindergarten_app/broadcast_ws_channel.dart';
 import 'package:kindergarten_app/calendar/bloc/calendar_bloc.dart';
+import 'package:kindergarten_app/gallery_photo/bloc/photo_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:logging_appenders/logging_appenders.dart';
 import 'announcement/bloc/announc_bloc.dart';
@@ -41,6 +42,11 @@ void main() {
         BlocProvider<CalendarBloc>(
           create: (context) => CalendarBloc(channel: channel),
         ),
+        BlocProvider<GalleryBloc>(
+          create: (context) => GalleryBloc(channel: channel),
+        ),
+
+
       ],
       child: const MyApp(),
     ),

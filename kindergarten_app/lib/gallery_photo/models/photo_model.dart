@@ -1,8 +1,17 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Photo {
-  final String url;
-  final String description;
-  final bool isLocal;
+part 'photo_model.freezed.dart';
+part 'photo_model.g.dart';
 
-  Photo({required this.url, required this.description, this.isLocal = false});
+@freezed
+class Gallery with _$Gallery {
+  const factory Gallery({
+    required int photoid,
+    required String? photourl,
+    required String? description,
+    @Default(false) bool isLocal,
+  }) = _Gallery;
+
+  factory Gallery.fromJson(Map<String, dynamic> json) =>
+      _$GalleryFromJson(json);
 }

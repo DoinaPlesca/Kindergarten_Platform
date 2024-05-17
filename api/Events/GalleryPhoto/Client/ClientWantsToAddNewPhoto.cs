@@ -14,7 +14,6 @@ namespace api.Events.GalleryPhoto.Client;
 public class ClientWantsToAddNewPhoto : BaseDto
 {
     [Required(ErrorMessage = "Photo URL is required.")]
-    [Url(ErrorMessage = "Invalid URL format.")]
     public string photourl { get; set; }
 
     [Required(ErrorMessage = "Description is required.")]

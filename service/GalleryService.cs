@@ -18,7 +18,7 @@ public class GalleryService
         return _galleryRepository.AddNewPhoto(gallery);
     }
 
-    public IEnumerable<Gallery> GetLastPhotos()
+    public List<Gallery> GetLastPhotos()
     {
         return _galleryRepository.GetLastPhotos();
     }
