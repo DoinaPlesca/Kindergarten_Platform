@@ -13,21 +13,11 @@ public class CalendarEventsService
         _calendarEventsRepository= calendarEventsRepository;
     }
 
-
-    public List<InsertEventResult> GetAllEvents()
-    {
-        return _calendarEventsRepository.GetAllEvents();
-    }
-
     public InsertEventResult InsertNewEvent(InsertEventResult newEvent)
     {
         return _calendarEventsRepository.InsertNewEvent(newEvent);
     }
-
-    public List<InsertEventResult> GetEventsByDate(DateTime date)
-    {
-        return _calendarEventsRepository.GetEventsByDate(date);
-    }
+    
 
     public List<InsertEventResult> GetEventsByDateRange(DateTime startDate, DateTime endDate)
     {

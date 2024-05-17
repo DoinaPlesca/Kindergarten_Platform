@@ -4,6 +4,7 @@ import 'package:kindergarten_app/children/screen/children_page.dart';
 import 'package:kindergarten_app/profile/widgets/profile_app_bar_title.dart';
 import '../../announcement/screen/annouc_screen.dart';
 import '../../app_colors.dart';
+import '../../gallery_photo/screens/gallery_screen.dart';
 import '../widgets/custom_bottom_navigation_bar.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -29,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     ChildrenPage(children: widget.children, username: widget.username),
     const CalendarScreen(),
     const AnnouncementsPage(),
-    /*GalleryPage(),*/
+    const GalleryScreen(),
   ];
 
   @override

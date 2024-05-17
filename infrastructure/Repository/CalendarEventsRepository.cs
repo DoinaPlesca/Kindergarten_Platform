@@ -16,16 +16,7 @@ namespace infrastructure.Repository
             _dataSource = dataSource;
             _logger = logger;
         }
-
-        public List<InsertEventResult> GetAllEvents()
-        {
-            using var conn = _dataSource.OpenConnection();
-            string sql = @"
-                SELECT eventid, eventdate, eventdescription, eventtitle
-                FROM kindergarten.calendarevents";
-
-            return conn.Query<InsertEventResult>(sql).ToList();
-        }
+        
 
         public InsertEventResult InsertNewEvent(InsertEventResult newEvent)
         {
@@ -36,25 +27,7 @@ namespace infrastructure.Repository
                 RETURNING eventid, eventdate, eventdescription, eventtitle", newEvent);
         }
 
-        public List<InsertEventResult> GetEventsByDate(DateTime date)
-        {
-            using var conn = _dataSource.OpenConnection();
-            string sql = @"
-                SELECT eventid, eventdate, eventdescription, eventtitle
-                FROM kindergarten.calendarevents
-                WHERE DATE(eventdate) = @Date;";
-
-            try
-            {
-                var events = conn.Query<InsertEventResult>(sql, new { Date = date.Date }).ToList();
-                return events;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving events for date {Date}", date);
-                throw;
-            }
-        }
+     
 
         public List<InsertEventResult> GetEventsByDateRange(DateTime startDate, DateTime endDate)
         {

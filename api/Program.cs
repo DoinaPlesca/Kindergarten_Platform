@@ -2,7 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Security.Authentication;
 using System.Text.Json;
-using api.Events.LogIn.Clients;
 using api.Helper;
 using api.ServerEvents;
 using api.WebSocket;
@@ -46,6 +45,8 @@ public static class Startup
         builder.Services.AddSingleton<ChildRepository>();
         builder.Services.AddSingleton<CalendarEventsService>();
         builder.Services.AddSingleton<CalendarEventsRepository>();
+        builder.Services.AddSingleton<GalleryRepository>();
+        builder.Services.AddSingleton<GalleryService>();
 
         // Register event handlers
         var services = builder.FindAndInjectClientEventHandlers(Assembly.GetExecutingAssembly());

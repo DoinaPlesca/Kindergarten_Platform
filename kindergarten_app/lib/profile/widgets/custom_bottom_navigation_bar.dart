@@ -92,10 +92,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> w
         label: 'Notification',
       ),
       const BottomNavigationBarItem(
-        icon: Icon(Icons.check),
-        label: 'Check-in',
-      ),
-      const BottomNavigationBarItem(
         icon: Icon(Icons.photo),
         label: 'Gallery',
       ),

@@ -54,20 +54,21 @@ public class AnnouncementsRepository
     {
         using var conn = _dataSource.OpenConnection();
         string sql = $@"
-    SELECT 
-        u.email AS {nameof(AnnouncementWithSenderEmail.email)},
-        a.content AS {nameof(AnnouncementWithSenderEmail.content)},
-        a.sender AS {nameof(AnnouncementWithSenderEmail.sender)},
-        a.id AS {nameof(AnnouncementWithSenderEmail.id)},
-        a.timestamp AS {nameof(AnnouncementWithSenderEmail.timestamp)},
-        a.isread AS {nameof(AnnouncementWithSenderEmail.isread)}
-    FROM kindergarten.announcements a
-    JOIN kindergarten.user u ON a.sender = u.id";
+        SELECT 
+            u.email AS {nameof(AnnouncementWithSenderEmail.email)},
+            a.content AS {nameof(AnnouncementWithSenderEmail.content)},
+            a.sender AS {nameof(AnnouncementWithSenderEmail.sender)},
+            a.id AS {nameof(AnnouncementWithSenderEmail.id)},
+            a.timestamp AS {nameof(AnnouncementWithSenderEmail.timestamp)},
+            a.isread AS {nameof(AnnouncementWithSenderEmail.isread)}
+        FROM kindergarten.announcements a
+        JOIN kindergarten.user u ON a.sender = u.id
+        ORDER BY a.timestamp DESC
+        LIMIT 30";
 
         return conn.Query<AnnouncementWithSenderEmail>(sql).ToList();
     }
-    
-    
+
     
     
     public IEnumerable<AnnouncementWithSenderEmail> GetUnreadAnnouncementsForUser(int userId)
@@ -98,8 +99,5 @@ public class AnnouncementsRepository
 
         conn.Execute(sql, new { id });
     }
-
-
-
 
 }
