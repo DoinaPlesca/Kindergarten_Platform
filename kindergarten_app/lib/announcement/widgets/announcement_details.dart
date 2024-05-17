@@ -15,7 +15,6 @@ class AnnouncementDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Format the DateTime object to a string in the desired format
     String formattedTimestamp = DateFormat('yyyy-MM-dd HH:mm').format(timestamp!);
 
     return Column(
@@ -31,7 +30,7 @@ class AnnouncementDetails extends StatelessWidget {
         ),
         const SizedBox(height: 4.0),
         Text(
-          'Time: $formattedTimestamp',  // Use the formatted timestamp here
+          'Time: $formattedTimestamp',
           style: TextStyle(
             fontSize: 12.0,
             fontStyle: FontStyle.italic,

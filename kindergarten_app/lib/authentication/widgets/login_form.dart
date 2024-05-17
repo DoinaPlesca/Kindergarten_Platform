@@ -77,7 +77,7 @@ class _LoginFormState extends State<LoginForm> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primary, width: 2.0),
+            borderSide: const BorderSide(color: AppColors.primary, width: 2.0),
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),

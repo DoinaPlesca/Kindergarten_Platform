@@ -28,8 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Widget> get _widgetOptions => <Widget>[
     ChildrenPage(children: widget.children, username: widget.username),
     const CalendarScreen(),
-    NotificationPage(),
-    /*CheckInPage(),*/
+    const AnnouncementsPage(),
     /*GalleryPage(),*/
   ];
 

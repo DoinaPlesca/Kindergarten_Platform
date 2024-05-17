@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kindergarten_app/announcement/models/announc_model.dart';
 import 'package:kindergarten_app/announcement/widgets/announcement_details.dart';
 import '../../app_colors.dart';
-
 import 'announcemnt_icon.dart';
 
 /// A widget to display an announcement card
-
 class AnnouncementCard extends StatelessWidget {
   final AnnouncementWithSenderEmail announcement;
   final bool isSelected;
@@ -26,42 +23,58 @@ class AnnouncementCard extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.0),
-          ),
-          elevation: 2,
-          color: _getCardColor(),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    AnnouncementIcon(isRead: announcement.isread),
-                    const SizedBox(width: 8.0),
-                    Expanded(
-                      child: AnnouncementDetails(
-                        email: announcement.email,
-                        timestamp: announcement.timestamp,
-                        isRead: announcement.isread,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8.0),
-                Text(
-                  announcement.content ?? 'No content',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: announcement.isread ? Colors.grey : AppColors.text,
-                  ),
-                ),
-              ],
-            ),
+        child: buildCard(),
+      ),
+    );
+  }
+
+  Card buildCard() {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      elevation: 2,
+      color: _getCardColor(),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: buildCardContent(),
+      ),
+    );
+  }
+
+  Column buildCardContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildCardHeader(),
+        const SizedBox(height: 8.0),
+        buildCardContentText(),
+      ],
+    );
+  }
+
+  Row buildCardHeader() {
+    return Row(
+      children: [
+        AnnouncementIcon(isRead: announcement.isread),
+        const SizedBox(width: 8.0),
+        Expanded(
+          child: AnnouncementDetails(
+            email: announcement.email,
+            timestamp: announcement.timestamp,
+            isRead: announcement.isread,
           ),
         ),
+      ],
+    );
+  }
+
+  Text buildCardContentText() {
+    return Text(
+      announcement.content ?? 'No content',
+      style: TextStyle(
+        fontSize: 16.0,
+        color: announcement.isread ? Colors.grey : AppColors.text,
       ),
     );
   }
