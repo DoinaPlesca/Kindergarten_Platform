@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:kindergarten_app/announcement/widgets/announcement_input_field.dart';
 
 import '../bloc/announc_bloc.dart';
@@ -102,6 +103,8 @@ void markAnnouncementAsRead(BuildContext context, int announcementId) {
 }
 
 void showAnnouncementDialog(BuildContext context, dynamic announcement) {
+  final DateFormat formatter = DateFormat.yMMMMd('en_US'); // Create a DateFormat
+
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -110,9 +113,50 @@ void showAnnouncementDialog(BuildContext context, dynamic announcement) {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text('From: ${announcement.email}'),
-              Text('Time: ${announcement.timestamp}'),
-              Text('Message: ${announcement.content}'),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'From: ',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    TextSpan(
+                      text: announcement.email,
+                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Time: ',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    TextSpan(
+                      text: formatter.format(announcement.timestamp), // Use the DateTime object directly
+                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    const TextSpan(
+                      text: 'Message: ',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                    ),
+                    TextSpan(
+                      text: announcement.content,
+                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

@@ -1,13 +1,11 @@
 ﻿using api.Helper;
 using Fleck;
-using infrastructure.ParametherModel;
 using Serilog;
-using service;
-using System;
-using System.Threading.Tasks;
 using api.EventFilters;
 using api.Events.CalendarEvents.Server;
+using infrastructure.QueryModels;
 using lib;
+using service;
 
 namespace api.Events.CalendarEvents.Client
 {
@@ -33,20 +31,20 @@ namespace api.Events.CalendarEvents.Client
         {
             try
             {
-                var insertEventParams = new InsertEventParams
+                var newEvent = new InsertEventResult
                 {
                     eventdate = dto.eventdate,
                     eventdescription = dto.eventdescription,
-                    eventtitle= dto.eventtitle
+                    eventtitle = dto.eventtitle
                 };
                 
-                _calendarEventsService.InsertNewEvent(insertEventParams);
+                var createdEvent = _calendarEventsService.InsertNewEvent(newEvent);
                 
-               
                 var responseDto = new ServerCreateCalendarEvent
                 {
-                    newEvent = insertEventParams
+                    newEvent = createdEvent
                 };
+                
                 socket.SendDto(responseDto);
             }
             catch (Exception ex)

@@ -52,7 +52,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> w
           elevation: 1.0,
           items: _buildBottomNavBarItems(showNotification),
           currentIndex: widget.currentIndex,
-          selectedItemColor: AppColors.purple,
+          selectedItemColor: AppColors.accentGreen,
           unselectedItemColor: AppColors.black,
           onTap: widget.onTap,
         );
@@ -82,7 +82,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> w
                   scale: _animation,
                   child: const Icon(
                     Icons.circle,
-                    color: AppColors.ultraRed,
+                    color: AppColors.accentRed,
                     size: 12,
                   ),
                 ),

@@ -38,7 +38,7 @@ public class ClientWantsToGetAllEvents : BaseEventHandler<BaseDto>
 
             var responseDto = new ServerGetAllCalendarEvents
             {
-                Events = eventsDto
+                events = eventsDto
             };
 
             Log.Information("Sending all calendar events to client.");

@@ -49,7 +49,7 @@ class ChildCard extends StatelessWidget {
         style: const TextStyle(
           fontSize: 20.0,
           fontWeight: FontWeight.bold,
-          color: AppColors.purple,
+          color: AppColors.accentYellow,
         ),
       ),
     );

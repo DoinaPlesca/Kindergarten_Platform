@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kindergarten_app/app_colors.dart';
 import '../widgets/children_widget.dart';
 
 class ChildrenPage extends StatelessWidget {
@@ -20,8 +21,8 @@ class ChildrenPage extends StatelessWidget {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
-                color: Colors.black,
-                fontStyle: FontStyle.italic
+                color: AppColors.black,
+
               ),
             ),
           ),

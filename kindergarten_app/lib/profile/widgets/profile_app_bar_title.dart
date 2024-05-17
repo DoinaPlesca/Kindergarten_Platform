@@ -5,6 +5,7 @@ import 'package:kindergarten_app/authentication/models/events.dart';
 import 'package:kindergarten_app/authentication/screens/login_screen.dart';
 import '../../app_colors.dart';
 
+/// A widget to display the profile app bar title with a logout button
 
 class ProfileAppBarTitle extends StatelessWidget {
   final String username;
@@ -36,20 +37,20 @@ class ProfileAppBarTitle extends StatelessWidget {
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
-            color: AppColors.white,
+            color: AppColors.background,
             letterSpacing: 1.2,
           ),
         ),
         TextButton(
           onPressed: () => _logout(context),
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(AppColors.purplelight),
+            backgroundColor: MaterialStateProperty.all<Color>(AppColors.secondary),
           ),
           child: const Text(
             'Logout',
             style: TextStyle(
-              color: AppColors.white,
-              fontSize: 20
+                color: AppColors.surface,
+                fontSize: 20
             ),
           ),
         ),

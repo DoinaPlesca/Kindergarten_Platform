@@ -1,9 +1,7 @@
 ﻿using Dapper;
-using infrastructure.ParametherModel;
-using infrastructure.QueryModels;
 using Microsoft.Extensions.Logging;
 using Npgsql;
-
+using infrastructure.QueryModels;
 
 namespace infrastructure.Repository
 {
@@ -19,43 +17,62 @@ namespace infrastructure.Repository
             _logger = logger;
         }
 
-        public IEnumerable<InsertEventResult> GetAllEvents()
+        public List<InsertEventResult> GetAllEvents()
         {
             using var conn = _dataSource.OpenConnection();
             string sql = @"
-                SELECT eventid, eventdate, eventdescription,eventtitle
+                SELECT eventid, eventdate, eventdescription, eventtitle
                 FROM kindergarten.calendarevents";
 
             return conn.Query<InsertEventResult>(sql).ToList();
         }
 
-
-        public InsertEventResult InsertNewEvent(InsertEventParams insertEventParams)
+        public InsertEventResult InsertNewEvent(InsertEventResult newEvent)
         {
             using var conn = _dataSource.OpenConnection();
             return conn.QueryFirstOrDefault<InsertEventResult>(@"
-        INSERT INTO kindergarten.calendarevents (eventdate, eventdescription,eventtitle)
-        VALUES (@EventDate, @EventDescription,@EventTitle)
-        RETURNING eventid, eventdate, eventdescription,eventtitle", insertEventParams);
+                INSERT INTO kindergarten.calendarevents (eventdate, eventdescription, eventtitle)
+                VALUES (@eventdate, @eventdescription, @eventtitle)
+                RETURNING eventid, eventdate, eventdescription, eventtitle", newEvent);
         }
 
-
-        public IEnumerable<InsertEventResult> GetEventsByDate(DateTime date)
+        public List<InsertEventResult> GetEventsByDate(DateTime date)
         {
             using var conn = _dataSource.OpenConnection();
             string sql = @"
-        SELECT eventid, eventdate, eventdescription,eventtitle
-        FROM kindergarten.calendarevents
-        WHERE DATE(eventdate) = @Date;";
+                SELECT eventid, eventdate, eventdescription, eventtitle
+                FROM kindergarten.calendarevents
+                WHERE DATE(eventdate) = @Date;";
 
             try
             {
-                var events = conn.Query<InsertEventResult>(sql, new { Date = date.Date });
+                var events = conn.Query<InsertEventResult>(sql, new { Date = date.Date }).ToList();
                 return events;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving events for date {Date}", date);
+                throw;
+            }
+        }
+
+        public List<InsertEventResult> GetEventsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            using var conn = _dataSource.OpenConnection();
+            string sql = @"
+            SELECT eventid, eventdate, eventdescription, eventtitle
+            FROM kindergarten.calendarevents
+            WHERE eventdate BETWEEN @StartDate AND @EndDate;";
+
+            try
+            {
+                var events = conn.Query<InsertEventResult>(sql, new { StartDate = startDate, EndDate = endDate })
+                    .ToList();
+                return events;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving events between {StartDate} and {EndDate}", startDate, endDate);
                 throw;
             }
         }

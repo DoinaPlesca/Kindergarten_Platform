@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kindergarten_app/broadcast_ws_channel.dart';
+import 'package:kindergarten_app/calendar/bloc/calendar_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:logging_appenders/logging_appenders.dart';
 import 'announcement/bloc/announc_bloc.dart';
@@ -19,11 +20,8 @@ void main() {
   Uri wsUri;
   if (kIsWeb) {
     wsUri = Uri.parse('ws://localhost:8181');
-
   } else {
-    //wsUri = Uri.parse('ws://10.0.2.2:8181');
     wsUri = Uri.parse('ws://localhost:8181');
-
   }
   final channel = BroadcastWsChannel(wsUri);
 
@@ -40,6 +38,9 @@ void main() {
             loginBloc: context.read<LoginBloc>(),
           ),
         ),
+        BlocProvider<CalendarBloc>(
+          create: (context) => CalendarBloc(channel: channel),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -51,11 +52,47 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = ThemeData(
+      primaryColor: AppColors.primary,
+      backgroundColor: AppColors.background,
+      scaffoldBackgroundColor: AppColors.background,
+      cardColor: AppColors.surface,
+      dividerColor: AppColors.border,
+      textTheme: TextTheme(
+        bodyText1: TextStyle(color: AppColors.text),
+        bodyText2: TextStyle(color: AppColors.text),
+        headline1: TextStyle(color: AppColors.text),
+        headline2: TextStyle(color: AppColors.text),
+        headline6: TextStyle(color: AppColors.primary),
+      ),
+      appBarTheme: AppBarTheme(
+        color: AppColors.primary,
+        iconTheme: IconThemeData(color: AppColors.background),
+        titleTextStyle: TextStyle(
+          color: AppColors.background,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      buttonTheme: ButtonThemeData(
+        buttonColor: AppColors.primary,
+        textTheme: ButtonTextTheme.primary,
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: AppColors.secondary,
+        foregroundColor: AppColors.background,
+      ),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kindergarten Platform',
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      theme: theme.copyWith(
+        colorScheme: theme.colorScheme.copyWith(
+          primary: AppColors.primary,
+          secondary: AppColors.secondary,
+        ),
       ),
       home: LayoutBuilder(
         builder: (context, constraints) {

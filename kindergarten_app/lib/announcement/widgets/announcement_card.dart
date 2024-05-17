@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kindergarten_app/announcement/models/announc_model.dart';
 import 'package:kindergarten_app/announcement/widgets/announcement_details.dart';
-
 import '../../app_colors.dart';
+
 import 'announcemnt_icon.dart';
+
+/// A widget to display an announcement card
 
 class AnnouncementCard extends StatelessWidget {
   final AnnouncementWithSenderEmail announcement;
@@ -29,9 +31,9 @@ class AnnouncementCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.0),
           ),
           elevation: 2,
-          color: announcement.isread ? Colors.grey[100] : (isSelected ? AppColors.babyPowder : AppColors.purple100),
+          color: _getCardColor(),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -53,7 +55,7 @@ class AnnouncementCard extends StatelessWidget {
                   announcement.content ?? 'No content',
                   style: TextStyle(
                     fontSize: 16.0,
-                    color: announcement.isread ? Colors.grey : Colors.black,
+                    color: announcement.isread ? Colors.grey : AppColors.text,
                   ),
                 ),
               ],
@@ -62,5 +64,15 @@ class AnnouncementCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _getCardColor() {
+    if (announcement.isread) {
+      return Colors.grey[100]!;
+    } else if (isSelected) {
+      return AppColors.accentYellow;
+    } else {
+      return AppColors.secondary.withOpacity(0.1);
+    }
   }
 }

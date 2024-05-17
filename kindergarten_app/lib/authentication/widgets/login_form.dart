@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../app_colors.dart';
 
+/// A form widget for user login
+
 class LoginForm extends StatefulWidget {
   const LoginForm({required this.onLogin, super.key});
 
@@ -56,7 +58,7 @@ class _LoginFormState extends State<LoginForm> {
       style: TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.bold,
-        color: AppColors.black,
+        color: AppColors.primary,
         letterSpacing: 1.2,
       ),
     );
@@ -64,47 +66,45 @@ class _LoginFormState extends State<LoginForm> {
 
   Widget buildUsernameField(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxWidth: 500,
-      ),
+      constraints: const BoxConstraints(maxWidth: 500),
       child: TextFormField(
         controller: usernameController,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Username',
           filled: true,
-          fillColor: AppColors.babyPowder,
-          border: OutlineInputBorder(),
+          fillColor: AppColors.surface,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.purple100, width: 2.0),
+            borderSide: BorderSide(color: AppColors.primary, width: 2.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
         ),
-        validator: (value) =>
-        (value ?? "").isEmpty ? "Username cannot be empty" : null,
+        validator: (value) => (value ?? "").isEmpty ? "Username cannot be empty" : null,
       ),
     );
   }
 
   Widget buildPasswordField(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(
-        maxWidth: 500,
-      ),
+      constraints: const BoxConstraints(maxWidth: 500),
       child: TextFormField(
         controller: passwordController,
         obscureText: true,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Password',
           filled: true,
-          fillColor: AppColors.babyPowder,
-          border: OutlineInputBorder(),
+          fillColor: AppColors.surface,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.purple100, width: 2.0),
+            borderSide: BorderSide(color: AppColors.primary, width: 2.0),
+            borderRadius: BorderRadius.circular(10.0),
           ),
         ),
-        validator: (value) =>
-        (value ?? "").isEmpty
-            ? "The password is required for authentication"
-            : null,
+        validator: (value) => (value ?? "").isEmpty ? "The password is required for authentication" : null,
       ),
     );
   }
@@ -115,16 +115,19 @@ class _LoginFormState extends State<LoginForm> {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.celeste,
-          foregroundColor: AppColors.babyPowder,
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.background,
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
         ),
         child: const Text(
           'Login',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: AppColors.black,
+            color: AppColors.background,
           ),
         ),
       ),

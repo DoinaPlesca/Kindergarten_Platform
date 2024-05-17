@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:kindergarten_app/calendar/models/calendar_model.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../app_colors.dart';
+import '../bloc/calendar_bloc.dart';
+import '../bloc/calendar_state.dart';
+import '../models/calendar_events.dart';
 import '../widgets/calendar/calendar_widget.dart';
-import '../widgets/settings/detail_settings.dart';
+import '../widgets/events/event_list_widget.dart';
 import '../widgets/settings/events_settings.dart';
 import 'add_event_screen.dart';
 
@@ -15,165 +21,184 @@ class CalendarScreen extends StatefulWidget {
 
 class _CalendarScreenState extends State<CalendarScreen> {
   late DateTime _selectedDate;
-  late List<Event> _events;
-  late Map<DateTime, List<Event>> _mySelectedEvents;
+  late DateTime _focusedDate;
 
   @override
   void initState() {
     super.initState();
     _selectedDate = DateTime.now();
-    _events = [];
-    _mySelectedEvents = {};
+    _focusedDate = _selectedDate;
+
+    /// Fetch events for the current month
+    _fetchEventsForMonth(_focusedDate);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateToAddEventScreen(_selectedDate),
-        backgroundColor: AppColors.babyPowder,
+        backgroundColor: AppColors.primary,
         child: const Icon(
           Icons.edit,
-          color: Colors.black,
+          color: AppColors.background,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            CalendarWidget(
-              onDaySelected: _onDaySelected,
-              selectedDate: _selectedDate,
+      body: BlocBuilder<CalendarBloc, CalendarState>(
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                CalendarWidget(
+                  onDaySelected: _onDaySelected,
+                  onMonthChanged: _onMonthChanged,
+                  selectedDate: _selectedDate,
+                  focusedDate: _focusedDate,
+                ),
+                EventListWidget(
+                  events: _listOfDayEvents(state, _selectedDate),
+                  onEventTapped: _showEventDetailsDialog,
+                ),
+              ],
             ),
-            EventListWidget(
-              events: _listOfDayEvents(_selectedDate),
-              onEventTapped: _navigateToEventDetails,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 
+ ///Get the events for the given month
+  void _fetchEventsForMonth(DateTime date) {
+    final firstDayOfMonth = DateTime(date.year, date.month, 1);
+    final lastDayOfMonth = DateTime(date.year, date.month + 1, 0);
+    context.read<CalendarBloc>().getEventsByRangeDate(firstDayOfMonth, lastDayOfMonth);
+  }
+
+  /// Navigate to Add Events Screen and handles the new event creation.
   void _navigateToAddEventScreen(DateTime selectedDate) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AddEventScreen(selectedDate: selectedDate)),
     );
     if (result != null && result is Event) {
-      setState(() {
-        final selectedDateEvents = _mySelectedEvents[selectedDate] ?? [];
-        selectedDateEvents.add(result);
-        _mySelectedEvents[selectedDate] = selectedDateEvents;
-      });
+      context.read<CalendarBloc>().add(ClientWantsToCreateNewCalendarEvent(
+        eventType: ClientWantsToCreateNewCalendarEvent.eventName,
+        eventdate: result.eventDate,
+        eventdescription: result.eventDescription,
+        eventtitle: result.eventTitle,
+      ));
     }
   }
 
-  List<Event> _listOfDayEvents(DateTime selectedDate) {
-    return _mySelectedEvents[selectedDate] ?? [];
+  /// Lists the events for the selected day
+  List<Event> _listOfDayEvents(CalendarState state, DateTime selectedDate) {
+    final eventsGroupedByDate = state.eventsGroupedByDate ?? {};
+    final dayEvents = eventsGroupedByDate[DateTime(selectedDate.year, selectedDate.month, selectedDate.day)] ?? [];
+    return dayEvents.map((event) => event.toEvent()).toList();
   }
 
+  /// Handles the day selection in the calendar
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDate, selectedDay)) {
       setState(() {
         _selectedDate = selectedDay;
+        _focusedDate = focusedDay; /// Update the focused date
       });
     }
   }
 
-  void _navigateToEventDetails(Event event) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DetailScreen(
-          eventTitle: event.eventTitle,
-          eventDescp: event.eventDescription,
-          eventDate: _selectedDate,
-        ),
+  ///Handles the month change in the calendar
+  void _onMonthChanged(DateTime date) {
+    setState(() {
+      _focusedDate = date;
+    });
+    _fetchEventsForMonth(date); ///  fetch events for the new month
+  }
+
+  /// call  the __buildEventDetailsDialog to construct Alert Dialog
+  void _showEventDetailsDialog(Event event) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return _buildEventDetailsDialog(context, event);
+      },
+    );
+  }
+
+
+  AlertDialog _buildEventDetailsDialog(BuildContext context, Event event) {
+    final DateFormat formatter = DateFormat.yMMMMd('en_US');
+    return AlertDialog(
+      title: _buildDialogTitle(event),
+      content: _buildDialogContent(event, formatter),
+      actions: _buildDialogActions(context),
+    );
+  }
+
+  Widget _buildDialogTitle(Event event) {
+    return Text(
+      event.eventTitle,
+      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget _buildDialogContent(Event event, DateFormat formatter) {
+    return SingleChildScrollView(
+      child: ListBody(
+        children: <Widget>[
+          _buildDescriptionText(event),
+          const SizedBox(height: 10),
+          _buildDateText(event, formatter),
+        ],
       ),
     );
   }
-}
 
-class EventListWidget extends StatelessWidget {
-  final List<Event> events;
-  final Function(Event) onEventTapped;
-
-  const EventListWidget({
-    required this.events,
-    required this.onEventTapped,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: events.map((event) {
-        return GestureDetector(
-          onTap: () => onEventTapped(event),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(color: AppColors.purple100, width: 2.0),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              leading: Container(
-                width: 50,
-                height: 50,
-                decoration: const BoxDecoration(
-                  color: AppColors.purple100,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.done,
-                  color: AppColors.babyPowder,
-                ),
-              ),
-              trailing: const Icon(
-                Icons.arrow_forward_ios,
-                color: AppColors.purple200,
-              ),
-              title: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  event.eventTitle,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-              subtitle: Text(event.eventDescription),
-            ),
+  Widget _buildDescriptionText(Event event) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          const TextSpan(
+            text: 'Description: ',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-        );
-      }).toList(),
+          TextSpan(
+            text: event.eventDescription,
+            style: const TextStyle(fontSize: 18, color: Colors.black),
+          ),
+        ],
+      ),
     );
   }
+
+  Widget _buildDateText(Event event, DateFormat formatter) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          const TextSpan(
+            text: 'Date: ',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          TextSpan(
+            text: formatter.format(event.eventDate),
+            style: const TextStyle(fontSize: 18, color: Colors.black),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildDialogActions(BuildContext context) {
+    return [
+      TextButton(
+        child: const Text(
+          'Close',
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
+    ];
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

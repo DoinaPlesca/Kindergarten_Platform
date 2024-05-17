@@ -1,9 +1,9 @@
-﻿using infrastructure.ParametherModel;
+﻿
+using infrastructure.QueryModels;
 using lib;
-
 namespace api.Events.CalendarEvents.Server;
 
 public class ServerCreateCalendarEvent : BaseDto
 {
-    public InsertEventParams newEvent { get; set; }
+    public InsertEventResult newEvent { get; set; }
 }

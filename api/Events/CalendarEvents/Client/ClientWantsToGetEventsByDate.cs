@@ -2,9 +2,6 @@
 using Fleck;
 using lib;
 using service;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Events.CalendarEvents.Server;
 using api.Helper;
 using Serilog;
@@ -31,19 +28,13 @@ namespace api.Events.CalendarEvents.Client
         {
             try
             {
-                var date = DateTime.Parse(dto.Date); 
+                var date = DateTime.Parse(dto.Date);
                 
-                var events =  _calendarEventsService.GetEventsByDate(date);
-                
-                var eventDtos = events.Select(e => new EventDto
-                {
-                    EventDescription = e.eventdescription,
-                    EventTitle = e.eventtitle
-                }).ToList();
+                var events = _calendarEventsService.GetEventsByDate(date);
                 
                 var responseDto = new ServerGetEventsByDate
                 {
-                    EventsByDate = eventDtos
+                    eventsByDate = events
                 };
                 socket.SendDto(responseDto);
             }

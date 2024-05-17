@@ -1,16 +1,10 @@
-﻿using infrastructure.ParametherModel;
+﻿using infrastructure.QueryModels;
 using lib;
 
-namespace api.Events.CalendarEvents.Server;
-
-public class ServerGetEventsByDate : BaseDto
+namespace api.Events.CalendarEvents.Server
 {
-    public List<EventDto> EventsByDate { get; set; }
-}
-
-public class EventDto
-{
-   
-    public string EventDescription { get; set; }
-    public string EventTitle { get; set; }
+    public class ServerGetEventsByDate : BaseDto
+    {
+        public List<InsertEventResult> eventsByDate { get; set; }
+    }
 }

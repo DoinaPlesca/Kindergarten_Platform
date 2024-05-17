@@ -14,18 +14,23 @@ public class CalendarEventsService
     }
 
 
-    public IEnumerable<InsertEventResult> GetAllEvents()
+    public List<InsertEventResult> GetAllEvents()
     {
         return _calendarEventsRepository.GetAllEvents();
     }
 
-    public InsertEventResult InsertNewEvent(InsertEventParams insertEventParams)
+    public InsertEventResult InsertNewEvent(InsertEventResult newEvent)
     {
-        return _calendarEventsRepository.InsertNewEvent(insertEventParams);
+        return _calendarEventsRepository.InsertNewEvent(newEvent);
     }
 
-    public IEnumerable<InsertEventResult> GetEventsByDate(DateTime date)
+    public List<InsertEventResult> GetEventsByDate(DateTime date)
     {
         return _calendarEventsRepository.GetEventsByDate(date);
+    }
+
+    public List<InsertEventResult> GetEventsByDateRange(DateTime startDate, DateTime endDate)
+    {
+        return _calendarEventsRepository.GetEventsByDateRange(startDate,endDate);
     }
 }

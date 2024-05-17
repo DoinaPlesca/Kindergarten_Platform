@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Scaffold(
         appBar: _buildAppBar(context),
         body: _buildBody(),
-        backgroundColor: AppColors.babyPowder,
+        backgroundColor: AppColors.surface,
         bottomNavigationBar: CustomBottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: AppColors.purple,
+      backgroundColor: AppColors.primary,
       elevation: 0.0,
       title: ProfileAppBarTitle(
         username: widget.username,
