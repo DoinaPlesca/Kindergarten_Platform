@@ -9,7 +9,6 @@ class Gallery with _$Gallery {
     required int photoid,
     required String? photourl,
     required String? description,
-    @Default(false) bool isLocal,
   }) = _Gallery;
 
   factory Gallery.fromJson(Map<String, dynamic> json) =>

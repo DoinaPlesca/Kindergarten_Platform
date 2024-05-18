@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -45,8 +46,17 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
       if (pickedFile != null) {
         final String filePath = pickedFile.path;
-        print('Picked file path: $filePath');  // Add a print statement for debugging
-        context.read<GalleryBloc>().addNewPhoto(filePath, 'New Photo');
+        print('Picked file path: $filePath');  // Debug print
+
+        // Check if the file exists
+        final fileExists = await File(filePath).exists();
+        print('File exists: $fileExists');  // Debug print
+
+        if (fileExists) {
+          context.read<GalleryBloc>().addNewPhoto(filePath, 'New Photo');
+        } else {
+          print('File does not exist at the picked path.');  // Debug print
+        }
       }
     }
   }

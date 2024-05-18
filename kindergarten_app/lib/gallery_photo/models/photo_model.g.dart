@@ -11,7 +11,6 @@ _$GalleryImpl _$$GalleryImplFromJson(Map<String, dynamic> json) =>
       photoid: (json['photoid'] as num).toInt(),
       photourl: json['photourl'] as String?,
       description: json['description'] as String?,
-      isLocal: json['isLocal'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$GalleryImplToJson(_$GalleryImpl instance) =>
@@ -19,5 +18,4 @@ Map<String, dynamic> _$$GalleryImplToJson(_$GalleryImpl instance) =>
       'photoid': instance.photoid,
       'photourl': instance.photourl,
       'description': instance.description,
-      'isLocal': instance.isLocal,
     };

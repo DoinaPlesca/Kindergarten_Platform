@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kindergarten_app/gallery_photo/bloc/photo_state.dart';
 import '../../broadcast_ws_channel.dart';
 import '../../events_base.dart';
 import '../models/photo_events.dart';
+import 'helper.dart';
 
 class GalleryBloc extends Bloc<BaseEvent, GalleryState> {
   final BroadcastWsChannel _channel;
@@ -56,8 +58,7 @@ class GalleryBloc extends Bloc<BaseEvent, GalleryState> {
     add(const ClientWantsToGetLastPhotos(eventType: ClientWantsToGetLastPhotos.eventName));
   }
 
-
-  void addNewPhoto(String photourl, String description ) {
+  void addNewPhoto(String photourl, String description) {
     add(ClientWantsToAddNewPhoto(
       eventType: ClientWantsToAddNewPhoto.eventName,
       photourl: photourl,

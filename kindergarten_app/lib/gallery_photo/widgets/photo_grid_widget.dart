@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kindergarten_app/gallery_photo/models/photo_model.dart';
 
@@ -23,20 +23,9 @@ class PhotoGridWidget extends StatelessWidget {
 
         print('Photo URL: $photoUrl');
         print('Description: $description');
-        print('Is Local: ${photo.isLocal}');
 
         Widget imageWidget;
-        if (photo.isLocal) {
-          imageWidget = Image.file(
-            File(photoUrl),
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              print('Error loading local image: $error');
-              return const Center(child: Text('Invalid image'));
-            },
-          );
-        } else if (photoUrl.startsWith('data:image')) {
-
+        if (photoUrl.startsWith('data:image')) {
           try {
             final base64Data = photoUrl.split(',')[1];
             final imageData = base64Decode(base64Data);
@@ -53,13 +42,12 @@ class PhotoGridWidget extends StatelessWidget {
             imageWidget = const Center(child: Text('Invalid base64 image'));
           }
         } else {
-          // Handle image URLs
-          imageWidget = Image.network(
-            photoUrl,
+          imageWidget = Image.file(
+            File(photoUrl),
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) {
-              print('Error loading network image: $error');
-              return const Center(child: Text('Failed to load image'));
+              print('Error loading local image: $error');
+              return const Center(child: Text('Invalid image'));
             },
           );
         }
@@ -84,3 +72,4 @@ class PhotoGridWidget extends StatelessWidget {
     );
   }
 }
+

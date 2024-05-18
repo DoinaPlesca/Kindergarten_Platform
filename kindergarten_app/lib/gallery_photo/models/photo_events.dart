@@ -22,19 +22,19 @@ class GalleryServerEvents extends BaseEvent {
 
 // CLIENT EVENTS
 @freezed
-class ClientWantsToAddNewPhoto extends ClientEvent
-    with _$ClientWantsToAddNewPhoto {
+class ClientWantsToAddNewPhoto extends ClientEvent with _$ClientWantsToAddNewPhoto {
   static const String eventName = "ClientWantsToAddNewPhoto";
   const factory ClientWantsToAddNewPhoto({
     required String eventType,
     required String photourl,
     required String description,
-
   }) = _ClientWantsToAddNewPhoto;
 
   factory ClientWantsToAddNewPhoto.fromJson(Map<String, Object?> json) =>
       _$ClientWantsToAddNewPhotoFromJson(json);
 }
+
+
 
 
 @freezed
