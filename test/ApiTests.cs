@@ -33,6 +33,13 @@ public class ApiTests
                 return receivedMessages.Count(e => e.eventType == nameof(ServerAuthenticatesUser)) == 1;
             });
         
+        await ws.DoAndAssert(new ClientWantsToAuthenticateWithJwtDto() { jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpZCI6MywiZW1haWwiOiJkb2luYSIsImhhc2giOiJwYXNzd29yZCIsInNhbHQiOiJzYWx0IiwiaXNwYXJlbnQiOnRydWUsImlzdGVhY2hlciI6ZmFsc2UsIm5hbWUiOiJEb2luYSBQbGVzY2EifQ.U8mqnGOq8j0jMDM0PkGfgjKBnpvhAjUa_H8QnbVznaYakZPvfNZvLXqU2P9wS3_Kg_GR-hPEJ1s1BvF4qIYrPg"},
+            receivedMessages =>
+            {
+                return receivedMessages.Count(e => e.eventType == nameof(ServerAuthenticatesUserFromJwt)) == 1;
+            });
+
+        
         await ws.DoAndAssert(new ClientWantsToCreateNewCalendarEvent() { eventdate = DateTime.Now, eventtitle = "title", eventdescription = "description"},
             receivedMessages =>
             {
