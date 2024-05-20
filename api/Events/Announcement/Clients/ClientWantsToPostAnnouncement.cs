@@ -15,8 +15,8 @@ namespace api.Events.Announcement.Clients
     {
         private const int MaxContentLength = 2000;
 
-        [Required(ErrorMessage = "Announcement content is required.")]
-        [StringLength(MaxContentLength, ErrorMessage = "Announcement content cannot exceed {1} characters.")]
+       [Required(ErrorMessage = "Announcement content is required.")]
+       [StringLength(MaxContentLength, ErrorMessage = "Announcement content cannot exceed {1} characters.")]
         public string content { get; set; }
     }
 
@@ -35,7 +35,6 @@ namespace api.Events.Announcement.Clients
         {
             try
             {
-                // Retrieve client metadata
                 var clientMetadata = WebSocketStateService.GetClient(socket.ConnectionInfo.Id);
                 if (clientMetadata.User == null)
                 {
@@ -51,6 +50,7 @@ namespace api.Events.Announcement.Clients
                     dto.content,
                     DateTimeOffset.UtcNow,
                     clientMetadata.User.id
+                  
                 );
 
                 var insertedMessage = _announcementService.InsertAnnouncement(insertAnnouncementParams);
