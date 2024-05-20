@@ -7,7 +7,6 @@ part 'photo_state.freezed.dart';
 class GalleryState with _$GalleryState {
   const factory GalleryState({
     @Default([]) List<Gallery> lastPhotos,
-
   }) = _GalleryState;
 
   factory GalleryState.empty() => const GalleryState(

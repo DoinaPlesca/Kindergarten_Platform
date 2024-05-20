@@ -7,8 +7,8 @@ part 'photo_model.g.dart';
 class Gallery with _$Gallery {
   const factory Gallery({
     required int photoid,
-    required String? photourl,
-    required String? description,
+    required String photourl,
+    required String description,
   }) = _Gallery;
 
   factory Gallery.fromJson(Map<String, dynamic> json) =>

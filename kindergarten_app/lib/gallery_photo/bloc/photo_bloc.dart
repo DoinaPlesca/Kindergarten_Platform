@@ -1,12 +1,14 @@
+
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kindergarten_app/gallery_photo/bloc/photo_state.dart';
+
 import '../../broadcast_ws_channel.dart';
 import '../../events_base.dart';
 import '../models/photo_events.dart';
-import 'helper.dart';
+import '../models/photo_model.dart';
 
 class GalleryBloc extends Bloc<BaseEvent, GalleryState> {
   final BroadcastWsChannel _channel;
@@ -46,7 +48,9 @@ class GalleryBloc extends Bloc<BaseEvent, GalleryState> {
   }
 
   FutureOr<void> _onServerGetLastPhotos(ServerGetLastPhotos event, Emitter<GalleryState> emit) {
-    emit(state.copyWith(lastPhotos: event.lastPhotos));
+    List<Gallery> lastPhotos = event.lastPhotos;
+
+    emit(state.copyWith(lastPhotos: lastPhotos));
   }
 
   FutureOr<void> _onServerAddNewPhoto(ServerAddNewPhoto event, Emitter<GalleryState> emit) {
@@ -66,3 +70,4 @@ class GalleryBloc extends Bloc<BaseEvent, GalleryState> {
     ));
   }
 }
+

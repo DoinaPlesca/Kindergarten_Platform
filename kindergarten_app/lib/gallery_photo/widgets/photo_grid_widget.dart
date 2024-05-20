@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kindergarten_app/gallery_photo/models/photo_model.dart';
 
@@ -21,9 +20,6 @@ class PhotoGridWidget extends StatelessWidget {
         final photoUrl = photo.photourl ?? '';
         final description = photo.description ?? '';
 
-        print('Photo URL: $photoUrl');
-        print('Description: $description');
-
         Widget imageWidget;
         if (photoUrl.startsWith('data:image')) {
           try {
@@ -33,23 +29,14 @@ class PhotoGridWidget extends StatelessWidget {
               imageData,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                print('Error loading base64 image: $error');
                 return const Center(child: Text('Invalid image'));
               },
             );
           } catch (e) {
-            print('Error decoding base64 image: $e');
             imageWidget = const Center(child: Text('Invalid base64 image'));
           }
         } else {
-          imageWidget = Image.file(
-            File(photoUrl),
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              print('Error loading local image: $error');
-              return const Center(child: Text('Invalid image'));
-            },
-          );
+          imageWidget = const Center(child: Text('Unsupported image type'));
         }
 
         return Card(
@@ -72,4 +59,3 @@ class PhotoGridWidget extends StatelessWidget {
     );
   }
 }
-

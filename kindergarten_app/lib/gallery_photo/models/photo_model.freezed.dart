@@ -21,8 +21,8 @@ Gallery _$GalleryFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Gallery {
   int get photoid => throw _privateConstructorUsedError;
-  String? get photourl => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  String get photourl => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $GalleryCopyWith<$Res> {
   factory $GalleryCopyWith(Gallery value, $Res Function(Gallery) then) =
       _$GalleryCopyWithImpl<$Res, Gallery>;
   @useResult
-  $Res call({int photoid, String? photourl, String? description});
+  $Res call({int photoid, String photourl, String description});
 }
 
 /// @nodoc
@@ -51,22 +51,22 @@ class _$GalleryCopyWithImpl<$Res, $Val extends Gallery>
   @override
   $Res call({
     Object? photoid = null,
-    Object? photourl = freezed,
-    Object? description = freezed,
+    Object? photourl = null,
+    Object? description = null,
   }) {
     return _then(_value.copyWith(
       photoid: null == photoid
           ? _value.photoid
           : photoid // ignore: cast_nullable_to_non_nullable
               as int,
-      photourl: freezed == photourl
+      photourl: null == photourl
           ? _value.photourl
           : photourl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
+              as String,
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -78,7 +78,7 @@ abstract class _$$GalleryImplCopyWith<$Res> implements $GalleryCopyWith<$Res> {
       __$$GalleryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int photoid, String? photourl, String? description});
+  $Res call({int photoid, String photourl, String description});
 }
 
 /// @nodoc
@@ -93,22 +93,22 @@ class __$$GalleryImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? photoid = null,
-    Object? photourl = freezed,
-    Object? description = freezed,
+    Object? photourl = null,
+    Object? description = null,
   }) {
     return _then(_$GalleryImpl(
       photoid: null == photoid
           ? _value.photoid
           : photoid // ignore: cast_nullable_to_non_nullable
               as int,
-      photourl: freezed == photourl
+      photourl: null == photourl
           ? _value.photourl
           : photourl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
+              as String,
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -127,9 +127,9 @@ class _$GalleryImpl implements _Gallery {
   @override
   final int photoid;
   @override
-  final String? photourl;
+  final String photourl;
   @override
-  final String? description;
+  final String description;
 
   @override
   String toString() {
@@ -169,17 +169,17 @@ class _$GalleryImpl implements _Gallery {
 abstract class _Gallery implements Gallery {
   const factory _Gallery(
       {required final int photoid,
-      required final String? photourl,
-      required final String? description}) = _$GalleryImpl;
+      required final String photourl,
+      required final String description}) = _$GalleryImpl;
 
   factory _Gallery.fromJson(Map<String, dynamic> json) = _$GalleryImpl.fromJson;
 
   @override
   int get photoid;
   @override
-  String? get photourl;
+  String get photourl;
   @override
-  String? get description;
+  String get description;
   @override
   @JsonKey(ignore: true)
   _$$GalleryImplCopyWith<_$GalleryImpl> get copyWith =>

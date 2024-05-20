@@ -9,8 +9,8 @@ part of 'photo_model.dart';
 _$GalleryImpl _$$GalleryImplFromJson(Map<String, dynamic> json) =>
     _$GalleryImpl(
       photoid: (json['photoid'] as num).toInt(),
-      photourl: json['photourl'] as String?,
-      description: json['description'] as String?,
+      photourl: json['photourl'] as String,
+      description: json['description'] as String,
     );
 
 Map<String, dynamic> _$$GalleryImplToJson(_$GalleryImpl instance) =>
