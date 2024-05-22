@@ -65,10 +65,10 @@ steps:
   - name: update database
     image: flyway/flyway
     commands:
-            - flyway migrate
-              -url=jdbc:postgresql://144.91.75.24:5432/cc
-              -user=user
-              -password=password
-              -locations=filesystem:./db/sql
+        - flyway migrate
+          -url=jdbc:postgresql://144.91.75.24:5432/cc
+          -user=user
+          -password=password
+          -locations=filesystem:./db/sql
     depends_on:
-            - trigger update
+        - trigger update
