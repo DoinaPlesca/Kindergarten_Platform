@@ -56,7 +56,7 @@ steps:
     image: curlimages/curl
     commands:
         - "curl --fail -X GET 'http://144.91.75.24:8080/v1/update' -H 'Authorization: Bearer mytoken'"
-        - sleep 10
+        - sleep 20
     depends_on:
         - publish api
         - publish flutter web
