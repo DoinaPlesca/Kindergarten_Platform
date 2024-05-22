@@ -48,8 +48,8 @@ public class ClientAddNewPhoto : BaseEventHandler<ClientWantsToAddNewPhoto>
             {
                 newPhoto = createdPhoto
             };
-            WebSocketStateService.BroadcastMessage(responseDto);
-           // socket.SendDto(responseDto);
+            
+            socket.SendDto(responseDto);
         }
         catch (Exception ex)
         {
