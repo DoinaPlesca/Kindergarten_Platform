@@ -1,0 +1,63 @@
+﻿services:
+  postgres-database:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cc
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+
+  flyway:
+    image: flyway/flyway
+    command: migrate
+    volumes:
+      - ./db:/flyway/sql
+      - ./db:/flyway/conf
+    depends_on:
+      - postgres-database
+  
+  
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    image: doina1992/cd-kindergarten-api:staging
+    
+    ports:
+      - "5100:8080"
+    hostname: api
+    depends_on:
+      - postgres-database
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  
+  
+  frontend:
+    build:
+      context: .
+      dockerfile: kindergarten_app/Dockerfile
+    image: doina1992/cd-kindergarten-web:staging
+    ports:
+      - "5001:8080"
+    depends_on:
+      - api
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true" 
+  
+  
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --debug --http-api-update
+    environment:
+      - WATCHTOWER_HTTP_API_TOKEN=mytoken
+      - WATCHTOWER_LABEL_ENABLE=true
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    ports:
+      - 8080:8080

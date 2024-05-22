@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GalleryState {
   List<Gallery> get lastPhotos => throw _privateConstructorUsedError;
+  List<Uint8List> get photoData => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GalleryStateCopyWith<GalleryState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $GalleryStateCopyWith<$Res> {
           GalleryState value, $Res Function(GalleryState) then) =
       _$GalleryStateCopyWithImpl<$Res, GalleryState>;
   @useResult
-  $Res call({List<Gallery> lastPhotos});
+  $Res call({List<Gallery> lastPhotos, List<Uint8List> photoData});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$GalleryStateCopyWithImpl<$Res, $Val extends GalleryState>
   @override
   $Res call({
     Object? lastPhotos = null,
+    Object? photoData = null,
   }) {
     return _then(_value.copyWith(
       lastPhotos: null == lastPhotos
           ? _value.lastPhotos
           : lastPhotos // ignore: cast_nullable_to_non_nullable
               as List<Gallery>,
+      photoData: null == photoData
+          ? _value.photoData
+          : photoData // ignore: cast_nullable_to_non_nullable
+              as List<Uint8List>,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$GalleryStateImplCopyWith<$Res>
       __$$GalleryStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Gallery> lastPhotos});
+  $Res call({List<Gallery> lastPhotos, List<Uint8List> photoData});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$GalleryStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? lastPhotos = null,
+    Object? photoData = null,
   }) {
     return _then(_$GalleryStateImpl(
       lastPhotos: null == lastPhotos
           ? _value._lastPhotos
           : lastPhotos // ignore: cast_nullable_to_non_nullable
               as List<Gallery>,
+      photoData: null == photoData
+          ? _value._photoData
+          : photoData // ignore: cast_nullable_to_non_nullable
+              as List<Uint8List>,
     ));
   }
 }
@@ -92,8 +103,11 @@ class __$$GalleryStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GalleryStateImpl implements _GalleryState {
-  const _$GalleryStateImpl({final List<Gallery> lastPhotos = const []})
-      : _lastPhotos = lastPhotos;
+  const _$GalleryStateImpl(
+      {final List<Gallery> lastPhotos = const [],
+      final List<Uint8List> photoData = const []})
+      : _lastPhotos = lastPhotos,
+        _photoData = photoData;
 
   final List<Gallery> _lastPhotos;
   @override
@@ -104,9 +118,18 @@ class _$GalleryStateImpl implements _GalleryState {
     return EqualUnmodifiableListView(_lastPhotos);
   }
 
+  final List<Uint8List> _photoData;
+  @override
+  @JsonKey()
+  List<Uint8List> get photoData {
+    if (_photoData is EqualUnmodifiableListView) return _photoData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_photoData);
+  }
+
   @override
   String toString() {
-    return 'GalleryState(lastPhotos: $lastPhotos)';
+    return 'GalleryState(lastPhotos: $lastPhotos, photoData: $photoData)';
   }
 
   @override
@@ -115,12 +138,16 @@ class _$GalleryStateImpl implements _GalleryState {
         (other.runtimeType == runtimeType &&
             other is _$GalleryStateImpl &&
             const DeepCollectionEquality()
-                .equals(other._lastPhotos, _lastPhotos));
+                .equals(other._lastPhotos, _lastPhotos) &&
+            const DeepCollectionEquality()
+                .equals(other._photoData, _photoData));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_lastPhotos));
+      runtimeType,
+      const DeepCollectionEquality().hash(_lastPhotos),
+      const DeepCollectionEquality().hash(_photoData));
 
   @JsonKey(ignore: true)
   @override
@@ -130,11 +157,14 @@ class _$GalleryStateImpl implements _GalleryState {
 }
 
 abstract class _GalleryState implements GalleryState {
-  const factory _GalleryState({final List<Gallery> lastPhotos}) =
-      _$GalleryStateImpl;
+  const factory _GalleryState(
+      {final List<Gallery> lastPhotos,
+      final List<Uint8List> photoData}) = _$GalleryStateImpl;
 
   @override
   List<Gallery> get lastPhotos;
+  @override
+  List<Uint8List> get photoData;
   @override
   @JsonKey(ignore: true)
   _$$GalleryStateImplCopyWith<_$GalleryStateImpl> get copyWith =>

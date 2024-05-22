@@ -36,7 +36,7 @@ public static class Startup
         builder.Services.AddSingleton<TokenService>();
         builder.Services.AddSingleton<TokenBlacklistService>();
 
-        builder.Services.AddNpgsqlDataSource(Utilities.ProperlyFormattedConnectionString,
+        builder.Services.AddNpgsqlDataSource(Utilities.ProperlyFormattedConnectionString!,
             sourceBuilder => { sourceBuilder.EnableParameterLogging(); });
         builder.Services.AddSingleton<AuthenticationRepository>();
         builder.Services.AddSingleton<AnnouncementsRepository>();

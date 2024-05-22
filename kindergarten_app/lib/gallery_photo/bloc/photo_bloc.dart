@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
@@ -27,13 +26,13 @@ class GalleryBloc extends Bloc<BaseEvent, GalleryState> {
     _channelSubscription = _channel.stream
         .map((event) => jsonDecode(event))
         .where((event) =>
-    event['eventType'] == ServerGetLastPhotos.eventName ||
-        event['eventType'] == ServerAddNewPhoto.eventName)
+            event['eventType'] == ServerGetLastPhotos.eventName ||
+            event['eventType'] == ServerAddNewPhoto.eventName)
         .map((event) => GalleryServerEvents.fromJson(event))
         .listen(
           (event) => add(event as BaseEvent),
-      onError: addError,
-    );
+          onError: addError,
+        );
   }
 
   @override
@@ -47,19 +46,27 @@ class GalleryBloc extends Bloc<BaseEvent, GalleryState> {
     _channel.sink.add(jsonEncode(event.toJson()));
   }
 
-  FutureOr<void> _onServerGetLastPhotos(ServerGetLastPhotos event, Emitter<GalleryState> emit) {
+  FutureOr<void> _onServerGetLastPhotos(
+      ServerGetLastPhotos event, Emitter<GalleryState> emit) {
     List<Gallery> lastPhotos = event.lastPhotos;
+    final photoData = lastPhotos.map((e) {
+      final base64Data = e.photourl.split(',')[1];
+      final imageData = base64Decode(base64Data);
+      return imageData;
+    }).toList();
 
-    emit(state.copyWith(lastPhotos: lastPhotos));
+    emit(state.copyWith(lastPhotos: lastPhotos, photoData: photoData ));
   }
 
-  FutureOr<void> _onServerAddNewPhoto(ServerAddNewPhoto event, Emitter<GalleryState> emit) {
+  FutureOr<void> _onServerAddNewPhoto(
+      ServerAddNewPhoto event, Emitter<GalleryState> emit) {
     final updatedPhotos = [event.newPhoto, ...state.lastPhotos];
     emit(state.copyWith(lastPhotos: updatedPhotos));
   }
 
   void getLastPhotos() {
-    add(const ClientWantsToGetLastPhotos(eventType: ClientWantsToGetLastPhotos.eventName));
+    add(const ClientWantsToGetLastPhotos(
+        eventType: ClientWantsToGetLastPhotos.eventName));
   }
 
   void addNewPhoto(String photourl, String description) {
@@ -70,4 +77,3 @@ class GalleryBloc extends Bloc<BaseEvent, GalleryState> {
     ));
   }
 }
-

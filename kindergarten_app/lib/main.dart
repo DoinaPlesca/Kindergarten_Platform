@@ -18,12 +18,7 @@ void main() {
   Bloc.observer = LoggerBlocObserver();
 
   // Connect to WebSocket
-  Uri wsUri;
-  if (kIsWeb) {
-    wsUri = Uri.parse('ws://localhost:8181');
-  } else {
-    wsUri = Uri.parse('ws://localhost:8181');
-  }
+  final wsUri = Uri.parse('ws://localhost:8181');
   final channel = BroadcastWsChannel(wsUri);
 
   // Start app with MultiBlocProvider
@@ -45,8 +40,6 @@ void main() {
         BlocProvider<GalleryBloc>(
           create: (context) => GalleryBloc(channel: channel),
         ),
-
-
       ],
       child: const MyApp(),
     ),
@@ -58,53 +51,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = ThemeData(
-      primaryColor: AppColors.primary,
-      backgroundColor: AppColors.background,
-      scaffoldBackgroundColor: AppColors.background,
-      cardColor: AppColors.surface,
-      dividerColor: AppColors.border,
-      textTheme: TextTheme(
-        bodyText1: TextStyle(color: AppColors.text),
-        bodyText2: TextStyle(color: AppColors.text),
-        headline1: TextStyle(color: AppColors.text),
-        headline2: TextStyle(color: AppColors.text),
-        headline6: TextStyle(color: AppColors.primary),
-      ),
-      appBarTheme: AppBarTheme(
-        color: AppColors.primary,
-        iconTheme: IconThemeData(color: AppColors.background),
-        titleTextStyle: TextStyle(
-          color: AppColors.background,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      buttonTheme: ButtonThemeData(
-        buttonColor: AppColors.primary,
-        textTheme: ButtonTextTheme.primary,
-      ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: AppColors.secondary,
-        foregroundColor: AppColors.background,
-      ),
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-    );
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kindergarten Platform',
-      theme: theme.copyWith(
-        colorScheme: theme.colorScheme.copyWith(
-          primary: AppColors.primary,
-          secondary: AppColors.secondary,
-        ),
-      ),
-      home: LayoutBuilder(
-        builder: (context, constraints) {
-          return const LoginPage();
-        },
-      ),
+      home: const LoginPage(),
     );
   }
 }

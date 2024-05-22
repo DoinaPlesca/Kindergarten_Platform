@@ -66,11 +66,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
           if (state.lastPhotos.isEmpty) {
             return const Center(child: Text('No photos available'));
           }
-          return PhotoGridWidget(photos: state.lastPhotos);
+          return PhotoGridWidget(photos: state.lastPhotos, photoData: state.photoData,);
         },
       ),
       floatingActionButton: PhotoUploadIcon(onTap: _addPhoto),
     );
   }
 }
-

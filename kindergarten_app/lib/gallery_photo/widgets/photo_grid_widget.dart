@@ -1,11 +1,13 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:kindergarten_app/gallery_photo/models/photo_model.dart';
 
 class PhotoGridWidget extends StatelessWidget {
   final List<Gallery> photos;
+  final List<Uint8List?> photoData;
 
-  const PhotoGridWidget({required this.photos, Key? key}) : super(key: key);
+  const PhotoGridWidget({required this.photos, required this.photoData, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +24,16 @@ class PhotoGridWidget extends StatelessWidget {
 
         Widget imageWidget;
         if (photoUrl.startsWith('data:image')) {
-          try {
-            final base64Data = photoUrl.split(',')[1];
-            final imageData = base64Decode(base64Data);
+          if (index < photoData.length && photoData[index] != null) {
+            /// Decodare base64 imagine
             imageWidget = Image.memory(
-              imageData,
+              photoData[index]!,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return const Center(child: Text('Invalid image'));
               },
             );
-          } catch (e) {
+          } else {
             imageWidget = const Center(child: Text('Invalid base64 image'));
           }
         } else {
