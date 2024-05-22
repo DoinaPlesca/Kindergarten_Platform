@@ -13,7 +13,6 @@ namespace api.Events.Announcement.Clients
     {
         public int id { get; set; }
         public string content { get; set; }
-        
     }
     [ValidateDataAnnotations]
     [RequireAuthentication]
