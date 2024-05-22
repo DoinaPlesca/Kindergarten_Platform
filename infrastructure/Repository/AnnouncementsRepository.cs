@@ -11,15 +11,12 @@ public class AnnouncementsRepository
 {
     private readonly NpgsqlDataSource _dataSource;
     private readonly ILogger<AnnouncementsRepository> _logger;
-
-
     public AnnouncementsRepository(NpgsqlDataSource dataSource,
         ILogger<AnnouncementsRepository> logger)
     {
         _dataSource = dataSource;
         _logger = logger;
     }
-
 
     public InsertAnnouncementResult InsertAnnouncement(InsertAnnouncementParams insertAnnouncementParams)
     {
