@@ -12,8 +12,7 @@ public class WsWithMetadata(IWebSocketConnection connection)
     public IWebSocketConnection Connection { get; set; } = connection;
     public bool IsAuthenticated { get; set; } = false;
     public User? User { get; set; }
-  
-   
+    
 }
 
 public static class WebSocketStateService
