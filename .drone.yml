@@ -33,7 +33,7 @@ steps:
         from_secret: DockerPassword
       context: .
       dockerfile: api/Dockerfile
-      repo: doina1992/cd-converter-api
+      repo: doina1992/cd-kindergarten-api
       tags:
         - staging
 
@@ -47,7 +47,7 @@ steps:
         from_secret: DockerPassword
       context: .
       dockerfile: kindergarten_app/Dockerfile
-      repo: doina1992/flutter-web-app
+      repo: doina1992/cd-kindergarten-web
       tags:
         - staging
 
@@ -72,3 +72,60 @@ steps:
         -locations=filesystem:./db/sql
     depends_on:
       - trigger update
+  
+  
+  
+---
+  
+  kind: pipeline
+  type: docker
+  name: deploy
+  depends_on:
+    - deliver
+  
+  steps:
+    - name: release api
+      image: plugins/docker
+      settings:
+        username:
+          from_secret: DockerUsername
+        password:
+          from_secret: DockerPassword
+        context: .
+        dockerfile: api/Dockerfile
+        repo: doina1992/cd-kindergarten-api
+        tags:
+          - prod
+
+    - name: release web
+      image: plugins/docker
+      settings:
+        username:
+          from_secret: DockerUsername
+        password:
+          from_secret: DockerPassword
+        context: .
+        dockerfile: kindergarten_app/Dockerfile
+        repo: doina1992/cd-kindergarten-web
+        tags:
+          - prod
+
+    - name: trigger update
+      image: curlimages/curl
+      commands:
+        - "curl --fail -X GET 'http://95.111.247.237:8080/v1/update' -H 'Authorization: Bearer mytoken'"
+        - sleep 10
+      depends_on:
+        - release api
+        - release web
+
+    - name: update database
+      image: flyway/flyway
+      commands:
+        - flyway migrate
+          -url=jdbc:postgresql://95.111.247.237:5432/cc
+          -user=user
+          -password=password
+          -locations=filesystem:./db/sql
+      depends_on:
+        - trigger update
