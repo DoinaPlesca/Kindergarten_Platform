@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kindergarten_app/broadcast_ws_channel.dart';
@@ -10,7 +10,7 @@ import 'announcement/bloc/announc_bloc.dart';
 import 'authentication/bloc/login_bloc.dart';
 import 'authentication/screens/login_screen.dart';
 import 'logger_bloc_observer.dart';
-import 'app_colors.dart';
+
 
 void main() {
   // Initialize logger
@@ -47,14 +47,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kindergarten Platform',
-      home: const LoginPage(),
+      home: LoginPage(),
     );
   }
 }
