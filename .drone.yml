@@ -73,16 +73,16 @@ steps:
     depends_on:
       - trigger update
 
-
-  - name: flutter test integration_test
+  - name: flutter test integration
     image: cirrusci/flutter:latest
     environment:
-      - FLUTTER_WEB=true
+      FLUTTER_WEB: "true"
     commands:
       - flutter pub get
       - flutter test --platform=chrome integration_test/app_test.dart
-  
-  
+
+
+
 ---
   
   kind: pipeline
