@@ -11,7 +11,7 @@ class AddEventScreen extends StatelessWidget {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descpController = TextEditingController();
 
-  AddEventScreen({Key? key, required this.selectedDate}) : super(key: key);
+  AddEventScreen({super.key, required this.selectedDate});
 
   @override
   Widget build(BuildContext context) {
