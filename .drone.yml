@@ -78,6 +78,7 @@ steps:
     environment:
       FLUTTER_WEB: "true"
     commands:
+      - cd kindergarten_app
       - flutter pub get
       - flutter test --platform=chrome integration_test/app_test.dart
 
