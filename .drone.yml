@@ -74,7 +74,7 @@ steps:
       - trigger update
 
   - name: flutter test integration
-    image: cirrusci/flutter:3.3.2
+    image: ghcr.io/cirruslabs/flutter:3.19.6
     environment:
       FLUTTER_WEB: "true"
     commands:
