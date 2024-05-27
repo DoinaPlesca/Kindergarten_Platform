@@ -72,6 +72,8 @@ steps:
         -locations=filesystem:./db/sql
     depends_on:
       - trigger update
+    
+    
 
   - name: flutter widget tests
     image: ghcr.io/cirruslabs/flutter:3.19.6
@@ -81,7 +83,16 @@ steps:
       - cd kindergarten_app
       - flutter pub get
       - test integration_test/app_test.dart
+    depends_on:
+      - update database
+      
 
+  - name: k6 load test
+    image: loadimpact/k6
+    commands:
+      - cd kindergarten_app
+      - k6 run integration_test/websocket_test.js
+    
 
 
 ---
