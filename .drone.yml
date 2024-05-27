@@ -80,7 +80,7 @@ steps:
     commands:
       - cd kindergarten_app
       - flutter pub get
-      - flutter test --platform=chrome integration_test/app_test.dart
+      - flutter test integration_test/app_test.dart
 
 
 
