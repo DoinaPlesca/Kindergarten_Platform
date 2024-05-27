@@ -55,7 +55,7 @@ steps:
   - name: trigger update
     image: curlimages/curl
     commands:
-      - "curl --fail -X GET 'http://95.111.247.237:8080/v1/update' -H 'Authorization: Bearer mytoken'"
+      - "curl --fail -X GET 'http://144.91.75.24:8080/v1/update' -H 'Authorization: Bearer mytoken'"
       - sleep 30
     depends_on:
       - publish api
@@ -66,7 +66,7 @@ steps:
     image: flyway/flyway
     commands:
       - flyway migrate
-        -url=jdbc:postgresql://95.111.247.237:5432/cc
+        -url=jdbc:postgresql://144.91.75.24:5432/cc
         -user=user
         -password=password
         -locations=filesystem:./db/sql
@@ -133,7 +133,7 @@ steps:
     - name: trigger update
       image: curlimages/curl
       commands:
-        - "curl --fail -X GET 'http://144.91.75.24:8080/v1/update' -H 'Authorization: Bearer mytoken'"
+        - "curl --fail -X GET 'http://95.111.247.237:8080/v1/update' -H 'Authorization: Bearer mytoken'"
         - sleep 30
       depends_on:
         - release api
@@ -143,7 +143,7 @@ steps:
       image: flyway/flyway
       commands:
         - flyway migrate
-          -url=jdbc:postgresql://144.91.75.24:5432/cc
+          -url=jdbc:postgresql://95.111.247.237:5432/cc
           -user=user
           -password=password
           -locations=filesystem:./db/sql

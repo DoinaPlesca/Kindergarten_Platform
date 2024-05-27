@@ -22,11 +22,11 @@
       <jdbc-url>jdbc:postgresql://144.91.75.24:5433/cc</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="postgres@localhost" uuid="27e22c70-2679-4609-b692-e3ca56cd1db4">
-      <driver-ref>postgresql</driver-ref>
+    <data-source source="LOCAL" name="144.91.75.24" uuid="4d109070-4ec8-459d-ab4f-cd30a0ff1a03">
+      <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/postgres</jdbc-url>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://144.91.75.24:3306/kindergarten</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
