@@ -73,22 +73,14 @@ steps:
     depends_on:
       - trigger update
 
-  - name: flutter test integration
+  - name: flutter widget tests
     image: ghcr.io/cirruslabs/flutter:3.19.6
     environment:
-     FLUTTER_WEB: "true"
+         FLUTTER_WEB: "true"
     commands:
-      - apt-get update && apt-get install -y wget gnupg
-      - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-      - sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
-      - apt-get update && apt-get install -y google-chrome-stable
       - cd kindergarten_app
-      - flutter doctor --android-licenses
-      - flutter doctor
-      - flutter config --enable-web
-      - flutter devices
       - flutter pub get
-      - flutter test --platform=chrome integration_test/app_test.dart
+      - flutter test
 
 
 
