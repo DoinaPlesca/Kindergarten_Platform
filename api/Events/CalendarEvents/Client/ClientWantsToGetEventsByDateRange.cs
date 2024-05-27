@@ -35,7 +35,6 @@ public class ClientGetEventsByDateRange : BaseEventHandler<ClientWantsToGetEvent
             {
                 eventsByDataRange= events
             };
-
             socket.SendDto(responseDto);
         }
         catch (Exception ex)
