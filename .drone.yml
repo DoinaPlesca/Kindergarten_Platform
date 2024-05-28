@@ -71,8 +71,8 @@ steps:
         -user=user
         -password=password
         -locations=filesystem:./db/sql
-    depends_on:
-      - trigger update
+#    depends_on:
+#      - trigger update
     
     
 
