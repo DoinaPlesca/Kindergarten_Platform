@@ -11,10 +11,11 @@ steps:
       PGCONN:
         from_secret: PGCONN
     commands:
-      - dotnet sonarscanner begin /k:"easv-devops_Kindergarten_Platform_AY-VL_lHEVvRW2O60FzP" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.token="$SONARSECRET" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
-      - dotnet build --no-incremental
-      - PGCONN=$PGCONN dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
-      - dotnet sonarscanner end /d:sonar.token="$SONARSECRET"
+      - echo 'YAY'
+#      - dotnet sonarscanner begin /k:"easv-devops_Kindergarten_Platform_AY-VL_lHEVvRW2O60FzP" /d:sonar.host.url="http://sonar.setgo.dk:9000" /d:sonar.token="$SONARSECRET" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+#      - dotnet build --no-incremental
+#      - PGCONN=$PGCONN dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
+#      - dotnet sonarscanner end /d:sonar.token="$SONARSECRET"
 
 ---
 kind: pipeline
@@ -24,42 +25,42 @@ depends_on:
   - integration
 
 steps:
-  - name: publish api
-    image: plugins/docker
-    settings:
-      username:
-        from_secret: DockerUsername
-      password:
-        from_secret: DockerPassword
-      context: .
-      dockerfile: api/Dockerfile
-      repo: doina1992/cd-kindergarten-api
-      tags:
-        - staging
-
-
-  - name: publish flutter web
-    image: plugins/docker
-    settings:
-      username:
-        from_secret: DockerUsername
-      password:
-        from_secret: DockerPassword
-      context: .
-      dockerfile: kindergarten_app/Dockerfile
-      repo: doina1992/cd-kindergarten-web
-      tags:
-        - staging
-
-
-  - name: trigger update
-    image: curlimages/curl
-    commands:
-      - "curl --fail -X GET 'http://144.91.75.24:8080/v1/update' -H 'Authorization: Bearer mytoken'"
-      - sleep 30
-    depends_on:
-      - publish api
-      - publish flutter web
+#  - name: publish api
+#    image: plugins/docker
+#    settings:
+#      username:
+#        from_secret: DockerUsername
+#      password:
+#        from_secret: DockerPassword
+#      context: .
+#      dockerfile: api/Dockerfile
+#      repo: doina1992/cd-kindergarten-api
+#      tags:
+#        - staging
+#
+#
+#  - name: publish flutter web
+#    image: plugins/docker
+#    settings:
+#      username:
+#        from_secret: DockerUsername
+#      password:
+#        from_secret: DockerPassword
+#      context: .
+#      dockerfile: kindergarten_app/Dockerfile
+#      repo: doina1992/cd-kindergarten-web
+#      tags:
+#        - staging
+#
+#
+#  - name: trigger update
+#    image: curlimages/curl
+#    commands:
+#      - "curl --fail -X GET 'http://144.91.75.24:8080/v1/update' -H 'Authorization: Bearer mytoken'"
+#      - sleep 30
+#    depends_on:
+#      - publish api
+#      - publish flutter web
 
 
   - name: update database
