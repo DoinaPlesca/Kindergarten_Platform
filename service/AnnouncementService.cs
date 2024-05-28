@@ -12,8 +12,7 @@ public class AnnouncementService
     {
         _announcementsRepository= announcementsRepository;
     }
-
-
+    
     public InsertAnnouncementResult InsertAnnouncement(InsertAnnouncementParams insertAnnouncementParams)
     {
         return _announcementsRepository.InsertAnnouncement(insertAnnouncementParams);
