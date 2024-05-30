@@ -9,6 +9,8 @@ Widget buildLoginLayout(BuildContext context) {
   return BlocListener<LoginBloc, LoginState>(
     listener: (context, state) {
       if (state.authenticated) {
+        showSuccessSnackBar(context, "Login successful!");
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -16,6 +18,7 @@ Widget buildLoginLayout(BuildContext context) {
               username: state.name ?? '',
               children: state.Children,
               jwt: state.jwt ?? '',
+              isTeacher: state.isTeacher?? false ,
             ),
           ),
         );
@@ -46,4 +49,12 @@ Widget buildLoginLayout(BuildContext context) {
       },
     ),
   );
+}
+
+void showSuccessSnackBar(BuildContext context, String message) {
+  final snackBar = SnackBar(
+    content: Text(message),
+    duration: const Duration(seconds: 2),
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

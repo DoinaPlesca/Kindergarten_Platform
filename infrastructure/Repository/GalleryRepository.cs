@@ -2,7 +2,6 @@
 using infrastructure.QueryModels;
 using Microsoft.Extensions.Logging;
 using Npgsql;
-using System.Collections.Generic;
 
 namespace infrastructure.Repository
 {
@@ -22,7 +21,8 @@ namespace infrastructure.Repository
             using var conn = _dataSource.OpenConnection();
             return conn.QueryFirst<Gallery>(@$"
                 INSERT INTO kindergarten.photo (photourl, description)
-                VALUES (@{nameof(Gallery.photourl)}, @{nameof(Gallery.description)})
+                VALUES (@{nameof(Gallery.photourl)}, 
+                        @{nameof(Gallery.description)})
                 RETURNING photourl AS {nameof(Gallery.photourl)},
                           description AS {nameof(Gallery.description)},
                           photoid AS {nameof(Gallery.photoid)};", gallery);
@@ -40,9 +40,21 @@ namespace infrastructure.Repository
                     kindergarten.photo
                 ORDER BY 
                     photoid DESC
-                LIMIT 40";
-            
+                LIMIT 20";
+
             return conn.Query<Gallery>(sql).ToList();
+        }
+
+
+        public void EditPhotoDescription(int photoid, string description)
+        {
+            using var conn = _dataSource.OpenConnection();
+            string sql = @"
+            UPDATE kindergarten.photo
+            SET description = @description
+            WHERE photoid = @photoid;";
+
+            conn.Execute(sql, new { photoid, description });
         }
     }
 }

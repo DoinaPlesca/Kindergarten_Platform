@@ -11,12 +11,14 @@ class ProfilePage extends StatefulWidget {
   final String username;
   final List<dynamic> children;
   final String jwt;
+  final bool isTeacher;
 
   ProfilePage({
     Key? key,
     required this.username,
     required this.children,
     required this.jwt,
+    this.isTeacher = false,
   }) : super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
   int _selectedIndex = 0;
 
   List<Widget> get _widgetOptions => <Widget>[
-    ChildrenPage(children: widget.children, username: widget.username),
+    ChildrenPage(children: widget.children, username: widget.username,isTeacher: widget.isTeacher),
     const CalendarScreen(),
     const AnnouncementsPage(),
     const GalleryScreen(),

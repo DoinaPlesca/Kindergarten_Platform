@@ -70,7 +70,8 @@ class _LoginFormState extends State<LoginForm> {
       child: TextFormField(
         controller: usernameController,
         decoration: InputDecoration(
-          labelText: 'Username',
+          labelText: 'Email',
+          hintText: 'Enter your email',
           filled: true,
           fillColor: AppColors.surface,
           border: OutlineInputBorder(
@@ -81,7 +82,15 @@ class _LoginFormState extends State<LoginForm> {
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),
-        validator: (value) => (value ?? "").isEmpty ? "Username cannot be empty" : null,
+        keyboardType: TextInputType.emailAddress,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Email cannot be empty';
+          } else if (!RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+$').hasMatch(value)) {
+            return 'Enter a valid email';
+          }
+          return null;
+        },
       ),
     );
   }

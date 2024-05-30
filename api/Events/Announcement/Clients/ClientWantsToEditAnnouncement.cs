@@ -1,4 +1,5 @@
-﻿using api.EventFilters;
+﻿using System.ComponentModel.DataAnnotations;
+using api.EventFilters;
 using api.Events.Announcement.Server;
 using api.Helper;
 using Fleck;
@@ -11,7 +12,12 @@ namespace api.Events.Announcement.Clients
 {
     public class ClientWantsToEditAnnouncementDto : BaseDto
     {
+        [Required(ErrorMessage = "Announcement ID is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Announcement ID must be a positive number.")]
         public int id { get; set; }
+
+        [Required(ErrorMessage = "Content is required.")]
+        [StringLength(500, ErrorMessage = "Content cannot exceed 1000 characters.")]
         public string content { get; set; }
     }
     [ValidateDataAnnotations]

@@ -1,5 +1,4 @@
-﻿
-using Dapper;
+﻿using Dapper;
 using infrastructure.ParametherModel;
 using infrastructure.ParametherModel.LogIn;
 using infrastructure.QueryModels;
@@ -37,37 +36,37 @@ public class AuthenticationRepository
                         from kindergarten.user where email = @{nameof(FindByEmail.email)};", findByEmail) ??
                throw new KeyNotFoundException("Could not find user with email " + findByEmail.email);
     }
-}
 
 
-
-
-/*public User InsertNewUser(InsertUser insertUser)
-{
-    using var conn = _dataSource.OpenConnection();
-    return conn.QueryFirstOrDefault<User>(@$"
-    insert into kindergarten.user (email, hash, salt, isteacher, isparent,name)
+    public User InsertNewUser(InsertUser insertUser)
+    {
+        using var conn = _dataSource.OpenConnection();
+        return conn.QueryFirstOrDefault<User>(@$"
+    insert into kindergarten.user (email, hash, salt, isteacher, isparent, name)
     values (
-    @{nameof(InsertUser.email)},
-    @{nameof(InsertUser.hash)},
-    @{nameof(InsertUser.salt)},
-    @{nameof(InsertUser.name)},
-    false, false)
-    returning
+            @{nameof(InsertUser.email)},
+            @{nameof(InsertUser.hash)},
+            @{nameof(InsertUser.salt)},
+            false,
+            true,
+            @{nameof(InsertUser.name)}
+    )
+    returning 
+            email as {nameof(User.email)},
+            isteacher as {nameof(User.isteacher)},
+            isparent as {nameof(User.isparent)},
+            name as {nameof(User.name)},
+            id as {nameof(User.id)};", insertUser)
+               ?? throw new InvalidOperationException("Insertion and retrieval failed");
+    }
 
-email as {nameof(User.email)},
-isteacher as {nameof(User.isteacher)},
-isparent as {nameof(User.isparent)},
-name as {nameof(User.name)}
-id as {nameof(User.id)};", insertUser)
-           ?? throw new InvalidOperationException("Insertion and retrieval failed");
+
+
+
+    public bool DoesUserAlreadyExist(FindByEmail findByEmail)
+    {
+        using var conn = _dataSource.OpenConnection();
+        return conn.ExecuteScalar<int>(@$"
+select count(*) from kindergarten.user where email = @{nameof(findByEmail.email)};", findByEmail) == 1;
+    }
 }
-
-
-public bool DoesUserAlreadyExist(FindByEmail findByEmail)
-{
-    using var conn = _dataSource.OpenConnection();
-    return conn.ExecuteScalar<int>(@$"
-select count(*) from kindegarten.user where email = @{nameof(findByEmail.email)};", findByEmail) == 1;
-}
-}*/

@@ -22,4 +22,9 @@ public class GalleryService
     {
         return _galleryRepository.GetLastPhotos();
     }
+
+    public void EditPhotoDescription(int photoid, string description)
+    {
+         _galleryRepository.EditPhotoDescription(photoid, description);
+    }
 }

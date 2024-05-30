@@ -47,6 +47,7 @@ public static class Startup
         builder.Services.AddSingleton<CalendarEventsRepository>();
         builder.Services.AddSingleton<GalleryRepository>();
         builder.Services.AddSingleton<GalleryService>();
+        builder.Services.AddSingleton<UserService>();
 
         // Register event handlers
         var services = builder.FindAndInjectClientEventHandlers(Assembly.GetExecutingAssembly());

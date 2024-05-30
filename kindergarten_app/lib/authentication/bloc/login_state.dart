@@ -12,6 +12,8 @@ class LoginState with _$LoginState {
     String? jwt,
     @Default([]) List<dynamic> Children,
     @Default([]) List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+    bool? isParent,
+    bool? isTeacher,
   }) = _LoginState;
 
   factory LoginState.empty() => const LoginState(
@@ -20,6 +22,8 @@ class LoginState with _$LoginState {
     name: null,
     Children: [],
     UnreadAnnouncements: [],
+    isParent: false,
+    isTeacher:false,
   );
 }
 

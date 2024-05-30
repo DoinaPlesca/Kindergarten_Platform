@@ -18,4 +18,9 @@ public class ChildService
         return await _childRepository.GetChildrenByParentId(parentId);
     }
 
+    public async Task<List<GetChildParams>> GetAllChildren()
+    {
+        return await _childRepository.GetAllChildren();
+    }
+
 }

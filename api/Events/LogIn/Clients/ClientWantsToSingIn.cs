@@ -1,6 +1,6 @@
-﻿using service.Security;
+﻿using System.ComponentModel.DataAnnotations;
+using service.Security;
 using Fleck;
-using infrastructure.QueryModels;
 using api.WebSocket;
 using System.Security.Authentication;
 using api.Events.Announcement.Server;
@@ -15,7 +15,12 @@ namespace api.Events.LogIn.Clients
 {
     public class ClientWantsToSignInDto : BaseDto
     {
+        [Required(ErrorMessage = "Email address is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string email { get; set; }
+        
+        [Required(ErrorMessage = "Password is required.")]
+        [StringLength(100, ErrorMessage = "The password must be at least {2} characters long.", MinimumLength = 4)]
         public string password { get; set; }
     }
 
@@ -48,21 +53,27 @@ namespace api.Events.LogIn.Clients
             {
                 throw new AuthenticationException("User not found");
             }
+
             var expectedHash = _credentialService.Hash(request.password!, user.salt!);
 
-            /*if (!expectedHash.SequenceEqual(user.hash!))
+            if (!expectedHash.SequenceEqual(user.hash!))
             {
                 throw new AuthenticationException("Wrong credentials");
-            }*/
+            }
 
             WebSocketStateService.GetClient(socket.ConnectionInfo.Id).IsAuthenticated = true;
             WebSocketStateService.GetClient(socket.ConnectionInfo.Id).User = user;
 
-            
+
             List<GetChildParams> children = new List<GetChildParams>();
             if (user.isparent)
             {
                 children = await _childService.GetChildrenByParentId(user.id);
+            }
+            else if (user.isteacher)
+            {
+                
+                children = await _childService.GetAllChildren(); 
             }
 
             var authResponseDto = new ServerAuthenticatesUser()
@@ -72,20 +83,16 @@ namespace api.Events.LogIn.Clients
                 isParent = user.isparent,
                 isTeacher = user.isteacher,
                 name = user.name,
-                Children = children
+                Children = children 
             };
 
             socket.SendDto(authResponseDto);
 
-            // Obține anunțurile necitite pentru utilizator și trimite notificări
             var unreadAnnouncements = _announcementService.GetUnreadAnnouncementsForUser(user.id);
-            var unreadAnnouncementsDto = new ServerUnreadAnnouncements
+            socket.SendDto(new ServerUnreadAnnouncements
             {
                 UnreadAnnouncements = unreadAnnouncements.ToList()
-            };
-            socket.SendDto(unreadAnnouncementsDto);
+            });
         }
     }
-
-   
 }

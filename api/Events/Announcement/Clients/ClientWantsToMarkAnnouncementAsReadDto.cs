@@ -1,8 +1,7 @@
-﻿using Fleck;
-using infrastructure.Repository;
+﻿using System.ComponentModel.DataAnnotations;
+using Fleck;
 using lib;
 using Serilog;
-using System.Threading.Tasks;
 using api.EventFilters;
 using api.Events.Announcement.Server;
 using api.Helper;
@@ -13,6 +12,8 @@ namespace api.Events.Announcement.Clients
 {
     public class ClientWantsToMarkAnnouncementAsReadDto : BaseDto
     {
+        [Required(ErrorMessage = "Announcement ID is required.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Announcement ID must be a positive number.")]
         public int announcementId { get; set; }
     }
 

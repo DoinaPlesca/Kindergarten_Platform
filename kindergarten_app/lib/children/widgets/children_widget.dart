@@ -28,7 +28,7 @@ class ChildCard extends StatelessWidget {
 
   Widget _buildImageContainer(BuildContext context, String imageUrl) {
     return AspectRatio(
-      aspectRatio: 16 / 9,
+      aspectRatio: 10/ 9,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(16.0)),

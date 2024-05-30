@@ -9,8 +9,7 @@ using service;
 namespace api.Events.GalleryPhoto.Client;
 
 public class ClientWantsToGetLastPhotos : BaseDto
-{
-}
+{ }
 
 [RequireAuthentication]
 [ValidateDataAnnotations]

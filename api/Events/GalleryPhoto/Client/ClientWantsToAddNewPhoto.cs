@@ -1,10 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using api.EventFilters;
-using api.Events.CalendarEvents.Client;
-using api.Events.CalendarEvents.Server;
 using api.Events.GalleryPhoto.Server;
 using api.Helper;
-using api.WebSocket;
 using Fleck;
 using infrastructure.QueryModels;
 using lib;

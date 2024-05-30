@@ -5,8 +5,10 @@ import '../widgets/children_widget.dart';
 class ChildrenPage extends StatelessWidget {
   final List<dynamic> children;
   final String username;
+  final bool isTeacher;
 
-  const ChildrenPage({super.key, required this.children, required this.username});
+  const ChildrenPage({super.key, required this.children, required this.username,required this.isTeacher});
+
   @override
   Widget build(BuildContext context) {
     bool isWeb = MediaQuery.of(context).size.width > 600;
@@ -51,20 +53,25 @@ class ChildrenPage extends StatelessWidget {
   }
 
   Widget _buildChildrenRow(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: children.map<Widget>((child) =>
-            SizedBox(
-              width: 600,
-              height: 600,
-              child: ChildCard(child: child),
-            )
-        ).toList(),
+    int gridColumns = 2;
+
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: gridColumns,
+        childAspectRatio: 1/ 1,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
       ),
+      itemCount: children.length,
+      itemBuilder: (context, index) {
+        var child = children[index];
+        return ChildCard(child: child);
+      },
+      padding: const EdgeInsets.all(10),
     );
   }
+
+
 
   Widget _buildChildrenColumn(BuildContext context) {
     return SingleChildScrollView(

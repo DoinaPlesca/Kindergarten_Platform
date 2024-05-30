@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using api.Events.LogIn.Server;
 using api.Helper;
 using api.WebSocket;
@@ -10,7 +11,7 @@ namespace api.Events.LogIn.Clients
 {
     public class ClientWantsToLogoutDto : BaseDto
     {
-        public string jwt { get; set; }
+        [Required] public string jwt { get; set; }
     }
 
     public class ClientWantsToLogout : BaseEventHandler<ClientWantsToLogoutDto>

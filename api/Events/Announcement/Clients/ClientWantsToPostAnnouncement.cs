@@ -13,7 +13,7 @@ namespace api.Events.Announcement.Clients
 {
     public class ClientWantsToPostAnnouncementDto : BaseDto
     {
-        private const int MaxContentLength = 2000;
+        private const int MaxContentLength = 1000;
 
        [Required(ErrorMessage = "Announcement content is required.")]
        [StringLength(MaxContentLength, ErrorMessage = "Announcement content cannot exceed {1} characters.")]
@@ -41,10 +41,8 @@ namespace api.Events.Announcement.Clients
                     Log.Error("Client metadata or user is null.");
                     return Task.CompletedTask;  
                 }
-
                
                 Log.Information("Posting announcement for user {UserId}.", clientMetadata.User.id);
-
                 
                 var insertAnnouncementParams = new InsertAnnouncementParams(
                     dto.content,
@@ -54,8 +52,6 @@ namespace api.Events.Announcement.Clients
                 );
 
                 var insertedMessage = _announcementService.InsertAnnouncement(insertAnnouncementParams);
-
-               
                 var messageWithUserInfo = new AnnouncementWithSenderEmail
                 {
                     sender = insertedMessage.sender,

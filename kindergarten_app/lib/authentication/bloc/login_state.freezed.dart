@@ -23,6 +23,8 @@ mixin _$LoginState {
   List<dynamic> get Children => throw _privateConstructorUsedError;
   List<AnnouncementWithSenderEmail> get UnreadAnnouncements =>
       throw _privateConstructorUsedError;
+  bool? get isParent => throw _privateConstructorUsedError;
+  bool? get isTeacher => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginStateCopyWith<LoginState> get copyWith =>
@@ -41,7 +43,9 @@ abstract class $LoginStateCopyWith<$Res> {
       String? name,
       String? jwt,
       List<dynamic> Children,
-      List<AnnouncementWithSenderEmail> UnreadAnnouncements});
+      List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+      bool? isParent,
+      bool? isTeacher});
 }
 
 /// @nodoc
@@ -63,6 +67,8 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
     Object? jwt = freezed,
     Object? Children = null,
     Object? UnreadAnnouncements = null,
+    Object? isParent = freezed,
+    Object? isTeacher = freezed,
   }) {
     return _then(_value.copyWith(
       authenticated: null == authenticated
@@ -89,6 +95,14 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.UnreadAnnouncements
           : UnreadAnnouncements // ignore: cast_nullable_to_non_nullable
               as List<AnnouncementWithSenderEmail>,
+      isParent: freezed == isParent
+          ? _value.isParent
+          : isParent // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isTeacher: freezed == isTeacher
+          ? _value.isTeacher
+          : isTeacher // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -107,7 +121,9 @@ abstract class _$$LoginStateImplCopyWith<$Res>
       String? name,
       String? jwt,
       List<dynamic> Children,
-      List<AnnouncementWithSenderEmail> UnreadAnnouncements});
+      List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+      bool? isParent,
+      bool? isTeacher});
 }
 
 /// @nodoc
@@ -127,6 +143,8 @@ class __$$LoginStateImplCopyWithImpl<$Res>
     Object? jwt = freezed,
     Object? Children = null,
     Object? UnreadAnnouncements = null,
+    Object? isParent = freezed,
+    Object? isTeacher = freezed,
   }) {
     return _then(_$LoginStateImpl(
       authenticated: null == authenticated
@@ -153,6 +171,14 @@ class __$$LoginStateImplCopyWithImpl<$Res>
           ? _value._UnreadAnnouncements
           : UnreadAnnouncements // ignore: cast_nullable_to_non_nullable
               as List<AnnouncementWithSenderEmail>,
+      isParent: freezed == isParent
+          ? _value.isParent
+          : isParent // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isTeacher: freezed == isTeacher
+          ? _value.isTeacher
+          : isTeacher // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -166,7 +192,9 @@ class _$LoginStateImpl implements _LoginState {
       this.name,
       this.jwt,
       final List<dynamic> Children = const [],
-      final List<AnnouncementWithSenderEmail> UnreadAnnouncements = const []})
+      final List<AnnouncementWithSenderEmail> UnreadAnnouncements = const [],
+      this.isParent,
+      this.isTeacher})
       : _Children = Children,
         _UnreadAnnouncements = UnreadAnnouncements;
 
@@ -198,8 +226,13 @@ class _$LoginStateImpl implements _LoginState {
   }
 
   @override
+  final bool? isParent;
+  @override
+  final bool? isTeacher;
+
+  @override
   String toString() {
-    return 'LoginState(authenticated: $authenticated, headsUp: $headsUp, name: $name, jwt: $jwt, Children: $Children, UnreadAnnouncements: $UnreadAnnouncements)';
+    return 'LoginState(authenticated: $authenticated, headsUp: $headsUp, name: $name, jwt: $jwt, Children: $Children, UnreadAnnouncements: $UnreadAnnouncements, isParent: $isParent, isTeacher: $isTeacher)';
   }
 
   @override
@@ -214,7 +247,11 @@ class _$LoginStateImpl implements _LoginState {
             (identical(other.jwt, jwt) || other.jwt == jwt) &&
             const DeepCollectionEquality().equals(other._Children, _Children) &&
             const DeepCollectionEquality()
-                .equals(other._UnreadAnnouncements, _UnreadAnnouncements));
+                .equals(other._UnreadAnnouncements, _UnreadAnnouncements) &&
+            (identical(other.isParent, isParent) ||
+                other.isParent == isParent) &&
+            (identical(other.isTeacher, isTeacher) ||
+                other.isTeacher == isTeacher));
   }
 
   @override
@@ -225,7 +262,9 @@ class _$LoginStateImpl implements _LoginState {
       name,
       jwt,
       const DeepCollectionEquality().hash(_Children),
-      const DeepCollectionEquality().hash(_UnreadAnnouncements));
+      const DeepCollectionEquality().hash(_UnreadAnnouncements),
+      isParent,
+      isTeacher);
 
   @JsonKey(ignore: true)
   @override
@@ -236,13 +275,14 @@ class _$LoginStateImpl implements _LoginState {
 
 abstract class _LoginState implements LoginState {
   const factory _LoginState(
-          {required final bool authenticated,
-          final String? headsUp,
-          final String? name,
-          final String? jwt,
-          final List<dynamic> Children,
-          final List<AnnouncementWithSenderEmail> UnreadAnnouncements}) =
-      _$LoginStateImpl;
+      {required final bool authenticated,
+      final String? headsUp,
+      final String? name,
+      final String? jwt,
+      final List<dynamic> Children,
+      final List<AnnouncementWithSenderEmail> UnreadAnnouncements,
+      final bool? isParent,
+      final bool? isTeacher}) = _$LoginStateImpl;
 
   @override
   bool get authenticated;
@@ -256,6 +296,10 @@ abstract class _LoginState implements LoginState {
   List<dynamic> get Children;
   @override
   List<AnnouncementWithSenderEmail> get UnreadAnnouncements;
+  @override
+  bool? get isParent;
+  @override
+  bool? get isTeacher;
   @override
   @JsonKey(ignore: true)
   _$$LoginStateImplCopyWith<_$LoginStateImpl> get copyWith =>

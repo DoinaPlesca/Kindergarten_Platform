@@ -3,7 +3,6 @@ using System.Security.Authentication;
 using api.EventFilters;
 using api.Events.LogIn.Server;
 using api.Helper;
-using api.ServerEvents;
 using api.WebSocket;
 using Fleck;
 using infrastructure.ParametherModel;

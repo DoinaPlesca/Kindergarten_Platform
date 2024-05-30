@@ -1,4 +1,5 @@
-﻿using api.Helper;
+﻿using System.ComponentModel.DataAnnotations;
+using api.Helper;
 using Fleck;
 using Serilog;
 using api.EventFilters;
@@ -11,8 +12,15 @@ namespace api.Events.CalendarEvents.Client
 {
     public class ClientWantsToCreateNewCalendarEvent : BaseDto
     {
+        [Required(ErrorMessage = "Event date is required.")]
         public DateTime eventdate { get; set; }
+
+        [Required(ErrorMessage = "Event description is required.")]
+        [StringLength(1000, ErrorMessage = "Event description cannot exceed 1000 characters.")]
         public string eventdescription { get; set; }
+
+        [Required(ErrorMessage = "Event title is required.")]
+        [StringLength(200, ErrorMessage = "Event title cannot exceed 200 characters.")]
         public string eventtitle { get; set; }
     }
 

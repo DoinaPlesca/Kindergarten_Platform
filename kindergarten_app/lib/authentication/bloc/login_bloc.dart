@@ -70,6 +70,8 @@ class LoginBloc extends Bloc<BaseEvent, LoginState> {
       jwt: event.jwt,
       Children: event.Children,
       UnreadAnnouncements: event.UnreadAnnouncements,
+      isParent: event.isParent,
+      isTeacher: event.isTeacher,
     ));
   }
 

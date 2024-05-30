@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using infrastructure.ParametherModel;
-using infrastructure.QueryModels;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 
@@ -40,4 +39,20 @@ public class ChildRepository
             }
         }
     }
+
+    public async Task<List<GetChildParams>> GetAllChildren()
+    {
+        using var conn = _dataSource.OpenConnection();
+        string sql = @"
+            SELECT 
+                firstname AS firstname,
+                lastname AS lastname,
+                image AS image
+            FROM kindergarten.children
+        ";
+        
+        var children = await conn.QueryAsync<GetChildParams>(sql);
+        return children.ToList();
+    }
+
 }
