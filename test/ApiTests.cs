@@ -1,5 +1,4 @@
-﻿/*
-using api;
+﻿using api;
 using api.Events.Announcement.Clients;
 using api.Events.Announcement.Server;
 using api.Events.CalendarEvents.Client;
@@ -29,7 +28,7 @@ public class ApiTests
         var ws2 = await new WebSocketTestClient().ConnectAsync();
 
         
-        await ws.DoAndAssert(new ClientWantsToSignInDto() { email = "doina", password = "password" },
+        await ws.DoAndAssert(new ClientWantsToSignInDto() { email = "doina@yahoo.com", password = "password" },
             receivedMessages =>
             {
                 return receivedMessages.Count(e => e.eventType == nameof(ServerAuthenticatesUser)) == 1;
@@ -51,19 +50,17 @@ public class ApiTests
                 return receivedMessages.Count(x =>
                     x.eventType.Equals(nameof(ServerGetEventsByDateRange))) == 1;
             });
-        await ws.DoAndAssert(new ClientWantsToPostAnnouncementDto() { content = "today"},
+        await ws.DoAndAssert(new ClientWantsToPostAnnouncementDto() { content = "New Content"},
             receivedMessages =>
             {
                 return receivedMessages.Count(x =>
                     x.eventType.Equals(nameof(ServerPostAnnouncement))) == 0;
             });
-
-        
         
         ws.Client.Dispose();
         ws2.Client.Dispose();
     }
 } 
-*/
+
     
     
